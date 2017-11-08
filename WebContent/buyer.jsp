@@ -3,18 +3,11 @@
 <%@ page import="cn.taobao.entity.*" %>
 <%@ page import="cn.taobao.dao.*" %>
 <%@ page import="cn.taobao.service.*" %>
-    
+   
 <%
 	if(session.getAttribute("buyer")==null){
 		response.sendRedirect(request.getContextPath()+"/login.jsp");
 	}
-	String name="";
-	Object b = session.getAttribute("buyer");
-	if(b instanceof Buyer){
-		Buyer buyer = (Buyer)b;
-		name = buyer.getName();
-	}
-	
 %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -69,7 +62,7 @@
 	<div class="mynav">
 		<div class="mynav-right">
 			<div class="mynav-left">
-				<a href="${pageContext.request.contextPath }/buyer.jsp">欢迎，<%=name %>！</a>
+				<a href="${pageContext.request.contextPath }/buyer.jsp">欢迎，${buyer.name }！</a>
 			</div>
 			<ul class="right">
 				<li><span><a href="#">联系客服</a></span></li>

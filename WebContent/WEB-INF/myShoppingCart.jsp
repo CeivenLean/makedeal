@@ -5,13 +5,11 @@
 <%@ page import="cn.taobao.entity.*" %>
 <%@ page import="cn.taobao.servlet.*" %>
 <%@ page import="cn.taobao.util.*" %>
+<%@ page import="cn.taobao.service.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% 
-	String name="";
-	Object b = session.getAttribute("buyer");
-	if(b instanceof Buyer){
-	Buyer buyer = (Buyer)b;
-	name = buyer.getName();
+<%
+	if(session.getAttribute("buyer")==null){
+		response.sendRedirect(request.getContextPath()+"/login.jsp");
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -77,8 +75,6 @@
 					
 					e.innerHTML = c;
 					
-					console.log(e.innerHTML);
-					
 					if(e.innerHTML == 0){
 						e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
 					}
@@ -92,7 +88,17 @@
 			
 		}
 		
-		
+		<!--
+		X.cartdelete = function(e){
+			var n = document.querySelectorAll(".mycheckbox");
+			for(var i=0;i<n.length;i++){
+				if(n[i].checked=="checked"){
+					var cartid = n[i].value;
+				}
+				
+			}
+		}
+		-->
 		
 		
 		
@@ -104,7 +110,7 @@
 	<div class="mynav">
 		<div class="mynav-right">
 			<div class="mynav-left">
-				<a href="${pageContext.request.contextPath }/buyer.jsp">欢迎，<%=name %>！</a>
+				<a href="${pageContext.request.contextPath }/buyer.jsp">欢迎，${buyer.name }！</a>
 			</div>
 			<ul class="right">
 				<li><span><a href="#">联系客服</a></span></li>
@@ -125,7 +131,8 @@
 	
 	<div class="good_container">
 	<h3 style="text-align:center">我的购物车</h3>
-	<%	
+	<%
+	out.print("<form action='"+request.getContextPath()+"/user/order' method='post'>");
 	out.print("<table class='table table-bordered table-striped'>");
 	out.print("<tr class='table-title'>");
 	out.print("<td>");
@@ -144,6 +151,7 @@
 		Object o = session.getAttribute("myShoppingCart");
 		Map<Integer,BuyerShoppingCart> map = (Map<Integer,BuyerShoppingCart>)o;
 		Set<Integer> set = map.keySet();
+		
 		for(Integer key:set) {
 			BuyerShoppingCart sc = map.get(key);
 			session.setAttribute("BuyerShoppingCart", sc);
@@ -160,15 +168,19 @@
 			out.print("<i class='mycount' onClick='X.updateCount("+sc.getCartId()+",1)'>+</i>");
 			out.print("</td>");
 			out.print("<td>");
-			out.print("<input class='mycheckbox'  type='checkbox' value='"+sc.getCartId()+"'>");
+			out.print("<input name='goodSelect' class='mycheckbox'  type='checkbox' value='"+sc.getCartId()+"'>");
 			out.print("</td>");
 			out.print("</tr>");
+			
+			
 		}
 		
 		
 		out.print("</table>");
-		out.print("<a class='btn btn-warning col-lg-1 col-lg-offset-8' href='"+request.getContextPath()+"/user/order'>删除</a>");
-		out.print("<a class='btn btn-primary col-lg-2 col-lg-offset-1' href='"+request.getContextPath()+"/user/order'>购买</a>");
+		out.print("<a class='btn btn-warning col-lg-1 col-lg-offset-8' disabled href='javascript:void(0)' onclick='X.cartdelete(this)'>删除</a>");
+		out.print("<a class='btn btn-primary col-lg-2 col-lg-offset-1' href='"+request.getContextPath()+"/order.jsp"+"'>购买</a>");
+		out.print("<input type='submit' value='提交'>");
+		out.print("</form>");
 	
 	%>
 	</div>

@@ -19,6 +19,10 @@ public class ShoppingCartService {
 		return scd.list(b);
 	}
 	
+	public Map<Integer,BuyerShoppingCart> list(String[] ids){
+		return scd.list(ids);
+	}
+	
 	public int update(Integer id,int act) {
 		return scd.update(id,act);
 	}

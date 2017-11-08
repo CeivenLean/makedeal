@@ -4,15 +4,9 @@
 <%@ page import="cn.taobao.dao.*" %>
 <%@ page import="cn.taobao.service.*" %>
 
-<%	
+<%
 	if(session.getAttribute("seller")==null){
 		response.sendRedirect(request.getContextPath()+"/login.jsp");
-	}
-	String name="";
-	Object s = session.getAttribute("seller");
-	if(s instanceof Seller){
-		Seller seller = (Seller)s;
-		name = seller.getName();
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -85,7 +79,7 @@
 	<div class="mynav">
 		<div class="mynav-right">
 			<div class="mynav-left">
-				<a href="${pageContext.request.contextPath }/seller.jsp">欢迎，<%=name %>！</a>
+				<a href="${pageContext.request.contextPath }/seller.jsp">欢迎，${seller.name }！</a>
 			</div>
 			<ul class="right">
 				<li><span><a href="#">联系客服</a></span></li>

@@ -7,12 +7,9 @@
 <%@ page import="cn.taobao.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="p" uri="http://cn.taobao/pagetag" %>
-<% 
-	String name="";
-	Object b = session.getAttribute("buyer");
-	if(b instanceof Buyer){
-	Buyer buyer = (Buyer)b;
-	name = buyer.getName();
+<%
+	if(session.getAttribute("buyer")==null){
+		response.sendRedirect(request.getContextPath()+"/login.jsp");
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -39,6 +36,7 @@
 	.page-container {width:30%;heigth:20px;margin:20px auto;text-align:center;position:fixed;bottom:50px;left:35%;}
 	.mypage {text-align:center;}
 	.pagelinkstyle1 , .pagelinkstyle{text-decoration:none;padding:0px 5px;display:inline-block;background-color:#dedede;margin:0px 10px;}
+	
 </style>
 </head>
 <script type="text/javascript">
@@ -66,6 +64,7 @@
 					var result = xhr.responseText;
 					var td = e.parentNode;
 					var p = document.createElement("p");
+					p.style.color = "#ff0000";
 					td.appendChild(p);
 					if(result=="1"){
 						p.innerHTML = "添加成功";
@@ -86,7 +85,7 @@
 	<div class="mynav">
 		<div class="mynav-right">
 			<div class="mynav-left">
-				<a href="${pageContext.request.contextPath }/buyer.jsp">欢迎，<%=name %>！</a>
+				<a href="${pageContext.request.contextPath }/buyer.jsp">欢迎，${buyer.name }！</a>
 			</div>
 			<ul class="right">
 				<li><span><a href="#">联系客服</a></span></li>
