@@ -131,31 +131,26 @@
 	
 	<div class="good_container">
 	<h3 style="text-align:center">我的购物车</h3>
+	<form action="${pageContext.request.contextPath }/user/order" method="post">
+	<table class="table table-bordered table-striped">
+	<tr class="table-title">
+	<td>图图</td>
+	<td>商品名称</td>
+	<td>商品价格</td>
+	<td>数量</td>
+	<td>全选<input type="checkbox" value="all" onClick="X.selectAll(this)"></td>
+	</tr>
 	<%
-	out.print("<form action='"+request.getContextPath()+"/user/order' method='post'>");
-	out.print("<table class='table table-bordered table-striped'>");
-	out.print("<tr class='table-title'>");
-	out.print("<td>");
-	out.print("商品名称");
-	out.print("</td>");
-	out.print("<td>");
-	out.print("商品价格");
-	out.print("</td>");
-	out.print("<td>");
-	out.print("数量");
-	out.print("</td>");
-	out.print("<td>");
-	out.print("全选<input type='checkbox' value='all' onClick='X.selectAll(this)'>");
-	out.print("</td>");
-	out.print("</tr>");
 		Object o = session.getAttribute("myShoppingCart");
 		Map<Integer,BuyerShoppingCart> map = (Map<Integer,BuyerShoppingCart>)o;
 		Set<Integer> set = map.keySet();
-		
 		for(Integer key:set) {
 			BuyerShoppingCart sc = map.get(key);
 			session.setAttribute("BuyerShoppingCart", sc);
 			out.print("<tr class='table-title'>");
+			out.print("<td>");
+			out.print("<img src='"+request.getContextPath()+"/images/goods/"+sc.getGoodId()+".jpg' width='25px' height='42px'>");
+			out.print("</td>");
 			out.print("<td>");
 			out.print(sc.getGoodTitle());
 			out.print("</td>");
@@ -171,17 +166,11 @@
 			out.print("<input name='goodSelect' class='mycheckbox'  type='checkbox' value='"+sc.getCartId()+"'>");
 			out.print("</td>");
 			out.print("</tr>");
-			
-			
 		}
-		
-		
 		out.print("</table>");
 		out.print("<a class='btn btn-warning col-lg-1 col-lg-offset-8' disabled href='javascript:void(0)' onclick='X.cartdelete(this)'>删除</a>");
-		out.print("<a class='btn btn-primary col-lg-2 col-lg-offset-1' href='"+request.getContextPath()+"/order.jsp"+"'>购买</a>");
-		out.print("<input type='submit' value='提交'>");
+		out.print("<input class='btn btn-primary col-lg-2 col-lg-offset-1' type='submit' value='购买'>");
 		out.print("</form>");
-	
 	%>
 	</div>
 
