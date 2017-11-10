@@ -29,7 +29,7 @@
 	.mynav a {text-decoration:none; color:black;}
 	.mynav span:hover {display:block; background-color:#dedede;}
 	.mynav {width:100%;height:35px; background-color:#f5f5f5;margin-bottom:20px;border:0;margin-top:-10px;}
-	
+	.upload {cursor: pointer;}
 </style>
 </head>
 <script type="text/javascript" src="/scripts/org.malajava.ajax.js"></script>
@@ -50,6 +50,10 @@
 		}
 		
 		$.upload = function(e){
+			var ele = e.previousElementSibling;
+			if(ele.type=="file"){
+				e.parentNode.removeChild(ele);
+			}
 			var input = document.createElement("input");
 			input.type = "file";
 			input.name = "upload";
