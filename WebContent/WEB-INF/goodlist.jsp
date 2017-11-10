@@ -105,56 +105,45 @@
 	</div>
 	
 	<div class="good_container">
-	<%	
-	out.print("<table class='table'>");
-	out.print("<tr>");
-	out.print("<td>");
-	out.print("小图");
-	out.print("</td>");
-	out.print("<td>");
-	out.print("卖家");
-	out.print("</td>");
-	out.print("<td>");
-	out.print("商品名称");
-	out.print("</td>");
-	out.print("<td>");
-	out.print("商品描述");
-	out.print("</td>");
-	out.print("<td>");
-	out.print("价格");
-	out.print("</td>");
-	out.print("<td>");
-	out.print("</td>");
-		Object v = session.getAttribute("goodsMap");
-		Map<Integer,Good> map = (Map<Integer,Good>)v;
-		Set<Integer> set = map.keySet();
-		for(Integer key:set) {
-			Good g = map.get(key);
-			session.setAttribute("good", g);
-			out.print("<tr>");
-			out.print("<td>");
-			out.print("<img src='"+request.getContextPath()+"/images/goods/"+g.getGoodId()+".jpg' width='80px' height='120px'>");
-			out.print("</td>");
-			out.print("<td>");
-			out.print(g.getSellerName());
-			out.print("</td>");
-			out.print("<td>");
-			out.print(g.getGoodTitle());
-			out.print("</td>");
-			out.print("<td>");
-			out.print(g.getGoodDesc());
-			out.print("</td>");
-			out.print("<td>");
-			out.print(g.getGoodPrice());
-			out.print("</td>");
-			out.print("<td>");
-			out.print("<a class='btn btn-default' href='javascript:void(0)' onclick='addshoppingcart(this,"+key+")'>加入购物车</a>");
-			out.print("</td>");
-			out.print("</tr>");
-		}
-		out.print("</table>");
-	
-	%>
+		<table class='table'>
+			<tr>
+				<td>小图</td>
+				<td>卖家</td>
+				<td>商品名称</td>
+				<td>商品描述</td>
+				<td>价格</td>
+				<td></td>
+			</tr>
+			<%	
+				Object v = session.getAttribute("goodsMap");
+				Map<Integer,Good> map = (Map<Integer,Good>)v;
+				Set<Integer> set = map.keySet();
+				for(Integer key:set) {
+					Good g = map.get(key);
+					session.setAttribute("good", g);
+					out.print("<tr>");
+					out.print("<td>");
+					out.print("<img src='"+request.getContextPath()+"/images/goods/"+g.getGoodId()+".jpg' width='80px' height='120px'>");
+					out.print("</td>");
+					out.print("<td>");
+					out.print(g.getSellerName());
+					out.print("</td>");
+					out.print("<td>");
+					out.print(g.getGoodTitle());
+					out.print("</td>");
+					out.print("<td>");
+					out.print(g.getGoodDesc());
+					out.print("</td>");
+					out.print("<td>");
+					out.print(g.getGoodPrice());
+					out.print("</td>");
+					out.print("<td>");
+					out.print("<a class='btn btn-default' href='javascript:void(0)' onclick='addshoppingcart(this,"+key+")'>加入购物车</a>");
+					out.print("</td>");
+					out.print("</tr>");
+				}	
+			%>
+		</table>
 	</div>
 	<p:page
 		actionName="${pageContext.request.contextPath }/good/list"
