@@ -33,10 +33,10 @@
 	.mynav span:hover {display:block; background-color:#dedede;}
 	.mynav {width:100%;height:35px; background-color:#f5f5f5;margin-bottom:20px;border:0;margin-top:-10px;}
 	.good_container .table {margin:20px auto; width:60%;}
-	.page-container {width:30%;heigth:20px;margin:20px auto;text-align:center;position:fixed;bottom:50px;left:35%;}
+	.page-container {background-color:#dedede;width:50%;heigth:20px;margin:30px auto;text-align:center;position:relative;}
 	.mypage {text-align:center;}
-	.pagelinkstyle1 , .pagelinkstyle{text-decoration:none;padding:0px 5px;display:inline-block;background-color:#dedede;margin:0px 10px;}
-	
+	.good-list {background-color:cyan;width:88%;height:auto;}
+	.good-list>div {background-color:green;width:32%;}	
 </style>
 </head>
 <script type="text/javascript">
@@ -62,14 +62,12 @@
 			if(xhr.readyState===xhr.DONE){
 				if(xhr.status==200){
 					var result = xhr.responseText;
-					var td = e.parentNode;
-					var p = document.createElement("p");
-					p.style.color = "#ff0000";
-					td.appendChild(p);
+					var msg = e.nextElementSibling;
+					msg.style.color = "#ff0000";
 					if(result=="1"){
-						p.innerHTML = "添加成功";
+						msg.innerHTML = "添加成功";
 					}else{
-						p.innerHTML = "添加失败,请勿重复添加";
+						msg.innerHTML = "添加失败,请勿重复添加";
 					}
 				}
 			}
@@ -104,47 +102,56 @@
 		</div>
 	</div>
 	
+	  
 	<div class="good_container">
 		<table class='table'>
 			<tr>
-				<td>小图</td>
-				<td>卖家</td>
-				<td>商品名称</td>
-				<td>商品描述</td>
-				<td>价格</td>
-				<td></td>
+				<th>小图</th>
+				<th>卖家</th>
+				<th>商品名称</th>
+				<th>商品描述</th>
+				<th>价格</th>
+				<th></th>
 			</tr>
-			<%	
-				Object v = session.getAttribute("goodsMap");
-				Map<Integer,Good> map = (Map<Integer,Good>)v;
-				Set<Integer> set = map.keySet();
-				for(Integer key:set) {
-					Good g = map.get(key);
-					session.setAttribute("good", g);
-					out.print("<tr>");
-					out.print("<td>");
-					out.print("<img src='"+request.getContextPath()+"/images/goods/"+g.getGoodId()+".jpg' width='80px' height='120px'>");
-					out.print("</td>");
-					out.print("<td>");
-					out.print(g.getSellerName());
-					out.print("</td>");
-					out.print("<td>");
-					out.print(g.getGoodTitle());
-					out.print("</td>");
-					out.print("<td>");
-					out.print(g.getGoodDesc());
-					out.print("</td>");
-					out.print("<td>");
-					out.print(g.getGoodPrice());
-					out.print("</td>");
-					out.print("<td>");
-					out.print("<a class='btn btn-default' href='javascript:void(0)' onclick='addshoppingcart(this,"+key+")'>加入购物车</a>");
-					out.print("</td>");
-					out.print("</tr>");
-				}	
-			%>
+			<c:forEach var="m" items="${pageUtil.datas }">
+				<tr>
+					<td>
+						<img src="${pageContext.request.contextPath }/images/goods/${m.value.goodId }.jpg" width="80px" height="120px">
+					</td>
+					<td>${m.value.sellerName }</td>
+					<td>${m.value.goodTitle }</td>
+					<td>${m.value.goodDesc }</td>
+					<td>${m.value.goodPrice }</td>
+					<td>
+						<a class="btn btn-default" href="javascript:void(0)" onclick="addshoppingcart(this,${m.key})">加入购物车</a>
+						<p class="msg"></p>
+					</td>
+				</tr>
+			</c:forEach>	
 		</table>
 	</div>
+	
+	
+	
+	<%-- <div style="width:100%;">
+		<div class="good-list">
+		<table>
+			<c:forEach var="m" items="${pageUtil.datas }">
+			
+				<tr>
+					<td rowspan="4"><img src="${pageContext.request.contextPath }/images/goods/${m.value.goodId }.jpg" width="80px" height="120px"></td>
+				</tr>
+				<tr><td>${m.value.goodTitle }</td></tr>
+				<tr><td>${m.value.goodDesc }</td></tr>
+				<tr>
+					<td>${m.value.sellerName }</td>
+					<td>${m.value.goodPrice }</td>
+				</tr>
+			</c:forEach>
+			</table>
+		</div>
+	</div> --%>
+	
 	<p:page
 		actionName="${pageContext.request.contextPath }/good/list"
 		pageIndex="${pageUtil.pageIndex }"

@@ -33,45 +33,37 @@ public class PagingTag extends TagSupport {
 			if(recordCounts%size!=0) {
 				pages++;
 			}
-//			w.print("<div class='page-container'>");
-//			w.print("<table width='450px' align='center' class='mypage'>");
-//			w.print("<tr>");
-//			w.print("<form action='"+actionName+"'");
-//			w.print("<td height='25' align='center'>");
-//			w.print("<a class='pagelinkstyle1' href='"+actionName+"?pageIndex=1'>首页</a>");
-//			w.print("<a class='pagelinkstyle1' href='"+actionName+"?pageIndex="+(index-1)+"'>上一页</a>");
-//			for(int i=0;i<pageNums.length;i++) {
-//				if(index==pageNums[i]) {
-//					w.print("<span class='currentpagestyle'>"+pageNums[i]+"</span>");
-//				}else {
-//					w.print("<a class='pagelinkstyle' href='"+ actionName +"?pageIndex="+pageNums[i]+"'>"+pageNums[i]+"</a>");
-//				}
-//			}
-//			w.print("<a class='pagelinkstyle1' href='"+actionName+"?pageIndex="+(index+1)+"'>下一页</a>");
-//			w.print("<a class='pagelinkstyle1' href='"+actionName+"?pageIndex="+pages+"'>尾页</a>");
-//			w.print("<input type='text' name='pageIndex' style='width:20px' value='"+pageIndex+"'>");
-//			w.print("<input type='submit' value='GO'>");
-//			w.print("</td>");
-//			w.print("</form>");
-//			w.print("</tr>");
-//			w.print("</table>");
-//			w.print("</div>");
+//			
 			w.print("<div class='page-container'>");
 			w.print("<nav aria-label=\"Page navigation\">");
 			w.print("<ul class=\"pagination\">");
-			w.print("<li>");
-			w.print("<a href='"+actionName+"?pageIndex="+(index-1)+"' aria-label=\"Previous\">");
-			w.print("<span aria-hidden=\"true\">&laquo;</span>");
-			w.print("</a></li>");
+			
+			if(index==1) {
+				//如果当前页是第一页，则将 "<<" 绘制成不可点击状态
+				w.print("<li class=\"disabled\"><span aria-hidden=\"true\">&laquo;</span></li>");
+			}else {
+				w.print("<li>");
+				w.print("<a href='"+actionName+"?pageIndex="+(index-1)+"' aria-label=\"Previous\">");
+				w.print("<span aria-hidden=\"true\">&laquo;</span>");
+				w.print("</a></li>");
+			}
+			
 			for(int i=0;i<pageNums.length;i++) {
 				if(index==pageNums[i]) {
-					w.print("<li  class=\"active\"><span>"+pageNums[i]+"</span>><li>");
+					w.print("<li  class=\"active\"><span>"+pageNums[i]+"</span><li>");
 				}else {
 					w.print("<li><a href='"+ actionName +"?pageIndex="+pageNums[i]+"'>"+pageNums[i]+"</a><li>");
 				}
 			}
-			w.print("<li><a href='"+actionName+"?pageIndex="+(index+1)+"'><span aria-hidden=\"true\">&raquo;</span></a></li>");
+			
+			if(index==pageNums.length) {
+				//如果当前页是最后一页，则将 ">>" 绘制成不可点击状态
+				w.print("<li class=\"disabled\"><span aria-hidden=\"true\">&raquo;</span></li>");
+			}else {
+				w.print("<li><a href='"+actionName+"?pageIndex="+(index+1)+"'><span aria-hidden=\"true\">&raquo;</span></a></li>");
+			}
 			w.print("</ul>");
+			w.print("<p style=\"text-align:center;\">第 "+index+" / "+pageNums.length+" 页</p>");
 			w.print("</div>");
 		}catch(Exception e) {
 			e.printStackTrace();

@@ -2,8 +2,9 @@ package cn.taobao.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Map;
 
-public class Order implements Serializable {
+public class BuyerOrder implements Serializable {
 
 	private static final long serialVersionUID = 7979952986452600426L;
 	
@@ -11,9 +12,7 @@ public class Order implements Serializable {
 	private double transactionAmount;
 	private Date orderDate;
 	private String buyerId;
-	private String sellerId;
-	private String goodId;
-	private String goodDesc;
+	private Map<Integer,Integer> goodsInfo;
 	public String getSerialNumber() {
 		return serialNumber;
 	}
@@ -38,25 +37,12 @@ public class Order implements Serializable {
 	public void setBuyerId(String buyerId) {
 		this.buyerId = buyerId;
 	}
-	public String getSellerId() {
-		return sellerId;
+	public Map<Integer, Integer> getGoodsInfo() {
+		return goodsInfo;
 	}
-	public void setSellerId(String sellerId) {
-		this.sellerId = sellerId;
+	public void setGoodsInfo(Map<Integer, Integer> goodsInfo) {
+		this.goodsInfo = goodsInfo;
 	}
-	public String getGoodId() {
-		return goodId;
-	}
-	public void setGoodId(String goodId) {
-		this.goodId = goodId;
-	}
-	public String getGoodDesc() {
-		return goodDesc;
-	}
-	public void setGoodDesc(String goodDesc) {
-		this.goodDesc = goodDesc;
-	}
-	
 	
 	
 

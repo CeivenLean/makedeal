@@ -10,7 +10,7 @@ public class PageUtil<T> {
 	private int pageIndex=1;
 	private int[] pageNums;
 	private int recordCount;
-	private int pageSize=3;
+	private int pageSize=5;
 	private Map<Integer,Good> datas;
 	private String where;
 	
