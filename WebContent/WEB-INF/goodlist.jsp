@@ -67,7 +67,7 @@
 					if(result=="1"){
 						msg.innerHTML = "添加成功";
 					}else{
-						msg.innerHTML = "添加失败,请勿重复添加";
+						msg.innerHTML = "请勿重复添加";
 					}
 				}
 			}
@@ -97,14 +97,16 @@
 					</div>
 				</li>
 				<li><span><a href="${pageContext.request.contextPath }/user/listShoppingCart"><i class="fa fa-shopping-cart" aria-hidden="true" style="color:#FF6905;font-size:14px;"></i>&nbsp;&nbsp;购物车</a>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></span></li>
-				<li><span><a href="#"><i class="fa fa-history" aria-hidden="true"  style="color:#FF6905;font-size:14px;"></i>&nbsp;&nbsp;我的订单</a>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></span></li>
+				<li><span><a href="${pageContext.request.contextPath }/user/listOrder"><i class="fa fa-history" aria-hidden="true"  style="color:#FF6905;font-size:14px;"></i>&nbsp;&nbsp;我的订单</a>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></span></li>
 			</ul>
 		</div>
 	</div>
 	
 	  
 	<div class="good_container">
+		
 		<table class='table'>
+			<tr><td style="border:0">>>${sort }</td></tr>
 			<tr>
 				<th>小图</th>
 				<th>卖家</th>
@@ -116,14 +118,14 @@
 			<c:forEach var="m" items="${pageUtil.datas }">
 				<tr>
 					<td>
-						<img src="${pageContext.request.contextPath }/images/goods/${m.value.goodId }.jpg" width="80px" height="120px">
+						<a href="${pageContext.request.contextPath }/good/detail?id=${m.value.goodId }"><img src="${pageContext.request.contextPath }/images/goods/${m.value.goodId }.jpg" width="80px" height="120px"></a>
 					</td>
-					<td>${m.value.sellerName }</td>
-					<td>${m.value.goodTitle }</td>
-					<td>${m.value.goodDesc }</td>
+					<td><a href="${pageContext.request.contextPath }/good/detail?id=${m.value.goodId }">${m.value.sellerName }</a></td>
+					<td><a href="${pageContext.request.contextPath }/good/detail?id=${m.value.goodId }">${m.value.goodTitle }</a></td>
+					<td><a href="${pageContext.request.contextPath }/good/detail?id=${m.value.goodId }">${m.value.goodDesc }</a></td>
 					<td>${m.value.goodPrice }</td>
 					<td>
-						<a class="btn btn-default" href="javascript:void(0)" onclick="addshoppingcart(this,${m.key})">加入购物车</a>
+						<a class="btn btn-default" onclick="addshoppingcart(this,${m.key})">加入购物车</a>
 						<p class="msg"></p>
 					</td>
 				</tr>
@@ -153,7 +155,7 @@
 	</div> --%>
 	
 	<p:page
-		actionName="${pageContext.request.contextPath }/good/list"
+		actionName="${ actionName}"
 		pageIndex="${pageUtil.pageIndex }"
 		pageSize="${pageUtil.pageSize }"
 		recordCount="${pageUtil.recordCount }"

@@ -88,17 +88,56 @@
 			
 		}
 		
-		<!--
-		X.cartdelete = function(e){
+		X.totalPrice = function(){
+			var totalprice="";
+			var sum="";
+			var input = document.querySelector("input[type='submit']");
 			var n = document.querySelectorAll(".mycheckbox");
 			for(var i=0;i<n.length;i++){
-				if(n[i].checked=="checked"){
-					var cartid = n[i].value;
+				if(n[i].checked==true){
+					var price = n[i].parentNode.previousElementSibling.previousElementSibling.innerHTML;
+					var count = n[i].parentNode.previousElementSibling.firstElementChild.nextElementSibling.innerHTML;
+					totalprice = (price*1) * (count*1);
+					sum += totalprice;
+					sum = sum*1;
 				}
 				
 			}
+				input.value= "购买"+sum;
 		}
-		-->
+		
+		
+		X.cartdelete = function(e){
+			
+			var input = document.querySelector("input[type='submit']");
+			input.value= "购买";
+			
+			var xhr = new XMLHttpRequest();
+			xhr.open("post","${pageContext.request.contextPath}/user/cartdelete");
+			var cartIds="";
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState===xhr.DONE){
+					var msg = xhr.responseText;
+					
+						var selects = document.querySelectorAll(".mycheckbox");
+						
+						for(var i=0;i<selects.length;i++){
+							if(selects[i].checked==true){
+								cartIds+=(selects[i].value+",");
+								var tr = selects[i].parentNode.parentNode;
+								var table = tr.parentNode;
+								table.removeChild(tr);
+							}
+						}
+						cartIds = cartIds.substring(0,cartIds.length-1);
+						console.log(cartIds);
+					
+				}
+			}
+			xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
+			xhr.send("cartIds="+cartIds);
+		}
+		
 		
 		
 		
@@ -124,7 +163,7 @@
 					</div>
 				</li>
 				<li><span><a href="${pageContext.request.contextPath }/user/listShoppingCart"><i class="fa fa-shopping-cart" aria-hidden="true" style="color:#FF6905;font-size:14px;"></i>&nbsp;&nbsp;购物车</a>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></span></li>
-				<li><span><a href="#"><i class="fa fa-history" aria-hidden="true"  style="color:#FF6905;font-size:14px;"></i>&nbsp;&nbsp;我的订单</a>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></span></li>
+				<li><span><a href="${pageContext.request.contextPath }/user/listOrder"><i class="fa fa-history" aria-hidden="true"  style="color:#FF6905;font-size:14px;"></i>&nbsp;&nbsp;我的订单</a>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></span></li>
 			</ul>
 		</div>
 	</div>
@@ -138,7 +177,7 @@
 	<td>商品名称</td>
 	<td>商品价格</td>
 	<td>数量</td>
-	<td>全选<input type="checkbox" value="all" onClick="X.selectAll(this)"></td>
+	<td>全选<input type="checkbox" value="all" onchange='X.totalPrice()' onClick="X.selectAll(this)"></td>
 	</tr>
 	<%
 		Object o = session.getAttribute("myShoppingCart");
@@ -163,16 +202,17 @@
 			out.print("<i class='mycount' onClick='X.updateCount("+sc.getCartId()+",1)'>+</i>");
 			out.print("</td>");
 			out.print("<td>");
-			out.print("<input name='goodSelect' class='mycheckbox'  type='checkbox' value='"+sc.getCartId()+"'>");
+			out.print("<input onchange='X.totalPrice()' name='goodSelect' class='mycheckbox'  type='checkbox' value='"+sc.getCartId()+"'>");
 			out.print("</td>");
 			out.print("</tr>");
 		}
 		out.print("</table>");
-		out.print("<a class='btn btn-warning col-lg-1 col-lg-offset-8' disabled href='javascript:void(0)' onclick='X.cartdelete(this)'>删除</a>");
+		out.print("<a class='btn btn-warning col-lg-1 col-lg-offset-8' href='javascript:void(0)' onclick='X.cartdelete(this)'>删除</a>");
 		out.print("<input class='btn btn-primary col-lg-2 col-lg-offset-1' type='submit' value='购买'>");
 		out.print("</form>");
 	%>
 	</div>
+	<div style="height:100px"></div>
 
 	
 </body>

@@ -113,6 +113,22 @@ public class ShoppingCartDao {
 		helper.update(SQLExtend);
 		return count;
 		
+	}
+	
+	public int deleteById(String[] cartIds) {
+		
+		StringBuilder nums = new StringBuilder();
+		if(cartIds!=null) {
+			for(int i=0;i<cartIds.length;i++) {
+				nums.append(cartIds[i]);
+				if(i!=cartIds.length-1) {
+					nums.append(",");
+				}
+			}
+		}
+		String SQL = "DELETE FROM shopping_cart WHERE cart_id IN ("+nums+")";
+		System.out.println(SQL);
+		return helper.update(SQL);
 		
 		
 	}

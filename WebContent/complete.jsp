@@ -3,23 +3,10 @@
 <%@ page import="cn.taobao.entity.*" %>
 <%@ page import="cn.taobao.dao.*" %>
 <%@ page import="cn.taobao.service.*" %>
-<%	
-	String name="";
-	if(session.getAttribute("buyer")!=null){
-		Object b = session.getAttribute("buyer");
-		if(b instanceof Buyer){
-			Buyer buyer = (Buyer)b;
-			name = buyer.getName();
-		}
+<%
+	if(session.getAttribute("buyer")==null){
+		response.sendRedirect(request.getContextPath()+"/login.jsp");
 	}
-	if(session.getAttribute("seller")!=null){
-		Object s = session.getAttribute("seller");
-		if(s instanceof Seller){
-			Seller seller = (Seller)s;
-			name = seller.getName();
-		}
-	}
-	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -99,7 +86,7 @@
 	<div class="mynav">
 		<div class="mynav-right">
 			<div class="mynav-left">
-				<p>欢迎，<%=name %>！</p>
+				<a href="${pageContext.request.contextPath }/buyer.jsp">欢迎，${buyer.name }！</a>
 			</div>
 			<ul class="right">
 				<li><span><a href="#">联系客服</a></span></li>
@@ -113,7 +100,7 @@
 					</div>
 				</li>
 				<li><span><a href="${pageContext.request.contextPath }/user/listShoppingCart"><i class="fa fa-shopping-cart" aria-hidden="true" style="color:#FF6905;font-size:14px;"></i>&nbsp;&nbsp;购物车</a>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></span></li>
-				<li><span><a href="#"><i class="fa fa-history" aria-hidden="true"  style="color:#FF6905;font-size:14px;"></i>&nbsp;&nbsp;我的订单</a>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></span></li>
+				<li><span><a href="${pageContext.request.contextPath }/user/listOrder"><i class="fa fa-history" aria-hidden="true"  style="color:#FF6905;font-size:14px;"></i>&nbsp;&nbsp;我的订单</a>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></span></li>
 			</ul>
 		</div>
 	</div>

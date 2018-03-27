@@ -56,7 +56,7 @@ public class GoodList extends HttpServlet {
 			
 			session.setAttribute("goodsMap", map);
 			session.setAttribute("value", value);
-			
+			session.setAttribute("actionName", request.getContextPath()+"/good/list");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/goodlist.jsp");
 			
 			rd.forward(request, response);

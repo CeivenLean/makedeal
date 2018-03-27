@@ -20,10 +20,18 @@ public class GoodService {
 	public int totalCount(String value) {
 		return gd.totalCount(value);
 	}
+	public int listSortTotalCount(String sort) {
+		return gd.listSortTotalCount(sort);
+	}
 	
 	public Map<Integer,Good> list(String value,PageUtil pageUtil) {
 		
 		return gd.list(value,pageUtil);
+	}
+	
+	public Map<Integer,Good> listBySort(String sort,PageUtil pageUtil) {
+		
+		return gd.listBySort(sort,pageUtil);
 	}
 	
 	public Good select(Integer key) {

@@ -62,4 +62,30 @@ public class SellerDao {
 		int i = helper.update(SQL);
 		return (i>0)?true:false;
 	}
+	
+	public Seller select(String name) {
+		String SQL = "SELECT * FROM seller_info WHERE seller_name=?";
+		ResultSet rs = helper.query(SQL, name);
+		if(rs!=null) {
+			try {
+				while(rs.next()) {
+					Seller s = new Seller();
+					s.setName(rs.getString("seller_name"));
+					s.setPassword(rs.getString("password"));
+					s.setGender(rs.getString("seller_gender"));
+					s.setPhone(rs.getString("seller_phone"));
+					s.setAddress(rs.getString("seller_address"));
+					s.setId(rs.getString("seller_id"));
+					s.setRealName(rs.getString("real_name"));
+					s.setLevel(rs.getString("seller_level"));
+					s.setRegistDate(rs.getDate("regist_date"));
+					
+					return s;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 }

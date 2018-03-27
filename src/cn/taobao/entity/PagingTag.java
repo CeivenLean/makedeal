@@ -43,7 +43,11 @@ public class PagingTag extends TagSupport {
 				w.print("<li class=\"disabled\"><span aria-hidden=\"true\">&laquo;</span></li>");
 			}else {
 				w.print("<li>");
-				w.print("<a href='"+actionName+"?pageIndex="+(index-1)+"' aria-label=\"Previous\">");
+				if(actionName.indexOf("?")==-1) {
+					w.print("<a href='"+actionName+"?pageIndex="+(index-1)+"' aria-label=\"Previous\">");
+				}else {
+					w.print("<a href='"+actionName+"&pageIndex="+(index-1)+"' aria-label=\"Previous\">");
+				}
 				w.print("<span aria-hidden=\"true\">&laquo;</span>");
 				w.print("</a></li>");
 			}
@@ -52,7 +56,11 @@ public class PagingTag extends TagSupport {
 				if(index==pageNums[i]) {
 					w.print("<li  class=\"active\"><span>"+pageNums[i]+"</span><li>");
 				}else {
-					w.print("<li><a href='"+ actionName +"?pageIndex="+pageNums[i]+"'>"+pageNums[i]+"</a><li>");
+					if(actionName.indexOf("?")==-1) {
+						w.print("<li><a href='"+ actionName +"?pageIndex="+pageNums[i]+"'>"+pageNums[i]+"</a><li>");
+					}else {
+						w.print("<li><a href='"+ actionName +"&pageIndex="+pageNums[i]+"'>"+pageNums[i]+"</a><li>");
+					}
 				}
 			}
 			
@@ -60,7 +68,11 @@ public class PagingTag extends TagSupport {
 				//如果当前页是最后一页，则将 ">>" 绘制成不可点击状态
 				w.print("<li class=\"disabled\"><span aria-hidden=\"true\">&raquo;</span></li>");
 			}else {
-				w.print("<li><a href='"+actionName+"?pageIndex="+(index+1)+"'><span aria-hidden=\"true\">&raquo;</span></a></li>");
+				if(actionName.indexOf("?")==-1) {
+					w.print("<li><a href='"+actionName+"?pageIndex="+(index+1)+"'><span aria-hidden=\"true\">&raquo;</span></a></li>");
+				}else {
+					w.print("<li><a href='"+actionName+"&pageIndex="+(index+1)+"'><span aria-hidden=\"true\">&raquo;</span></a></li>");
+				}
 			}
 			w.print("</ul>");
 			w.print("<p style=\"text-align:center;\">第 "+index+" / "+pageNums.length+" 页</p>");

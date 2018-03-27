@@ -36,6 +36,9 @@ public class GoodPublish extends HttpServlet {
 		String goodTitle = request.getParameter("goodTitle");
 		String goodDesc = request.getParameter("goodDesc");
 		String goodPrice = request.getParameter("goodPrice");
+		String sort1 = request.getParameter("sort1");
+		String sort2 = request.getParameter("sort2");
+		String sort3 = request.getParameter("sort3");
 		
 		if(goodPrice!=null && goodPrice.length()>0) {
 			double price = Double.valueOf(goodPrice);

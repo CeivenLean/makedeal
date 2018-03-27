@@ -26,5 +26,9 @@ public class ShoppingCartService {
 	public int update(Integer id,int act) {
 		return scd.update(id,act);
 	}
+	
+	public int deleteById(String[] cartIds) {
+		return scd.deleteById(cartIds);
+	}
 
 }

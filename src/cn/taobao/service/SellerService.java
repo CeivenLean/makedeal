@@ -31,5 +31,9 @@ public class SellerService {
 	public boolean delete(Seller s) {
 		return sd.delete(s);
 	}
+	
+	public Seller select(String name) {
+		return sd.select(name);
+	}
 
 }

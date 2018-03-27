@@ -12,6 +12,10 @@ public class Good implements Serializable {
 	private String goodDesc;
 	private double goodPrice;
 	
+	private String sort1;
+	private String sort2;
+	private String sort3;
+	
 	
 	public Integer getGoodId() {
 		return goodId;
@@ -43,6 +47,24 @@ public class Good implements Serializable {
 	}
 	public void setSellerName(String sellerName) {
 		this.sellerName = sellerName;
+	}
+	public String getSort1() {
+		return sort1;
+	}
+	public void setSort1(String sort1) {
+		this.sort1 = sort1;
+	}
+	public String getSort2() {
+		return sort2;
+	}
+	public void setSort2(String sort2) {
+		this.sort2 = sort2;
+	}
+	public String getSort3() {
+		return sort3;
+	}
+	public void setSort3(String sort3) {
+		this.sort3 = sort3;
 	}
 	
 
