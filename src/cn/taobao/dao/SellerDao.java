@@ -2,7 +2,10 @@ package cn.taobao.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
+import cn.taobao.entity.Buyer;
 import cn.taobao.entity.Seller;
 import cn.taobao.util.JdbcHelper;
 
@@ -85,6 +88,33 @@ public class SellerDao {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		}
+		return null;
+	}
+	
+	public Map listAll() {
+		String SQL = "SELECT * FROM seller_info";
+		ResultSet rs = helper.query(SQL);
+		Map map = new HashMap();
+		try {
+			while(rs.next()) {
+				
+				Seller b = new Seller();
+				b.setName(rs.getString("seller_name"));
+				b.setAddress(rs.getString("seller_address"));
+				b.setGender(rs.getString("seller_gender"));
+				b.setId(rs.getString("seller_id"));		
+				b.setLevel(rs.getString("seller_level"));
+				b.setPhone(rs.getString("seller_phone"));
+				b.setRealName(rs.getString("real_name"));
+				b.setRegistDate(rs.getDate("regist_date"));
+				
+				map.put(b.getId(),b );
+			
+			}
+			return map;
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 		return null;
 	}

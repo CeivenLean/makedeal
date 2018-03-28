@@ -2,8 +2,11 @@ package cn.taobao.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import cn.taobao.entity.Buyer;
+import cn.taobao.entity.Good;
 import cn.taobao.util.JdbcHelper;
 
 public class BuyerDao {
@@ -61,5 +64,32 @@ public class BuyerDao {
 		String SQL = "DELETE FROM buyer_info WHERE buyer_id='"+b.getId()+"'";
 		int i = helper.update(SQL);
 		return (i>0)?true:false;
+	}
+	
+	public Map listAll() {
+		String SQL = "SELECT * FROM buyer_info";
+		ResultSet rs = helper.query(SQL);
+		Map map = new HashMap();
+		try {
+			while(rs.next()) {
+				
+				Buyer b = new Buyer();
+				b.setName(rs.getString("buyer_name"));
+				b.setAddress(rs.getString("buyer_address"));
+				b.setGender(rs.getString("buyer_gender"));
+				b.setId(rs.getString("buyer_id"));		
+				b.setLevel(rs.getString("buyer_level"));
+				b.setPhone(rs.getString("buyer_phone"));
+				b.setRealName(rs.getString("real_name"));
+				b.setRegistDate(rs.getDate("regist_date"));
+				
+				map.put(b.getId(),b );
+			
+			}
+			return map;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

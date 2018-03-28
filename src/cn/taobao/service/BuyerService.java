@@ -1,6 +1,7 @@
 package cn.taobao.service;
 
 import java.util.Date;
+import java.util.Map;
 
 import cn.taobao.dao.BuyerDao;
 import cn.taobao.entity.Buyer;
@@ -32,6 +33,10 @@ public class BuyerService {
 	
 	public boolean delete(Buyer b) {
 		return bd.delete(b);
+	}
+	
+	public Map listAll() {
+		return bd.listAll();
 	}
 
 }

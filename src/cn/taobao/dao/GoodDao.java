@@ -171,4 +171,31 @@ public Map<Integer,Good> listBySort(String sort,PageUtil pageUtil){
 		return null;
 		
 	}
+	
+	public Map listAll() {
+		String SQL = "SELECT * FROM goods_info";
+		ResultSet rs = helper.query(SQL);
+		Map map = new HashMap();
+		try {
+			while(rs.next()) {
+				
+				Good g = new Good();
+				
+				g.setGoodId(rs.getInt("good_id"));
+				g.setSellerName(rs.getString("seller_name"));
+				g.setGoodTitle(rs.getString("good_title"));
+				g.setGoodDesc(rs.getString("good_desc"));
+				g.setGoodPrice(rs.getDouble("good_price"));
+				g.setSort1(rs.getString("sort1"));
+				g.setSort2(rs.getString("sort2"));
+				g.setSort3(rs.getString("sort3"));
+				map.put(g.getGoodId(), g);
+			}
+			return map;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 }

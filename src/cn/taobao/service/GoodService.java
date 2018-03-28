@@ -37,5 +37,9 @@ public class GoodService {
 	public Good select(Integer key) {
 		return gd.select(key);
 	}
+	
+	public Map listAll() {
+		return gd.listAll();
+	}
 
 }

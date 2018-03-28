@@ -1,6 +1,7 @@
 package cn.taobao.service;
 
 import java.util.Date;
+import java.util.Map;
 
 import cn.taobao.dao.SellerDao;
 import cn.taobao.entity.Seller;
@@ -34,6 +35,10 @@ public class SellerService {
 	
 	public Seller select(String name) {
 		return sd.select(name);
+	}
+	
+	public Map listAll() {
+		return sd.listAll();
 	}
 
 }
