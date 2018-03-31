@@ -26,7 +26,7 @@
 	z-index: 810;
 	background-color: #222d32;
  }
-.right-content {margin-left:17%; width:83%; height:100%;}
+.right-content {margin-left:17%; width:83%; height:100%;background-color:red;}
 .right-content>div {display:none; margin:7% 5%;}
 td a {cursor:pointer;}
 </style>
@@ -43,9 +43,10 @@ td a {cursor:pointer;}
 		document.querySelector(".seller-content").style.display="block";
 	}
 	function goodShow(){
-		document.querySelector(".buyer-content").style.display="none";
+		/* document.querySelector(".buyer-content").style.display="none";
 		document.querySelector(".seller-content").style.display="none";
-		document.querySelector(".good-content").style.display="block";
+		document.querySelector(".good-content").style.display="block"; */
+		
 	}
 </script>
 <body>
@@ -199,10 +200,37 @@ td a {cursor:pointer;}
 <script>
 $.sidebarMenu($('.sidebar-menu'))
 </script>
+<!-- <script type="text/javascript">
+	function modifysave(e){
+		var tr = e.parentNode.parentNode;
+		var tds = tr.childNodes;
+		var xhr = new XMLHttpRequest();
+		xhr.open("post","${pageContext.request.contextPath}/user/good/modifysave");
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState===xhr.DONE){
+				for(var i=3;i<8;i++){
+       				var input = tds[i].firstElementChild;
+					var value = input.value;
+					if(i<7){tds[i].innerHTML = value;}
+					/* else if(i=6){tds[i].innerHTML = "";} 这里加分类select,做这个时要把上面i<7改成i<6*/
+					else{tds[i].innerHTML="<a onclick=\"modify(this)\">修改</a><a>下架</a>";}
+				}
+				
+			}
+			
+		}
+		xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
+		
+		var data = "data="+"{\"goodId\":"+"\""+tds[1].innerHTML+"\",\"goodTitle\":"+"\""+tds[3].firstElementChild.value+"\",\"goodDesc\":"+"\""+tds[4].firstElementChild.value+"\",\"goodPrice\":"+"\""+tds[5].firstElementChild.value+"\"}";
+		console.log(data);
+		xhr.send(data);
+		
+	}	
+</script> -->
 
 <div class="right-content">
-
-	<div class="buyer-content">
+	<jsp:include page='${pageContext.request.contextPath }/admin-good.jsp' flush='true' />
+	<%-- <div class="buyer-content">
 		<table  class='table table-striped table-hover table-condensed'>
 			<tr><th>用户昵称</th><th>性别</th><th>手机号</th><th>地址</th><th>ID</th><th>姓名</th><th>级别</th><th>注册日期</th><th>操作</th></tr>
 			<c:forEach var="map" items="${buyerMap}">
@@ -256,14 +284,31 @@ $.sidebarMenu($('.sidebar-menu'))
        			var tr = e.parentNode.parentNode;
        			var tds = tr.childNodes;
 				console.log(tds);
-				for(var i=1;i<8;i++){
+				/*i从3 开始，即不允许修改商品编号和卖家 */
+				for(var i=3;i<8;i++){
 					var value = tds[i].innerHTML;
-					if(i<6){tds[i].innerHTML = "<input style=\"width:120px\" type=\"text\" value=\""+value+"\">";}
-					/* else if(i=6){tds[i].innerHTML = "";} 这里加分类select*/
-					else{tds[i].innerHTML="<a>保存</a>";}
+					if(i<7){tds[i].innerHTML = "<input style=\"width:100px\" type=\"text\" value=\""+value+"\">";}
+					/* else if(i=6){tds[i].innerHTML = "";} 这里加分类select,做这个时要把上面i<7改成i<6*/
+					else{tds[i].innerHTML="<a onclick=\"modifysave(this)\">保存</a><a onclick=\"modifycancel(this)\">取消</a>";}
 				}
-       			
        		}
+       		
+       		function modifycancel(e){
+       			var tr = e.parentNode.parentNode;
+       			var tds = tr.childNodes;
+       			/*i从3 开始，即不允许修改商品编号和卖家 */
+       			for(var i=3;i<8;i++){
+       				var input = tds[i].firstElementChild;
+					var value = input.value;
+					if(i<7){tds[i].innerHTML = value;}
+					/* else if(i=6){tds[i].innerHTML = "";} 这里加分类select,做这个时要把上面i<7改成i<6*/
+					else{tds[i].innerHTML="<a onclick=\"modify(this)\">修改</a><a>下架</a>";}
+				}
+       		}
+       		
+       		
+       		
+       		
 			var theTable = document.getElementById("table");
 			var txtValue = document.getElementById("Text1").value;
 			function changepage() {
@@ -306,7 +351,7 @@ $.sidebarMenu($('.sidebar-menu'))
 		
 		 </script>
 		<script type="text/javascript" src="${pageContext.request.contextPath }/js/goodpagging.js"></script>
-	</div>
+	</div> --%>
 
 </div>
 
