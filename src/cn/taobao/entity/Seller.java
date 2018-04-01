@@ -16,6 +16,7 @@ public class Seller implements Serializable {
 	private String id;
 	private String level;
 	private Date registDate;
+	private String email;
 	public String getName() {
 		return name;
 	}
@@ -69,6 +70,12 @@ public class Seller implements Serializable {
 	}
 	public void setRegistDate(Date registDate) {
 		this.registDate = registDate;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	

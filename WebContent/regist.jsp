@@ -18,6 +18,86 @@
 <script type="text/javascript">
 	(function(w){
 		var X = {};
+		var emailcode="";
+		X.sendCode = function(e){
+			var username = document.querySelector("input[name='username']");
+			var name = username.value+"";
+			var useremail = document.querySelector("input[name='email']");
+			var email = useremail.value+"";
+			var xhr = new XMLHttpRequest();
+			xhr.open("post","${pageContext.request.contextPath}/genEmailCode");
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState===xhr.DONE){
+					if(xhr.status==200){
+						var text = xhr.responseText ;
+						if(text!="null"){
+							emailcode = text;
+							console.log(text);
+							e.value="验证码发送成功";
+							e.disabled="disabled";
+						}else{
+							console.log(text);
+							e.value="发送失败";
+						}
+					}
+				}
+			}
+			xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
+			var data = "data="+"{'name':'"+name+"','email':'"+email+"'}";
+			xhr.send(data);
+			
+		}
+		
+		X.emailCheck = function(e){
+			var content = e.value;
+			if(content.indexOf("@")!=-1&&content.indexOf(".")!=-1&&content.indexOf(".")-content.indexOf("@")>1){
+				
+				var div = e.nextElementSibling;
+				e.style.borderColor = "#008000";
+				div.innerHTML = "<i class='fa fa-check' aria-hidden='true'></i>" ;
+				div.style.color = "#008000";
+				document.querySelector(".btn").disabled="";
+				document.querySelector(".sendCode").disabled = "";
+				
+			}else{
+				var div = e.nextElementSibling;
+				e.style.borderColor = "#ff0000";
+				div.style.color = "#ff0000";
+				div.innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>" + "邮箱格式不正确！" ;
+				document.querySelector(".btn").disabled="disabled";
+				document.querySelector(".sendCode").disabled = "disabled";
+
+			}
+		}
+		X.emailCodeCheck = function(e){
+			if(emailcode!=""){
+				emailcode = emailcode.trim();
+				var content = e.value;
+				if(content==""){
+					var div = e.nextElementSibling;
+					e.style.borderColor = "#ff0000";
+					div.style.color = "#ff0000";
+					div.innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>" + "请输入邮箱中的验证码！" ;
+					document.querySelector(".btn").disabled="disabled";
+					document.querySelector(".sendCode").disabled = "disabled";
+				}else if(emailcode==content){
+					var div = e.nextElementSibling;
+					e.style.borderColor = "#008000";
+					div.innerHTML = "<i class='fa fa-check' aria-hidden='true'></i>" ;
+					div.style.color = "#008000";
+					document.querySelector(".btn").disabled="";
+					document.querySelector(".sendCode").disabled = "";
+				}else{
+					var div = e.nextElementSibling;
+					e.style.borderColor = "#ff0000";
+					div.style.color = "#ff0000";
+					div.innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>" + "对不起，验证码不正确！请仔细检查邮箱" ;
+					document.querySelector(".btn").disabled="disabled";
+					document.querySelector(".sendCode").disabled = "disabled";
+				}
+			}
+		}
+		
 		
 		X.userCheck = function(e){
 			//第一步，创建一个XMLHttpRequest对象的实例
@@ -53,6 +133,8 @@
 			var data = "username="+e.value;
 			xhr.send(data);
 		}
+		
+		
 		
 		X.inputCheck = function(e){
 			var content = e.value;
@@ -113,7 +195,7 @@
 </script>
 <body>
 	<div class="mycontainer">
-		<form class="form-horizontal" action="<%=request.getContextPath()%>/user/regist" method="post">
+		<form id="form1" class="form-horizontal" action="<%=request.getContextPath()%>/user/regist" method="post">
 		  <div class="form-group">
 		    <label for="username" class="col-sm-2 control-label">用户名</label>
 		    <div class="col-sm-10">
@@ -125,7 +207,7 @@
 		  <div class="form-group">
 		    <label for="userpassword" class="col-sm-2 control-label">密码</label>
 		    <div class="col-sm-10">
-		      <input type="password" class="form-control pwd" name="userpassword" onblur="X.pwdCheck(this)" placeholder="请输入密码">
+		      <input type="password" class="form-control pwd" name="userpassword" onblur="" placeholder="请输入密码">
 		      <div class="prompt userpassword-prompt"></div>
 		    </div>
 		  </div>
@@ -134,6 +216,20 @@
 		    <div class="col-sm-10">
 		      <input type="password" class="form-control con" name="confirmpassword" onblur="X.pwdCheck(this)" placeholder="请确认密码">
 		      <div class="prompt confirmpassword-prompt"></div>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="email" class="col-sm-2 control-label">邮箱</label>
+		    <div class="col-sm-10">
+		      <input type="text" class="form-control con" name="email" onblur="X.emailCheck(this)" placeholder="请输入邮箱">
+		      <div class="prompt email-prompt"></div>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <div class="col-sm-offset-2 col-sm-10">
+		      <input type="text" class="form-control con" name="emailCode" onblur="X.emailCodeCheck(this)" placeholder="请输入您邮箱中的验证码">
+		      <div class="prompt emailCode-prompt"></div><br>
+		      <input onclick="X.sendCode(this)" class="sendCode" type="button" value="点出获取验证码">
 		    </div>
 		  </div>
 		  <hr>

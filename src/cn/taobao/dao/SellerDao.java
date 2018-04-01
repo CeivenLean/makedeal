@@ -41,6 +41,7 @@ public class SellerDao {
 					s.setRealName(rs.getString("real_name"));
 					s.setLevel(rs.getString("seller_level"));
 					s.setRegistDate(rs.getDate("regist_date"));
+					s.setEmail(rs.getString("email"));
 					
 					return s;
 				}
@@ -82,7 +83,7 @@ public class SellerDao {
 					s.setRealName(rs.getString("real_name"));
 					s.setLevel(rs.getString("seller_level"));
 					s.setRegistDate(rs.getDate("regist_date"));
-					
+					s.setEmail(rs.getString("email"));
 					return s;
 				}
 			} catch (SQLException e) {
@@ -108,7 +109,7 @@ public class SellerDao {
 				b.setPhone(rs.getString("seller_phone"));
 				b.setRealName(rs.getString("real_name"));
 				b.setRegistDate(rs.getDate("regist_date"));
-				
+				b.setEmail(rs.getString("email"));
 				map.put(b.getId(),b );
 			
 			}

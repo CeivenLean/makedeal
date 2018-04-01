@@ -41,6 +41,7 @@ public class BuyerDao {
 					b.setRealName(rs.getString("real_name"));
 					b.setLevel(rs.getString("buyer_level"));
 					b.setRegistDate(rs.getDate("regist_date"));
+					b.setEmail(rs.getString("email"));
 					
 					return b;
 				}
@@ -82,7 +83,7 @@ public class BuyerDao {
 				b.setPhone(rs.getString("buyer_phone"));
 				b.setRealName(rs.getString("real_name"));
 				b.setRegistDate(rs.getDate("regist_date"));
-				
+				b.setEmail(rs.getString("email"));
 				map.put(b.getId(),b );
 			
 			}

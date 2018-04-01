@@ -35,13 +35,14 @@ public class Regist extends HttpServlet {
 		String confirmpassword = request.getParameter("confirmpassword").trim();
 		String userid = request.getParameter("userid").trim();
 		String name = request.getParameter("name").trim();
+		String email = request.getParameter("email").trim();
 		String role = request.getParameter("role").trim();
 		
 		if(StringHelper.notEmpty(username)&&
 				StringHelper.notEmpty(userpassword)&&
 				StringHelper.notEmpty(confirmpassword)&&
 				StringHelper.notEmpty(userid)&&
-				StringHelper.notEmpty(name)&&
+				StringHelper.notEmpty(name)&&StringHelper.notEmpty(email)&&
 				StringHelper.notEmpty(role)) {
 			
 			if(userpassword.equals(confirmpassword)) {
@@ -51,6 +52,7 @@ public class Regist extends HttpServlet {
 					buyer.setPassword(userpassword);
 					buyer.setId(userid);
 					buyer.setRealName(name);
+					buyer.setEmail(email);
 					BuyerService bs = new BuyerService();
 					bs.regist(buyer);
 					session.setAttribute("buyer", buyer);
@@ -60,6 +62,7 @@ public class Regist extends HttpServlet {
 				if("卖家".equals(role)) {
 					Seller seller = new Seller();
 					seller.setName(username);
+					seller.setEmail(email);
 					seller.setPassword(userpassword);
 					seller.setId(userid);
 					seller.setRealName(name);
