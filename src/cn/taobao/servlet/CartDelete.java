@@ -1,24 +1,18 @@
 package cn.taobao.servlet;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import cn.taobao.entity.Buyer;
-import cn.taobao.entity.BuyerOrder;
-import cn.taobao.entity.BuyerShoppingCart;
-import cn.taobao.service.OrderService;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
 import cn.taobao.service.ShoppingCartService;
 import cn.taobao.util.StringHelper;
 
@@ -31,12 +25,10 @@ public class CartDelete extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String values = request.getParameter("cartIds");
-		System.out.println("values:"+values);
-		String[] cartIds = StringHelper.strToArray(values);
+		String[] list = values.split(",");
 		ShoppingCartService scs = new ShoppingCartService();
-		int msg = scs.deleteById(cartIds);
+		int msg = scs.deleteById(list);
 		response.getWriter().print(msg);
-		
 	}
 	
 }

@@ -57,6 +57,7 @@
 .menuTop2 span:hover {background-color:#ff4815 }
 .content {width:100%;height:454px;background-color:green;}
 .content>div {float:left;}
+.content>div div:hover{background-color:RGBA(0,0,0,0.5);}
 
 .input-group input {border:none;}
 .input-group button {border:none;}

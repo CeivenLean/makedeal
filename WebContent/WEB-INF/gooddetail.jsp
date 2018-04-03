@@ -57,6 +57,31 @@
 		w.X = X;
 	})(window);
 </script>
+<script type="text/javascript">
+function addshoppingcart(e){
+	var count = document.querySelector("#goodCount");
+	var value = count.value;
+	var xhr = new XMLHttpRequest();
+	var method = "post";
+	var url = "${pageContext.request.contextPath }/user/shoppingcart?goodId=${good.goodId }&goodCount="+value;
+	xhr.open(method,url);
+	xhr.onreadystatechange = function(){
+		if(xhr.readyState===xhr.DONE){
+			if(xhr.status==200){
+				var result = xhr.responseText;
+				if(result=="1"){
+					e.firstElementChild.innerHTML = "添加成功" ;
+				}else{
+					e.firstElementChild.innerHTML = "添加失败，请重试";
+				}
+			}
+		}
+	}
+	xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
+	xhr.send();
+	
+}
+</script>
 <body>
 
 	<div class="mynav">
@@ -113,7 +138,7 @@
 			<div  style="height:34%">
 				<p>数量<span style="margin-left:24px;">
 						<i class='mycount' onclick="increCount(this)">-</i>
-						<input type="text" value="1" maxlength="8" title="请输入购买量">
+						<input id="goodCount" type="text" value="1" maxlength="8" title="请输入购买量">
 						<i class='mycount' onclick="decreCount(this)">+</i>
 					</span>
 				</p>
@@ -144,8 +169,8 @@
 						}
 					}
 				</script>
-				<div style="margin-top:20px;cursor:pointer;float:left;width:136px;height:40px;line-height:40px;text-align:center;border-color: #F0CAB6;background-color: #FFD9BC;color: #E5511D;"><a style="text-decoration:none;inline-block;width:136px;height:40px;line-height:40px;text-align:center;border-color: #F0CAB6;background-color: #FFD9BC;color: #E5511D;">立即购买</a></div>
-				<div style="margin-top:20px;margin-left:10px;cursor:pointer;float:left;width:180px;height:40px;line-height:40px;text-align:center;color: #FFF;border-color: #F40;background: #F40;"><a style="text-decoration:none;inline-block;width:180px;height:40px;line-height:40px;text-align:center;color: #FFF;border-color: #F40;background: #F40;">加入购物车</a></div>				
+				<div onclick="" style="margin-top:20px;cursor:pointer;float:left;width:136px;height:40px;line-height:40px;text-align:center;border-color: #F0CAB6;background-color: #FFD9BC;color: #E5511D;"><a style="text-decoration:none;inline-block;width:136px;height:40px;line-height:40px;text-align:center;border-color: #F0CAB6;background-color: #FFD9BC;color: #E5511D;">立即购买</a></div>
+				<div onclick="addshoppingcart(this)" style="margin-top:20px;margin-left:10px;cursor:pointer;float:left;width:180px;height:40px;line-height:40px;text-align:center;color: #FFF;border-color: #F40;background: #F40;"><a style="text-decoration:none;inline-block;width:180px;height:40px;line-height:40px;text-align:center;color: #FFF;border-color: #F40;background: #F40;">加入购物车</a></div>				
 			</div>
 		</div>
 		<div class="seller-info">

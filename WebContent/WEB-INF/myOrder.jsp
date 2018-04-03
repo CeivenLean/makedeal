@@ -39,7 +39,6 @@
 	.good-count a:hover{text-decoration:none;}
 	.mycount {cursor:pointer;margin:0px 8px;display:inline-block; width:20px;height:20px;background-color:#dedede;text-align:center}
 	.table-title {text-align:center;}
-
 </style>
 </head>
 <script type="text/javascript">

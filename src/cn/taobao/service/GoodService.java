@@ -41,5 +41,13 @@ public class GoodService {
 	public Map listAll() {
 		return gd.listAll();
 	}
+	
+	public boolean save(Map map) {
+		return gd.save(map);
+	}
+	
+	public boolean delById(int id) {
+		return gd.delById(id);
+	}
 
 }

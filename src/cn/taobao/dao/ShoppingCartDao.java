@@ -20,9 +20,9 @@ public class ShoppingCartDao {
 			return false;
 		}
 			
-		String SQL = "INSERT INTO shopping_cart (buyer_id,good_id,good_title,good_price) VALUES (?,?,?,?)";
+		String SQL = "INSERT INTO shopping_cart (buyer_id,good_id,good_title,good_price,good_count) VALUES (?,?,?,?,?)";
 		
-		int[] i = helper.insert(SQL, sc.getBuyerId(),sc.getGoodId(),sc.getGoodTitle(),sc.getGoodPrice());
+		int[] i = helper.insert(SQL, sc.getBuyerId(),sc.getGoodId(),sc.getGoodTitle(),sc.getGoodPrice(),sc.getGoodCount());
 		
 		return (i!=null&&i.length>0)?true:false;
 		

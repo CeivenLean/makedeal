@@ -21,7 +21,7 @@
 	.mynav-left {float:left;line-height:35px;font-family:arial;}
 	.mynav-right {width:88%; margin:0px auto;background-color:cyan;}
 	.mynav .right>li{float:right;list-style:none; margin-left:30px;font-size:10px;line-height:35px;font-family:arial;}
-	.myhidden {display:none;}
+	.myhidden {display:none;position:absolute;}
 	.abc li{list-style:none;font-size:8px;margin-bottom:-6px;font-family:arial;}
 	.mynav .left{float:left;list-style:none;}
 	.mynav a {text-decoration:none; color:black;}

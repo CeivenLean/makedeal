@@ -17,7 +17,7 @@ public class GoodDao {
 	
 	public long publish(Good g) {
 		
-		String SQL = "INSERT INTO" +TABLE+ "(seller_name,good_title,good_desc,good_price,sor1,sort1,sor3) VALUES (?,?,?,?,?,?,?)";
+		String SQL = "INSERT INTO" +TABLE+ "(seller_name,good_title,good_desc,good_price,sort1,sort2,sort3) VALUES (?,?,?,?,?,?,?)";
 		
 		int[] i = helper.insert(SQL, g.getSellerName(),g.getGoodTitle(),g.getGoodDesc(),g.getGoodPrice(),g.getSort1(),g.getSort2(),g.getSort3());
 		
@@ -196,6 +196,32 @@ public Map<Integer,Good> listBySort(String sort,PageUtil pageUtil){
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public boolean save(Map map) {
+		
+		String SQL = "UPDATE goods_info SET good_title=?,good_desc=?,good_price=? WHERE good_id=?";
+		
+		int i = helper.update(SQL, map.get("goodTitle").toString(),map.get("goodDesc").toString(),Double.parseDouble(map.get("goodPrice").toString()),Integer.parseInt(map.get("goodId").toString()));
+		
+		if(i!=0) {
+			return true;
+		}else {
+			return false;
+		}
 		
 	}
+	
+	public boolean delById(int id) {
+		String SQL = "DELETE FROM goods_info WHERE good_id=?";
+		int i = helper.update(SQL, id);
+		if(i!=0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	
+	
 }

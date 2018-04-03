@@ -26,7 +26,7 @@
 	.mynav-left {float:left;line-height:35px;font-family:arial;}
 	.mynav-right {width:88%; margin:0px auto;background-color:cyan;}
 	.mynav .right>li{float:right;list-style:none; margin-left:30px;font-size:10px;line-height:35px;font-family:arial;}
-	.myhidden {display:none;}
+	.myhidden {display:none;position:absolute;}
 	.abc li{list-style:none;font-size:8px;margin-bottom:-6px;font-family:arial;}
 	.mynav .left{float:left;list-style:none;}
 	.mynav a {text-decoration:none; color:black;}
@@ -115,22 +115,29 @@
 			var xhr = new XMLHttpRequest();
 			xhr.open("post","${pageContext.request.contextPath}/user/cartdelete");
 			var cartIds="";
+			var selects = document.querySelectorAll(".mycheckbox");
+			
+			for(var i=0;i<selects.length;i++){
+				if(selects[i].checked==true){
+					cartIds+=(selects[i].value+",");
+				}
+			}
+			cartIds = cartIds.substring(0,cartIds.length-1);
+			
 			xhr.onreadystatechange = function(){
 				if(xhr.readyState===xhr.DONE){
 					var msg = xhr.responseText;
-					
-						var selects = document.querySelectorAll(".mycheckbox");
-						
+					if(msg!==null){
 						for(var i=0;i<selects.length;i++){
 							if(selects[i].checked==true){
-								cartIds+=(selects[i].value+",");
 								var tr = selects[i].parentNode.parentNode;
 								var table = tr.parentNode;
 								table.removeChild(tr);
 							}
 						}
-						cartIds = cartIds.substring(0,cartIds.length-1);
-						console.log(cartIds);
+					}else{
+						window.alert("删除时发生错误，请重试！");
+					}
 					
 				}
 			}

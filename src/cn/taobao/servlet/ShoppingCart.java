@@ -30,6 +30,7 @@ public class ShoppingCart extends HttpServlet {
 //		Good g = (Good)og;
 		String goodId = request.getParameter("goodId");
 		Integer key = Integer.parseInt(goodId);
+		String goodCount = request.getParameter("goodCount");
 		
 		GoodService gd = new GoodService();
 		Good g = gd.select(key);
@@ -41,6 +42,11 @@ public class ShoppingCart extends HttpServlet {
 		sc.setGoodId(g.getGoodId());
 		sc.setGoodTitle(g.getGoodTitle());
 		sc.setGoodPrice(g.getGoodPrice());
+		if(goodCount!=null&&goodCount.length()>0) {
+			sc.setGoodCount(Integer.parseInt(goodCount));
+		}else {
+			sc.setGoodCount(1);
+		}
 		
 		ShoppingCartService scs = new ShoppingCartService();
 		

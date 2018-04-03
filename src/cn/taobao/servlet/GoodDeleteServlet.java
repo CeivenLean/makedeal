@@ -15,28 +15,22 @@ import com.alibaba.fastjson.JSONObject;
 import cn.taobao.service.GoodService;
 
 
-@WebServlet("/user/good/modifysave")
-public class GoodModifySaveServlet extends HttpServlet {
+@WebServlet("/user/good/gooddel")
+public class GoodDeleteServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1876100923138122511L;
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String info = request.getParameter("data");
-		System.out.println(request.getParameter("data"));
-		Map map = (Map)JSON.parse(info);
-		/*System.out.println(maps);
-		for (Object map : maps.entrySet()){  
-            System.out.println(((Map.Entry)map).getKey()+"     " + ((Map.Entry)map).getValue());  
-        }*/
+		int goodId = Integer.parseInt(request.getParameter("goodId"));
 		
 		GoodService gs = new GoodService();
-		boolean b= gs.save(map);
+		boolean b= gs.delById(goodId);
 		response.setContentType( "text/plain;charset=UTF-8" );
 		if(b) {
-			response.getWriter().println("true");
+			response.getWriter().print("true");
 		}else {
-			response.getWriter().println("false");
+			response.getWriter().print("false");
 		}
 		
 	}
