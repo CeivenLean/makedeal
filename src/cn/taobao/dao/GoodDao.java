@@ -2,6 +2,8 @@ package cn.taobao.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,10 +18,11 @@ public class GoodDao {
 	String TABLE = " goods_info ";
 	
 	public long publish(Good g) {
+		Date date = new Date();  
+		Timestamp timeStamp = new Timestamp(date.getTime());
+		String SQL = "INSERT INTO" +TABLE+ "(seller_name,good_title,good_desc,good_price,publish_date,sort1,sort2,sort3) VALUES (?,?,?,?,?,?,?,?)";
 		
-		String SQL = "INSERT INTO" +TABLE+ "(seller_name,good_title,good_desc,good_price,sort1,sort2,sort3) VALUES (?,?,?,?,?,?,?)";
-		
-		int[] i = helper.insert(SQL, g.getSellerName(),g.getGoodTitle(),g.getGoodDesc(),g.getGoodPrice(),g.getSort1(),g.getSort2(),g.getSort3());
+		int[] i = helper.insert(SQL, g.getSellerName(),g.getGoodTitle(),g.getGoodDesc(),g.getGoodPrice(),timeStamp,g.getSort1(),g.getSort2(),g.getSort3());
 		
 		return i[0];
 	}
@@ -84,6 +87,7 @@ public class GoodDao {
 				g.setGoodTitle(goodTitle);
 				g.setGoodDesc(goodDesc);
 				g.setGoodPrice(goodPrice);
+				g.setPublishDate(rs.getTimestamp("publish_date"));
 				g.setSort1(sort1);
 				g.setSort2(sort2);
 				g.setSort3(sort3);
@@ -133,7 +137,7 @@ public Map<Integer,Good> listBySort(String sort,PageUtil pageUtil){
 				g.setSort1(sort1);
 				g.setSort2(sort2);
 				g.setSort3(sort3);
-				
+				g.setPublishDate(rs.getTimestamp("publish_date"));
 				map.put(goodId, g);
 			
 			}
@@ -162,6 +166,7 @@ public Map<Integer,Good> listBySort(String sort,PageUtil pageUtil){
 				g.setSort1(rs.getString("sort1"));
 				g.setSort2(rs.getString("sort2"));
 				g.setSort3(rs.getString("sort3"));
+				g.setPublishDate(rs.getTimestamp("publish_date"));
 				return g;
 			}
 			
@@ -189,6 +194,7 @@ public Map<Integer,Good> listBySort(String sort,PageUtil pageUtil){
 				g.setSort1(rs.getString("sort1"));
 				g.setSort2(rs.getString("sort2"));
 				g.setSort3(rs.getString("sort3"));
+				g.setPublishDate(rs.getTimestamp("publish_date"));
 				map.put(g.getGoodId(), g);
 			}
 			return map;

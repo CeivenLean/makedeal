@@ -1,12 +1,13 @@
 package cn.taobao.dao;
 
+import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
 import cn.taobao.entity.Buyer;
-import cn.taobao.entity.Good;
 import cn.taobao.util.JdbcHelper;
 
 public class BuyerDao {
@@ -17,10 +18,11 @@ public class BuyerDao {
 	public boolean regist(Buyer b) {
 		String SQL = "INSERT INTO buyer_info (buyer_name,password,buyer_id,real_name,buyer_level,regist_date) VALUES (?,?,?,?,?,?)";
 		
-		java.util.Date date = b.getRegistDate();
-		java.sql.Date registDate = new java.sql.Date(date.getTime());
-		
-		int[] i = helper.insert(SQL, b.getName(),b.getPassword(),b.getId(),b.getRealName(),b.getLevel(),registDate);
+		/*java.util.Date date = b.getRegistDate();
+		Timestamp registDate = new Timestamp(date.getTime());*/
+		Date date = new Date();  
+		Timestamp timeStamp = new Timestamp(date.getTime());
+		int[] i = helper.insert(SQL, b.getName(),b.getPassword(),b.getId(),b.getRealName(),b.getLevel(),timeStamp);
 		
 		return (i!=null&&i.length>0)?true:false;
 	}
@@ -40,7 +42,7 @@ public class BuyerDao {
 					b.setId(rs.getString("buyer_id"));
 					b.setRealName(rs.getString("real_name"));
 					b.setLevel(rs.getString("buyer_level"));
-					b.setRegistDate(rs.getDate("regist_date"));
+					b.setRegistDate(rs.getTimestamp("regist_date"));
 					b.setEmail(rs.getString("email"));
 					
 					return b;
@@ -82,7 +84,7 @@ public class BuyerDao {
 				b.setLevel(rs.getString("buyer_level"));
 				b.setPhone(rs.getString("buyer_phone"));
 				b.setRealName(rs.getString("real_name"));
-				b.setRegistDate(rs.getDate("regist_date"));
+				b.setRegistDate(rs.getTimestamp("regist_date"));
 				b.setEmail(rs.getString("email"));
 				map.put(b.getId(),b );
 			

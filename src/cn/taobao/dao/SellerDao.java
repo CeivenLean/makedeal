@@ -17,10 +17,7 @@ public class SellerDao {
 	public boolean regist(Seller s) {
 		String SQL = "INSERT INTO seller_info (seller_name,password,seller_id,real_name,seller_level,regist_date) VALUES (?,?,?,?,?,?)";
 		
-		java.util.Date date = s.getRegistDate();
-		java.sql.Date registDate = new java.sql.Date(date.getTime());
-		
-		int[] i = helper.insert(SQL, s.getName(),s.getPassword(),s.getId(),s.getRealName(),s.getLevel(),registDate);
+		int[] i = helper.insert(SQL, s.getName(),s.getPassword(),s.getId(),s.getRealName(),s.getLevel(),s.getRegistDate());
 		
 		return (i!=null&&i.length>0)?true:false;
 	}
@@ -40,7 +37,7 @@ public class SellerDao {
 					s.setId(rs.getString("seller_id"));
 					s.setRealName(rs.getString("real_name"));
 					s.setLevel(rs.getString("seller_level"));
-					s.setRegistDate(rs.getDate("regist_date"));
+					s.setRegistDate(rs.getTimestamp("regist_date"));
 					s.setEmail(rs.getString("email"));
 					
 					return s;
@@ -82,7 +79,7 @@ public class SellerDao {
 					s.setId(rs.getString("seller_id"));
 					s.setRealName(rs.getString("real_name"));
 					s.setLevel(rs.getString("seller_level"));
-					s.setRegistDate(rs.getDate("regist_date"));
+					s.setRegistDate(rs.getTimestamp("regist_date"));
 					s.setEmail(rs.getString("email"));
 					return s;
 				}
@@ -108,7 +105,7 @@ public class SellerDao {
 				b.setLevel(rs.getString("seller_level"));
 				b.setPhone(rs.getString("seller_phone"));
 				b.setRealName(rs.getString("real_name"));
-				b.setRegistDate(rs.getDate("regist_date"));
+				b.setRegistDate(rs.getTimestamp("regist_date"));
 				b.setEmail(rs.getString("email"));
 				map.put(b.getId(),b );
 			

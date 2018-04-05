@@ -1,6 +1,7 @@
 package cn.taobao.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ public class BuyerOrder implements Serializable {
 	
 	private String serialNumber;
 	private double transactionAmount;
-	private Date orderDate;
+	private Timestamp orderDate;
 	private String buyerId;
 	private Map<Integer,Integer> goodsInfo;
 	public String getSerialNumber() {
@@ -25,10 +26,11 @@ public class BuyerOrder implements Serializable {
 	public void setTransactionAmount(double transactionAmount) {
 		this.transactionAmount = transactionAmount;
 	}
-	public Date getOrderDate() {
+	
+	public Timestamp getOrderDate() {
 		return orderDate;
 	}
-	public void setOrderDate(Date orderDate) {
+	public void setOrderDate(Timestamp orderDate) {
 		this.orderDate = orderDate;
 	}
 	public String getBuyerId() {

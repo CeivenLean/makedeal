@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@ page import="java.sql.*" %>
 <%@ page import="java.lang.*" %>
 <%@ page import="cn.taobao.entity.*" %>
 <%@ page import="cn.taobao.servlet.*" %>
@@ -32,8 +33,9 @@
 	.mynav a {text-decoration:none; color:black;}
 	.mynav span:hover {display:block; background-color:#dedede;}
 	.mynav {width:100%;height:35px; background-color:#f5f5f5;margin-bottom:20px;border:0;margin-top:-10px;}
+	
 	.table {margin:20px auto;}
-	.good_container {width:50%;margin:0px auto;}
+	.good_container {width:70%;margin:0px auto;}
 	.good-count {text-align:center;}
 	.myselect {text-align:center;}
 	.good-count a:hover{text-decoration:none;}
@@ -177,7 +179,7 @@
 	
 	<div class="good_container">
 	<h3 style="text-align:center">我的购物车</h3>
-	<form action="${pageContext.request.contextPath }/user/order" method="post">
+	<form action="${pageContext.request.contextPath }/user/orderFromCart" method="post">
 	<table class="table table-bordered table-striped">
 	<tr class="table-title">
 	<td>图图</td>
@@ -193,7 +195,7 @@
 		for(Integer key:set) {
 			BuyerShoppingCart sc = map.get(key);
 			session.setAttribute("BuyerShoppingCart", sc);
-			out.print("<tr class='table-title'>");
+			out.print("<tr class='table-title'><a href='"+request.getContextPath()+"/good/detail?id="+sc.getGoodId()+"'>");
 			out.print("<td>");
 			out.print("<img src='"+request.getContextPath()+"/images/goods/"+sc.getGoodId()+".jpg' width='25px' height='42px'>");
 			out.print("</td>");
@@ -211,7 +213,7 @@
 			out.print("<td>");
 			out.print("<input onchange='X.totalPrice()' name='goodSelect' class='mycheckbox'  type='checkbox' value='"+sc.getCartId()+"'>");
 			out.print("</td>");
-			out.print("</tr>");
+			out.print("</a></tr>");
 		}
 		out.print("</table>");
 		out.print("<a class='btn btn-warning col-lg-1 col-lg-offset-8' href='javascript:void(0)' onclick='X.cartdelete(this)'>删除</a>");

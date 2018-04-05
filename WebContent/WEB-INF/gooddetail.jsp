@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -81,6 +82,10 @@ function addshoppingcart(e){
 	xhr.send();
 	
 }
+
+function buyThisOne(){
+	document.querySelector("#form2").submit();
+}
 </script>
 <body>
 
@@ -123,6 +128,9 @@ function addshoppingcart(e){
 	
 	<p style="margin-left:6%;margin-top:60px;">${good.sort1 }&nbsp;>>&nbsp;${good.sort2 }&nbsp;>>&nbsp;${good.sort3 }</p>
 	<div class="good-container">
+		<form id="form2" action="${pageContext.request.contextPath }/user/orderFromDetail" method="post">
+		<input type="hidden" name="goodId" value="${good.goodId }">
+		
 		<div class="good-pic">
 			<img alt="" src="${pageContext.request.contextPath }/images/goods/${good.goodId }.jpg" width="100%" height="100%">
 		</div>
@@ -130,7 +138,7 @@ function addshoppingcart(e){
 			<div style="height:66%">
 			<h4>${good.goodTitle }</h4><hr>
 			
-			<h6>${good.goodDesc }</h6><hr>
+			<h5>${good.goodDesc }</h5><h6>${good.publishDate }</h6><hr>
 			
 			<p>价格<span style="margin-left:24px;font-size:24px;color:#f40;font-family:verdana,arial;font-weight:700">&yen;${good.goodPrice }</span></p><hr>
 			</div>
@@ -138,7 +146,7 @@ function addshoppingcart(e){
 			<div  style="height:34%">
 				<p>数量<span style="margin-left:24px;">
 						<i class='mycount' onclick="increCount(this)">-</i>
-						<input id="goodCount" type="text" value="1" maxlength="8" title="请输入购买量">
+						<input name="goodCount" id="goodCount" type="text" value="1" maxlength="8" title="请输入购买量">
 						<i class='mycount' onclick="decreCount(this)">+</i>
 					</span>
 				</p>
@@ -169,7 +177,7 @@ function addshoppingcart(e){
 						}
 					}
 				</script>
-				<div onclick="" style="margin-top:20px;cursor:pointer;float:left;width:136px;height:40px;line-height:40px;text-align:center;border-color: #F0CAB6;background-color: #FFD9BC;color: #E5511D;"><a style="text-decoration:none;inline-block;width:136px;height:40px;line-height:40px;text-align:center;border-color: #F0CAB6;background-color: #FFD9BC;color: #E5511D;">立即购买</a></div>
+				<div onclick="buyThisOne()"  style="margin-top:20px;cursor:pointer;float:left;width:136px;height:40px;line-height:40px;text-align:center;border-color: #F0CAB6;background-color: #FFD9BC;color: #E5511D;"><a style="text-decoration:none;inline-block;width:136px;height:40px;line-height:40px;text-align:center;border-color: #F0CAB6;background-color: #FFD9BC;color: #E5511D;">立即购买</a></div>
 				<div onclick="addshoppingcart(this)" style="margin-top:20px;margin-left:10px;cursor:pointer;float:left;width:180px;height:40px;line-height:40px;text-align:center;color: #FFF;border-color: #F40;background: #F40;"><a style="text-decoration:none;inline-block;width:180px;height:40px;line-height:40px;text-align:center;color: #FFF;border-color: #F40;background: #F40;">加入购物车</a></div>				
 			</div>
 		</div>
@@ -181,6 +189,7 @@ function addshoppingcart(e){
 			<p>${seller.name }</p>
 			<p>注册日期：${seller.registDate }</p>
 		</div>
+		</form>
 	</div>
 
 </body>

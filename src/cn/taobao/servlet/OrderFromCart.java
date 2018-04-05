@@ -21,8 +21,8 @@ import cn.taobao.entity.BuyerShoppingCart;
 import cn.taobao.service.OrderService;
 import cn.taobao.service.ShoppingCartService;
 
-@WebServlet("/user/order")
-public class Order extends HttpServlet {
+@WebServlet("/user/orderFromCart")
+public class OrderFromCart extends HttpServlet {
 
 	private static final long serialVersionUID = 6168630777297454140L;
 

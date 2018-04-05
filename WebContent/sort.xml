@@ -1,10 +1,58 @@
-<?xml version="1.0"?>  
-  
-<note>  
-<to>George</to>  
-<from>John</from>  
-<heading>Reminder</heading>  
-<body>Don't forget the meeting!</body>  
-<lastname>Simth</lastname>  
-  
-</note>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root>
+    <province name="1">
+        <city name="11">
+            <area name="111"></area>
+            <area name="112"></area>
+            <area name="113"></area>
+        </city>
+        <city name="12">
+            <area name="121"></area>
+            <area name="122"></area>
+            <area name="123"></area>
+        </city>
+        <city name="13">
+            <area name="131"></area>
+            <area name="132"></area>
+            <area name="133"></area>
+        </city>
+    </province>
+
+    <province name="2">
+        <city name="21">
+            <area name="211"></area>
+            <area name="212"></area>
+            <area name="213"></area>
+        </city>
+        <city name="22">
+            <area name="221"></area>
+            <area name="222"></area>
+            <area name="223"></area>
+        </city>
+        <city name="23">
+            <area name="231"></area>
+            <area name="232"></area>
+            <area name="233"></area>
+        </city>
+    </province>
+
+    <province name="3">
+        <city name="31">
+            <area name="311"></area>
+            <area name="312"></area>
+            <area name="313"></area>
+        </city>
+        <city name="32">
+            <area name="321"></area>
+            <area name="322"></area>
+            <area name="323"></area>
+        </city>
+        <city name="33">
+            <area name="331"></area>
+            <area name="332"></area>
+            <area name="333"></area>
+        </city>
+    </province>
+
+</root>

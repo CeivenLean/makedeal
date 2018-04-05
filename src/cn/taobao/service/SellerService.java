@@ -1,5 +1,6 @@
 package cn.taobao.service;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ public class SellerService {
 	public boolean regist(Seller s) {
 		if( s!=null ) {
 			s.setLevel("青铜");
-			s.setRegistDate(new Date());
+			s.setRegistDate(new Timestamp(new Date().getTime()));
 			return sd.regist(s);
 		}
 		return false;

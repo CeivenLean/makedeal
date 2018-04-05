@@ -10,9 +10,11 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.css">
 <style type="text/css">
-	.mycontainer{margin:80px auto;width:45%;padding:40px 20px;}
+	body {color:white;background: url("images/login-bg.jpg") fixed ;}
+	.mycontainer{margin:0 auto;width:40%;padding:10px 10px;}
+	input.form-control{background-color:rgba(255,255,255,0.3); }  
 	.btn {margin-top:15px;}
-	.prompt {padding-left:4px;height:6px;font-size:12px;}
+	.prompt {padding-left:4px;height:4px;font-size:12px;}
 </style>
 </head>
 <script type="text/javascript">
@@ -24,6 +26,10 @@
 			var name = username.value+"";
 			var useremail = document.querySelector("input[name='email']");
 			var email = useremail.value+"";
+			if(""==email){
+				alert("请先输入邮箱！");
+				return ;
+			}
 			var xhr = new XMLHttpRequest();
 			xhr.open("post","${pageContext.request.contextPath}/genEmailCode");
 			xhr.onreadystatechange = function(){
@@ -32,11 +38,9 @@
 						var text = xhr.responseText ;
 						if(text!="null"){
 							emailcode = text;
-							console.log(text);
 							e.value="验证码发送成功";
 							e.disabled="disabled";
 						}else{
-							console.log(text);
 							e.value="发送失败";
 						}
 					}
@@ -160,13 +164,14 @@
 		X.pwdCheck = function(e){
 			var pwd = document.querySelector(".pwd");
 			var con = document.querySelector(".con");
-			if(e.value.trim().length==0){
-				var div = e.nextElementSibling;
-				e.style.borderColor = "#ff0000";
-				div.style.color = "#ff0000";
-				div.innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>" + "输入不能为空！" ;
-				
-				document.querySelector(".btn").disabled="disabled";
+			if(pwd.value.trim().length==0||con.value.trim().length==0){
+				if(e.value.trim().length==0){
+					var div = e.nextElementSibling;
+					e.style.borderColor = "#ff0000";
+					div.style.color = "#ff0000";
+					div.innerHTML = "<i class='fa fa-exclamation-triangle' aria-hidden='true'></i>" + "输入不能为空！" ;
+					document.querySelector(".btn").disabled="disabled";
+				}
 			}else{
 				if(pwd.value.trim()!=con.value.trim()){
 					pwd.style.borderColor = "#ff0000";
@@ -194,8 +199,10 @@
 	})(window);
 </script>
 <body>
+<div style="width:100%; height:100%; background:rgba(4, 40, 68, 0.1);">
 	<div class="mycontainer">
 		<form id="form1" class="form-horizontal" action="<%=request.getContextPath()%>/user/regist" method="post">
+		<h3 style="text-align:center;">欢迎注册</h3>
 		  <div class="form-group">
 		    <label for="username" class="col-sm-2 control-label">用户名</label>
 		    <div class="col-sm-10">
@@ -207,7 +214,7 @@
 		  <div class="form-group">
 		    <label for="userpassword" class="col-sm-2 control-label">密码</label>
 		    <div class="col-sm-10">
-		      <input type="password" class="form-control pwd" name="userpassword" onblur="" placeholder="请输入密码">
+		      <input type="password" class="form-control pwd" name="userpassword" onblur="X.pwdCheck(this)" placeholder="请输入密码">
 		      <div class="prompt userpassword-prompt"></div>
 		    </div>
 		  </div>
@@ -266,7 +273,13 @@
 		      <button type="submit" class="btn btn-primary btn-lg btn-block">注册</button>
 		    </div>
 		  </div>
+		  <div class="form-group">
+		    <div class="col-sm-offset-8 col-sm-4">
+		      <a href="${pageContext.request.contextPath }/login.jsp">已有账号？点我登录</a>
+		    </div>
+		  </div>
 		</form>
 	</div>
+</div>
 </body>
 </html>

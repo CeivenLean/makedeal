@@ -1,6 +1,7 @@
 package cn.taobao.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Buyer implements Serializable {
@@ -15,7 +16,7 @@ public class Buyer implements Serializable {
 	private String realName;
 	private String id;
 	private String level;
-	private Date registDate;
+	private Timestamp registDate;
 	private String email;
 	
 	public String getName() {
@@ -66,10 +67,13 @@ public class Buyer implements Serializable {
 	public void setLevel(String level) {
 		this.level = level;
 	}
-	public Date getRegistDate() {
+	
+	
+	
+	public Timestamp getRegistDate() {
 		return registDate;
 	}
-	public void setRegistDate(Date registDate) {
+	public void setRegistDate(Timestamp registDate) {
 		this.registDate = registDate;
 	}
 	public String getEmail() {

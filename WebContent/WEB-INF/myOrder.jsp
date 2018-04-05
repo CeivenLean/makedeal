@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@ page import="java.sql.*" %>
 <%@ page import="java.lang.*" %>
 <%@ page import="cn.taobao.entity.*" %>
 <%@ page import="cn.taobao.servlet.*" %>
@@ -129,7 +130,7 @@
 	</div>
 	
 	<div class="good_container">
-	<h3 style="text-align:center">我的订单</h3>
+	<h3 style="text-align:center">我的订单</h3><hr>
 	<div class="container-fluid">
 	<form action="${pageContext.request.contextPath }/user/order" method="post">
 	
@@ -150,25 +151,29 @@
 			out.print(bo.getOrderDate());
 			out.print("</div>");
 			
-			out.print("<div class='col-lg-4'>订单金额:  ");
-			out.print("<span style='color:#ff0000;font-size:24px'>"+bo.getTransactionAmount()+"</span>");
+			out.print("<div class='col-lg-4'>订单总金额:  ");
+			out.print("<span style='height:34px;line-height:34px;color:#ff0000;font-size:24px'>&yen;"+bo.getTransactionAmount()+"</span>");
 			out.print("</div>");
 			
 			
 			GoodService gd = new GoodService();
 			Map<Integer, Integer> m = bo.getGoodsInfo();
 			for(Map.Entry<Integer, Integer> entry : m.entrySet()) {
-				out.print("<div class='row'>");
 				Integer aaa = Integer.valueOf(entry.getKey());
 				Good g = gd.select(aaa);
+				out.print("<div class='row'><a href='"+request.getContextPath()+"/good/detail?id="+g.getGoodId()+"'>");
 				out.print("<div class='col-lg-1'>");
 				out.print("<img src='"+request.getContextPath()+"/images/goods/"+g.getGoodId()+".jpg' height='60px'>");
 				out.print("</div>");
 				out.print("<div class='col-lg-3'>");
-				out.print(g.getGoodTitle());
+				out.print(g.getGoodTitle().length()<20?g.getGoodTitle():g.getGoodTitle().substring(0,20));
 				out.print("</div>");
 				out.print("<div class='col-lg-6'>");
-				out.print(g.getGoodDesc());
+				if(g.getGoodDesc().length()<50){
+					out.print(g.getGoodDesc());
+				}else{
+					out.print(g.getGoodDesc().substring(0,50));	
+				}
 				out.print("</div>");
 				out.print("<div class='col-lg-1'>");
 				out.print(g.getGoodPrice());
@@ -176,7 +181,7 @@
 				out.print("<div class='col-lg-1'>x ");
 				out.print(entry.getValue());
 				out.print("</div>");
-				out.print("</div>");
+				out.print("</a></div>");
 			}
 						
 			out.print("</div>");

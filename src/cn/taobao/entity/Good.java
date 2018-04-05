@@ -1,6 +1,7 @@
 package cn.taobao.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 public class Good implements Serializable {
 
@@ -11,6 +12,8 @@ public class Good implements Serializable {
 	private String goodTitle;
 	private String goodDesc;
 	private double goodPrice;
+	
+	private Timestamp publishDate;
 	
 	private String sort1;
 	private String sort2;
@@ -65,6 +68,12 @@ public class Good implements Serializable {
 	}
 	public void setSort3(String sort3) {
 		this.sort3 = sort3;
+	}
+	public Timestamp getPublishDate() {
+		return publishDate;
+	}
+	public void setPublishDate(Timestamp publishDate) {
+		this.publishDate = publishDate;
 	}
 	
 

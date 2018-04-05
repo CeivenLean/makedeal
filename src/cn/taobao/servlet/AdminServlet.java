@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import cn.taobao.service.BuyerService;
 import cn.taobao.service.GoodService;
+import cn.taobao.service.OrderService;
 import cn.taobao.service.SellerService;
 
 @WebServlet("/admin")
@@ -28,15 +29,18 @@ public class AdminServlet extends HttpServlet {
 		BuyerService bs = new BuyerService();
 		SellerService ss = new SellerService();
 		GoodService gs = new GoodService();
+		OrderService os = new OrderService();
 		
 		Map buyerMap = bs.listAll();
 		Map sellerMap = ss.listAll();
 		Map goodMap = gs.listAll();
+		Map orderMap = os.listAll();
 		
 		HttpSession session = request.getSession();
 		request.setAttribute("buyerMap", buyerMap);
 		request.setAttribute("sellerMap", sellerMap);
 		request.setAttribute("goodMap", goodMap);
+		request.setAttribute("orderMap", orderMap);
 		
 		
 		

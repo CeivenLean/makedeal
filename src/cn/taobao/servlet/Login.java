@@ -30,12 +30,26 @@ public class Login extends HttpServlet {
 		HttpSession session = request.getSession();
 		String name = request.getParameter("username");
 		String password = request.getParameter("password");
-		if(StringHelper.notEmpty(name)&&StringHelper.notEmpty(password)) {
+		String imgCode = request.getParameter("imgCode").toUpperCase();
+		
+		Object randomCode = session.getAttribute("RANDOMVALIDATECODEKEY");
+		
+		String code = (String)randomCode;
+		code = code.toUpperCase();
+		if(StringHelper.notEmpty(name)&&StringHelper.notEmpty(password)&&StringHelper.notEmpty(imgCode)) {
+			
+			if(!imgCode.equals(code)) {
+				session.setAttribute("imgcodeError", "验证码不正确！");
+				response.sendRedirect(request.getHeader("referer"));
+				return ;
+			}
+			
 			BuyerService bs = new BuyerService();
 			Buyer buyer = bs.search(name,password);
 			
 			SellerService ss = new SellerService();
 			Seller seller = ss.search(name,password);
+			
 			if(buyer==null&&seller==null) {
 				session.setAttribute("usernameError", "用户名或密码不正确！");
 				session.setAttribute("passwordError", "用户名或密码不正确！");
@@ -59,6 +73,9 @@ public class Login extends HttpServlet {
 			}
 			if(StringHelper.isEmpty(password)) {
 				session.setAttribute("passwordError", "密码不能为空！");
+			}
+			if(StringHelper.isEmpty(password)) {
+				session.setAttribute("imgcodeError", "验证码不能为空！");
 			}
 			response.sendRedirect(request.getHeader("referer"));
 		}

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@ page import="java.sql.*" %>
 <%@ page import="java.lang.*" %>
 <%@ page import="cn.taobao.entity.*" %>
 <%@ page import="cn.taobao.service.*" %>
@@ -39,6 +40,7 @@ td a {cursor:pointer;}
 		document.querySelector(".good-content1").style.display="none";
 		document.querySelector(".good-content2").style.display="none";
 		document.querySelector(".good-content3").style.display="none";
+		document.querySelector(".order-content").style.display="none";
 		document.querySelector(".buyer-content").style.display="block";
 	}
 	function sellerShow(){
@@ -46,6 +48,7 @@ td a {cursor:pointer;}
 		document.querySelector(".good-content1").style.display="none";
 		document.querySelector(".good-content2").style.display="none";
 		document.querySelector(".good-content3").style.display="none";
+		document.querySelector(".order-content").style.display="none";
 		document.querySelector(".seller-content").style.display="block";
 	}
 	function good1Show(){
@@ -53,6 +56,7 @@ td a {cursor:pointer;}
 		document.querySelector(".seller-content").style.display="none";
 		document.querySelector(".good-content2").style.display="none";
 		document.querySelector(".good-content3").style.display="none";
+		document.querySelector(".order-content").style.display="none";
 		document.querySelector(".good-content1").style.display="block";
 		
 	}
@@ -61,6 +65,7 @@ td a {cursor:pointer;}
 		document.querySelector(".seller-content").style.display="none";
 		document.querySelector(".good-content1").style.display="none";
 		document.querySelector(".good-content3").style.display="none";
+		document.querySelector(".order-content").style.display="none";
 		document.querySelector(".good-content2").style.display="block";
 		
 	}
@@ -69,8 +74,17 @@ td a {cursor:pointer;}
 		document.querySelector(".seller-content").style.display="none";
 		document.querySelector(".good-content1").style.display="none";
 		document.querySelector(".good-content2").style.display="none";
+		document.querySelector(".order-content").style.display="none";
 		document.querySelector(".good-content3").style.display="block";
 		
+	}
+	function orderShow(){
+		document.querySelector(".buyer-content").style.display="none";
+		document.querySelector(".seller-content").style.display="none";
+		document.querySelector(".good-content1").style.display="none";
+		document.querySelector(".good-content2").style.display="none";
+		document.querySelector(".good-content3").style.display="none";
+		document.querySelector(".order-content").style.display="block";
 	}
 </script>
 <body>
@@ -101,120 +115,13 @@ td a {cursor:pointer;}
 		  </li>
 		</ul>
 	  </li>
-	  <li>
+	  <li onclick="orderShow()">
 		<a href="javascript:void(0)">
 		  <i class="fa fa-th"></i> <span>订单日志</span>
 		 <!--  <small class="label pull-right label-info">new</small> -->
 		</a>
 	  </li>
-	  <li class="treeview">
-		<a href="javascript:void(0)">
-		  <i class="fa fa-pie-chart"></i>
-		  <span>Charts</span>
-		  <i class="fa fa-angle-down pull-right"></i>
-		</a>
-		<ul class="treeview-menu">
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Morris</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Flot</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-		</ul>
-	  </li>
-	  <li class="treeview">
-		<a href="javascript:void(0)">
-		  <i class="fa fa-laptop"></i>
-		  <span>UI Elements</span>
-		  <i class="fa fa-angle-down pull-right"></i>
-		</a>
-		<ul class="treeview-menu">
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> General</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Icons</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Buttons</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Sliders</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Timeline</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Modals</a></li>
-		</ul>
-	  </li>
-	  <li class="treeview">
-		<a href="javascript:void(0)">
-		  <i class="fa fa-edit"></i> <span>Forms</span>
-		  <i class="fa fa-angle-down pull-right"></i>
-		</a>
-		<ul class="treeview-menu">
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> General Elements</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Editors</a></li>
-		</ul>
-	  </li>
-	  <li class="treeview">
-		<a href="javascript:void(0)">
-		  <i class="fa fa-table"></i> <span>Tables</span>
-		  <i class="fa fa-angle-down pull-right"></i>
-		</a>
-		<ul class="treeview-menu">
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Simple tables</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Data tables</a></li>
-		</ul>
-	  </li>
-	  <li>
-		<a href="javascript:void(0)">
-		  <i class="fa fa-calendar"></i> <span>Calendar</span>
-		  <small class="label pull-right label-danger">3</small>
-		</a>
-	  </li>
-	  <li>
-		<a href="javascript:void(0)">
-		  <i class="fa fa-envelope"></i> <span>Mailbox</span>
-		  <small class="label pull-right label-warning">12</small>
-		</a>
-	  </li>
-	  <li class="treeview">
-		<a href="javascript:void(0)">
-		  <i class="fa fa-folder"></i> <span>Examples</span>
-		  <i class="fa fa-angle-down pull-right"></i>
-		</a>
-		<ul class="treeview-menu">
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Invoice</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Profile</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Login</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Register</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> 404 Error</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> 500 Error</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Pace Page</a></li>
-		</ul>
-	  </li>
-	  <li class="treeview">
-		<a href="javascript:void(0)">
-		  <i class="fa fa-share"></i> <span>Multilevel</span>
-		  <i class="fa fa-angle-down pull-right"></i>
-		</a>
-		<ul class="treeview-menu">
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Level One</a></li>
-		  <li>
-			<a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Level One <i class="fa fa-angle-down pull-right"></i></a>
-			<ul class="treeview-menu">
-			  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Level Two</a></li>
-			  <li>
-				<a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Level Two <i class="fa fa-angle-down pull-right"></i></a>
-				<ul class="treeview-menu">
-				  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Level Three</a></li>
-				  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Level Three</a></li>
-				</ul>
-			  </li>
-			</ul>
-		  </li>
-		  <li><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> Level One</a></li>
-		</ul>
-	  </li>
-	 <!--  
-	  <li><a href="javascript:void(0)"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
-	  <li class="header">LABELS</li>
-	  <li><a href="javascript:void(0)"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-	  <li><a href="javascript:void(0)"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-	  <li><a href="javascript:void(0)"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
-	  -->
+	 
 	</ul>
   </section>
  </aside>
@@ -239,7 +146,7 @@ $.sidebarMenu($('.sidebar-menu'))
 						var value = input.value;
 						if(i<7){tds[i].innerHTML = value;}
 						/* else if(i=6){tds[i].innerHTML = "";} 这里加分类select,做这个时要把上面i<7改成i<6*/
-						else{tds[i].innerHTML="<a onclick=\"modify(this)\">修改</a><a>下架</a>";}
+						else{tds[i].innerHTML="<a onclick=\"modify(this)\">修改</a>";}
 					}
 				}else{
 					
@@ -683,6 +590,17 @@ $.sidebarMenu($('.sidebar-menu'))
 			<c:forEach var="map" items="${goodMap}">
 				<tr>
 					<td>${map.value.goodId }</td><td>${map.value.sellerName }</td><td>${map.value.goodTitle }</td><td>${map.value.goodDesc }</td><td>${map.value.goodPrice }</td><td>${map.value.sort1 }－${map.value.sort2 }－${map.value.sort3 }</td><td><a onclick="goodDel(this)">下架</a></td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+	
+	<div  class="order-content">
+		<table id="table"  class='table table-hover'>
+			<tr><th>订单流水号</th><th>金额</th><th>日期</th></tr>
+			<c:forEach var="map" items="${orderMap}">
+				<tr>
+					<td>${map.value.serialNumber }</td><td>${map.value.transactionAmount }</td><td>${map.value.orderDate }</td>
 				</tr>
 			</c:forEach>
 		</table>
