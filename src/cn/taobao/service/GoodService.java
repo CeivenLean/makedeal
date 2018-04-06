@@ -49,5 +49,9 @@ public class GoodService {
 	public boolean delById(int id) {
 		return gd.delById(id);
 	}
+	
+	public Map<Integer,Good> listByPublishDate() {
+		return gd.listByPublishDate();
+	}
 
 }

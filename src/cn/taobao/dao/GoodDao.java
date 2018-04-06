@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import cn.taobao.entity.Good;
@@ -181,6 +182,33 @@ public Map<Integer,Good> listBySort(String sort,PageUtil pageUtil){
 		String SQL = "SELECT * FROM goods_info";
 		ResultSet rs = helper.query(SQL);
 		Map map = new HashMap();
+		try {
+			while(rs.next()) {
+				
+				Good g = new Good();
+				
+				g.setGoodId(rs.getInt("good_id"));
+				g.setSellerName(rs.getString("seller_name"));
+				g.setGoodTitle(rs.getString("good_title"));
+				g.setGoodDesc(rs.getString("good_desc"));
+				g.setGoodPrice(rs.getDouble("good_price"));
+				g.setSort1(rs.getString("sort1"));
+				g.setSort2(rs.getString("sort2"));
+				g.setSort3(rs.getString("sort3"));
+				g.setPublishDate(rs.getTimestamp("publish_date"));
+				map.put(g.getGoodId(), g);
+			}
+			return map;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public Map<Integer,Good> listByPublishDate() {
+		String SQL = "SELECT * FROM goods_info ORDER BY publish_date LIMIT 0,8";
+		ResultSet rs = helper.query(SQL);
+		Map<Integer,Good> map = new LinkedHashMap<Integer,Good>();
 		try {
 			while(rs.next()) {
 				

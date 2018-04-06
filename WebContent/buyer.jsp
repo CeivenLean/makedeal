@@ -3,7 +3,12 @@
 <%@ page import="cn.taobao.entity.*" %>
 <%@ page import="cn.taobao.dao.*" %>
 <%@ page import="cn.taobao.service.*" %>
-   
+<%@ page import="java.util.*" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="java.lang.*" %>
+<%@ page import="cn.taobao.servlet.*" %>
+<%@ page import="cn.taobao.util.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	if(session.getAttribute("buyer")==null){
 		response.sendRedirect(request.getContextPath()+"/login.jsp");
@@ -18,8 +23,38 @@
 <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/images/mylogo.jpg">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.css">
-
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/product.css">
+<script src="${pageContext.request.contextPath }/js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+function goTop(min_height) {
+    $(".goTop").click(
+        function() {
+            $('html,body').animate({
+                scrollTop: 0
+            }, 700);
+        });
+    //获取页面的最小高度，无传入值则默认为600像素
+    min_height=min_height?min_height:400;
+    //为窗口的scroll事件绑定处理函数
+    $(window).scroll(function() {
+        //获取窗口的滚动条的垂直位置
+        var s = $(window).scrollTop();
+        //当窗口的滚动条的垂直位置大于页面的最小高度时，让返回顶部元素渐现，否则渐隐
+        if (s > min_height) {
+            $(".goTop").fadeIn(100);
+        } else {
+            $(".goTop").fadeOut(200);
+        }
+    });
+}
+ 
+ 
+$(function() {
+    goTop();
+});
+</script>
 <style type="text/css">
+body {background-color:#f4f4f4;}
 	* {margin:0px 0px;padding:0px 0px;font-family:arial;} 
 	.mynav-left {float:left;line-height:35px;font-family:arial;}
 	.mynav-right {width:88%; margin:0px auto;background-color:cyan;}
@@ -67,6 +102,109 @@
 
 .input-group input:focus {border:none;box-shadow:none;}
 
+.goTop {
+cursor:pointer;
+    height: 70px;
+    width: 70px;
+    line-height:70px;
+    text-align:center;
+    background: red;
+    border-radius: 50px;
+    position: fixed;
+    right: 20px;
+    bottom: 30px;
+    display: none;
+}
+ 
+.goTop span {
+    color: #fff;
+    text-align:center;
+}
+.goTop i{
+	height: 70px;line-height:70px;font-size:20px;
+}
+
+.foot {margin:20px auto;width:88%;
+font-family: 'Varela Round', sans-serif;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;}
+.foot ul.legals {
+height:20px;
+text-align:center;
+    list-style: none;
+    color: #8c9398;
+    font-size: 14px;
+    margin: 5px auto;
+    padding: 0px !important;
+}
+.foot ul {list-style: none;
+text-align:center;
+    color: #8c9398;
+    font-size: 14px;
+    margin: 5px auto;
+    padding: 0px !important;}
+.foot ul li {display: inline-block;
+text-align:center;
+    padding: 0px 20px;
+    margin: 0px;}
+.foot ul li:last-child {
+text-align:center;
+    border-right: none;
+    border-right-width: initial;
+    border-right-style: none;
+    border-right-color: initial;
+}
+.foot .line {
+    border-bottom: 1px solid #ababab;
+    width: 170px;
+    margin: 0 auto;
+}
+.foot ul.social li {
+height:28px;
+    padding: 0px 5px;
+    font-size: 20px !important;
+}
+.foot ul.social {
+height:28px;
+line-height:28px;
+}
+.foot ul.legals li {
+    display: inline-block;
+    padding: 0px 20px;
+    margin: 0px;
+}
+.foot a {
+text-align:center;
+    -webkit-font-smoothing: antialiased;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.004);
+    color: #353535;
+}
+.foot a:hover, a:focus {
+    color: #ffa200;
+    text-decoration: none;
+}
+.foot a:hover {
+    outline: 0;
+}
+.foot ul.legals li:last-child {
+    border-right: none;
+}
+.foot ul.social li {
+text-align:center;
+    padding: 0px 5px;
+    font-size: 20px !important;
+}
+.foot .copy {
+    font-size: 10px;
+    text-align: center;
+    color: #404142;
+    word-spacing: 1px;
+    line-height: 25px;
+    height:25px;
+    text-transform: uppercase;
+}
+
 </style>
 </head>
 <script type="text/javascript">
@@ -95,6 +233,29 @@
 		input.style.fontSize = "";
 		input.value = "";
 	}
+	function addshoppingcart(e,goodId){
+		
+		var xhr = new XMLHttpRequest();
+		var method = "post";
+		var url = "${pageContext.request.contextPath }/user/shoppingcart?goodId="+goodId+"&goodCount=1";
+		xhr.open(method,url);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState===xhr.DONE){
+				if(xhr.status==200){
+					var result = xhr.responseText;
+					if(result=="1"){
+						e.innerHTML = "添加成功" ;
+					}else{
+						e.innerHTML = "添加失败，请重试";
+					}
+				}
+			}
+		}
+		xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
+		xhr.send();
+		
+	}
+	
 </script>
 <script src="${pageContext.request.contextPath }/js/jquery.js"></script>
 
@@ -298,7 +459,7 @@
 </script>
 
 <body onload="inputvalue()">
-	<div class="mynav">
+	<div id="mytop" class="mynav">
 		<div class="mynav-right">
 			<div class="mynav-left">
 				<a href="${pageContext.request.contextPath }/buyer.jsp">欢迎，${buyer.name }！</a>
@@ -392,6 +553,104 @@
 	    
 	   
 	   </div>
+	</div>
+
+	<div class="product-list">
+	
+		<div class="product-title">
+            <p>最新上架</p>
+        </div>
+
+        <div>
+        <ul>
+            <c:forEach var="map" items="${goodlistmap}" >
+                <li class="cell-3">
+                    <div class="inner"><a href="${pageContext.request.contextPath}/good/detail?id=${map.value.goodId}">
+                        <p class="pic">
+                            
+                                <img src="${pageContext.request.contextPath}/images/goods/${map.value.goodId}.jpg" height="200px" width="200px" border="0" alt="商品图片">
+                            
+                        </p>
+                        <p class="pro_name">
+                            ${map.value.goodTitle }
+                        <p/></a>
+                        <h5 class="pro_sellingPrice">商家：${map.value.sellerName }</h5>
+                        <h6 class="pro_memberPrice">单价：<span style="color:red;font-size:20px;">${map.value.goodPrice}</span><span onclick="addshoppingcart(this,${map.value.goodId})" style="cursor:pointer;height:30px;line-height:30px;padding:2px 4px;float:right;border:1px solid red;background-color:red;color:#fff"><i class="fa fa-shopping-cart" aria-hidden="true" style="color:#FFF;font-size:20px;"></i>加入购物车</span> </h6>
+                    </div>
+                </li>
+
+            </c:forEach>
+        </ul>
+        </div>
+        
+	</div>
+	<div style="margin-top:700px;width:100%;height:100px;"></div>
+	<hr>
+	
+	<div class="product-list">
+	
+		<div class="product-title">
+            <p>热销商品</p>
+        </div>
+
+        <div>
+        <ul>
+            <c:forEach var="map" items="${goodlistmap}" >
+                <li class="cell-3">
+                    <div class="inner"><a href="${pageContext.request.contextPath}/good/detail?id=${map.value.goodId}">
+                        <p class="pic">
+                            
+                                <img src="${pageContext.request.contextPath}/images/goods/${map.value.goodId}.jpg" height="200px" width="200px" border="0" alt="商品图片">
+                            
+                        </p>
+                        <p class="pro_name">
+                            ${map.value.goodTitle }
+                        <p/></a>
+                        <h5 class="pro_sellingPrice">商家：${map.value.sellerName }</h5>
+                        <h6 class="pro_memberPrice">单价：<span style="color:red;font-size:20px;">${map.value.goodPrice}</span><span onclick="addshoppingcart(this,${map.value.goodId})" style="cursor:pointer;height:30px;line-height:30px;padding:2px 4px;float:right;border:1px solid red;background-color:red;color:#fff"><i class="fa fa-shopping-cart" aria-hidden="true" style="color:#FFF;font-size:20px;"></i>加入购物车</span> </h6>
+                    </div>
+                </li>
+
+            </c:forEach>
+        </ul>
+        </div>
+        
+	</div>
+	
+	
+	<%--取消，改用jquery动态实现 <div style="display:block;width:70px; height:70px;line-height:70px;position:fixed;right: 20px;bottom: 30px; "><a href="#mytop"><img width="70px" height="70px" alt="返回顶部" src="${pageContext.request.contextPath}/images/backTop.jpg"></a></div> --%>
+	<div class="goTop">
+    <span><i class="fa fa-arrow-up"></i></span>
+	</div>
+	
+	<div style="margin-top:900px;margin-bottom:60px;" class="foot">
+		<ul class="legals">
+			<li>
+				<a href="https://github.com/CeivenLean/makedeal" target="blank" target="_blank">关于</a>
+			</li>
+			<li>
+				<a href="http://blog.sina.com.cn/u/1769758704" target="blank" target="_blank">博客</a>
+			</li>
+			<li>
+				<a href="http://localhost:8080/taobao/" target="_blank">网站</a>
+			</li>
+		</ul>
+		<div class="line"></div>
+		<ul class="legals social">
+			<li>
+				<a href="javascropt:void(0)" title="腾讯QQ"><i class="fa fa-qq"></i></a>
+			</li>
+			<li>
+				<a href="javascropt:void(0)" title="微信"><i class="fa fa-weixin"></i></a>
+			</li>
+			<li>
+				<a href="https://weibo.com/u/1769758704" target="blank" title="微博"><i class="fa fa-weibo"></i></a>
+			</li>
+			<li>
+				<a href="mailto:ceiven@foxmail.com" title="商务合作"><i class="fa fa-envelope-o"></i></a>
+			</li>
+		</ul>
+		<p class="copy">© 2018 · CeivenLean · All Rights Reserved</p>
 	</div>
 	
 </body>

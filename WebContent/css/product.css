@@ -1,0 +1,22 @@
+@charset "UTF-8";
+.product-list .cell-3 {width:25%;}
+.product-list { width:88%;margin: 10px auto ;  }
+.product-list .product-title p { margin: 2px 2px ; font-size: 20px ; font-weight: bold ; color: white ; }
+.product-list .product-title { height: 42px ; line-height: 42px ; text-align: center ;margin:20px auto; ; background-color: #FF6905}
+.product-list .inner {overflow:hidden;text-overflow:ellipsis;word-break:keep-all;white-space:nowrap; border: solid 1px red; padding: 16px 16px; position: absolute;font-size: 16px;font-weight: bolder; }
+.product-list .pic { display: block; position: relative; margin-bottom: 5px; width: 200px; height: 200px;  }
+.product-list .inner a {color: #018BD3; text-decoration: none ;}
+.product-list .inner a:hover {color:#FF6600; }
+.product-list .inner:hover{border: 2px solid #FF6905 ; }
+.product-list .inner a:VISITED {color:#018BD3;}
+.product-list ul{list-style-type: none;}
+.product-list li {float: left; width: 240px; height: 319px; line-height: 18px; position: relative;  }
+.product-list li div {margin: 1px auto;}
+.product-list ul, li, p,img, div { margin: 0; padding: 0; list-style-type: none; }
+.product-list .pro_name {text-decoration:underline; color:#555555; display: block; width: 200px;}
+.product-list .pro_sellingPrice {display: block;}
+.product-list .pro_memberPrice {display: block;}
+.product-list li{margin:20px auto;}
+
+
+

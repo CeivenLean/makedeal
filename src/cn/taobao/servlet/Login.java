@@ -1,6 +1,7 @@
 package cn.taobao.servlet;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,10 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import cn.taobao.entity.*;
 import cn.taobao.entity.Buyer;
 import cn.taobao.entity.Seller;
 import cn.taobao.service.BuyerService;
+import cn.taobao.service.GoodService;
 import cn.taobao.service.SellerService;
 import cn.taobao.util.StringHelper;
 /**
@@ -46,6 +48,10 @@ public class Login extends HttpServlet {
 			
 			BuyerService bs = new BuyerService();
 			Buyer buyer = bs.search(name,password);
+			GoodService gs = new GoodService();
+			Map<Integer,Good> goodmap = gs.listByPublishDate();
+			
+			session.setAttribute("goodlistmap", goodmap);
 			
 			SellerService ss = new SellerService();
 			Seller seller = ss.search(name,password);
@@ -57,7 +63,9 @@ public class Login extends HttpServlet {
 			}else {
 				if(buyer!=null) {
 					session.setAttribute("buyer", buyer);
+					
 					response.sendRedirect(request.getContextPath()+"/buyer.jsp");
+					
 				}
 				if(seller!=null) {
 					session.setAttribute("seller", seller);
