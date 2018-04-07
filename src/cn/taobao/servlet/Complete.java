@@ -1,6 +1,8 @@
 package cn.taobao.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +26,8 @@ public class Complete extends HttpServlet {
 		
 		String gender = request.getParameter("gender");
 		String phone = request.getParameter("phone");
-		String address = request.getParameter("address");
+		List<String> address = new ArrayList();
+		address.add(request.getParameter("address"));
 		
 		HttpSession session = request.getSession();
 		if(session.getAttribute("buyer")!=null) {
@@ -44,7 +47,7 @@ public class Complete extends HttpServlet {
 			Seller s = (Seller)o;
 			s.setGender(gender);
 			s.setPhone(phone);
-			s.setAddress(address);
+			s.setAddress(request.getParameter("address"));
 			SellerService ss = new SellerService();
 			boolean x = ss.complete(s);
 			if(x) {

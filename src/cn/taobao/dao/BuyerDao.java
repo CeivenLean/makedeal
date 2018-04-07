@@ -1,10 +1,12 @@
 package cn.taobao.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.taobao.entity.Buyer;
@@ -38,7 +40,52 @@ public class BuyerDao {
 					b.setPassword(rs.getString("password"));
 					b.setGender(rs.getString("buyer_gender"));
 					b.setPhone(rs.getString("buyer_phone"));
-					b.setAddress(rs.getString("buyer_address"));
+					List<String> address = new ArrayList();
+					if(rs.getString("buyer_address1")!=null)
+						address.add(rs.getString("buyer_address1"));
+					if(rs.getString("buyer_address2")!=null)
+						address.add(rs.getString("buyer_address2"));
+					if(rs.getString("buyer_address3")!=null)
+						address.add(rs.getString("buyer_address3"));
+					if(rs.getString("buyer_address1")==null&&rs.getString("buyer_address2")==null&&rs.getString("buyer_address3")==null)
+						address.add("NULL");
+					b.setAddress(address);
+					b.setId(rs.getString("buyer_id"));
+					b.setRealName(rs.getString("real_name"));
+					b.setLevel(rs.getString("buyer_level"));
+					b.setRegistDate(rs.getTimestamp("regist_date"));
+					b.setEmail(rs.getString("email"));
+					
+					return b;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	public Buyer selectById(String id) {
+		String SQL = "SELECT * FROM buyer_info WHERE buyer_id=?";
+		ResultSet rs = helper.query(SQL, id);
+		if(rs!=null) {
+			try {
+				while(rs.next()) {
+					Buyer b = new Buyer();
+					b.setName(rs.getString("buyer_name"));
+					b.setPassword(rs.getString("password"));
+					b.setGender(rs.getString("buyer_gender"));
+					b.setPhone(rs.getString("buyer_phone"));
+					List<String> address = new ArrayList();
+					if(rs.getString("buyer_address1")!=null)
+						address.add(rs.getString("buyer_address1"));
+					if(rs.getString("buyer_address2")!=null)
+						address.add(rs.getString("buyer_address2"));
+					if(rs.getString("buyer_address3")!=null)
+						address.add(rs.getString("buyer_address3"));
+					if(rs.getString("buyer_address1")==null&&rs.getString("buyer_address2")==null&&rs.getString("buyer_address3")==null)
+						address.add("NULL");
+					b.setAddress(address);
 					b.setId(rs.getString("buyer_id"));
 					b.setRealName(rs.getString("real_name"));
 					b.setLevel(rs.getString("buyer_level"));
@@ -56,7 +103,27 @@ public class BuyerDao {
 	
 	public boolean complete(Buyer b) {
 		
-		String SQL = "UPDATE buyer_info SET buyer_gender='"+b.getGender()+"',buyer_phone='"+b.getPhone()+"',buyer_address='"+b.getAddress()+"' WHERE buyer_id='"+b.getId()+"'";
+		String fir= "SELECT * FROM buyer_info WHERE buyer_id=?";
+		ResultSet rs = helper.query(fir, b.getId());
+		
+		String SQL = "UPDATE buyer_info SET buyer_gender='"+b.getGender()+"',buyer_phone='"+b.getPhone()+"',buyer_address1='"+b.getAddress().get(0)+"' WHERE buyer_id='"+b.getId()+"'";
+		if(rs!=null) {
+			try {
+				while(rs.next()) {
+					
+					if(rs.getString("buyer_address1")==null) {
+						SQL = "UPDATE buyer_info SET buyer_gender='"+b.getGender()+"',buyer_phone='"+b.getPhone()+"',buyer_address1='"+b.getAddress().get(0)+"' WHERE buyer_id='"+b.getId()+"'";
+					}else if(rs.getString("buyer_address2")==null) {
+						SQL = "UPDATE buyer_info SET buyer_gender='"+b.getGender()+"',buyer_phone='"+b.getPhone()+"',buyer_address2='"+b.getAddress().get(0)+"' WHERE buyer_id='"+b.getId()+"'";
+					}else if(rs.getString("buyer_address3")==null) {
+						SQL = "UPDATE buyer_info SET buyer_gender='"+b.getGender()+"',buyer_phone='"+b.getPhone()+"',buyer_address3='"+b.getAddress().get(0)+"' WHERE buyer_id='"+b.getId()+"'";
+					}
+					
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		int i = helper.update(SQL);
 		
@@ -78,7 +145,16 @@ public class BuyerDao {
 				
 				Buyer b = new Buyer();
 				b.setName(rs.getString("buyer_name"));
-				b.setAddress(rs.getString("buyer_address"));
+				List<String> address = new ArrayList();
+				if(rs.getString("buyer_address1")!=null)
+					address.add(rs.getString("buyer_address1"));
+				if(rs.getString("buyer_address2")!=null)
+					address.add(rs.getString("buyer_address2"));
+				if(rs.getString("buyer_address3")!=null)
+					address.add(rs.getString("buyer_address3"));
+				if(rs.getString("buyer_address1")==null&&rs.getString("buyer_address2")==null&&rs.getString("buyer_address3")==null)
+					address.add("NULL");
+				b.setAddress(address);
 				b.setGender(rs.getString("buyer_gender"));
 				b.setId(rs.getString("buyer_id"));		
 				b.setLevel(rs.getString("buyer_level"));

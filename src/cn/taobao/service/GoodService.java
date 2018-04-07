@@ -4,6 +4,7 @@ import java.util.Map;
 
 import cn.taobao.dao.GoodDao;
 import cn.taobao.entity.Good;
+import cn.taobao.entity.Seller;
 import cn.taobao.util.PageUtil;
 
 public class GoodService {
@@ -40,6 +41,9 @@ public class GoodService {
 	
 	public Map listAll() {
 		return gd.listAll();
+	}
+	public Map listBySeller(Seller seller) {
+		return gd.listBySeller(seller);
 	}
 	
 	public boolean save(Map map) {

@@ -110,7 +110,7 @@ td a {cursor:pointer;}
 		<ul class="treeview-menu" style="display: none;">
 		  <li onclick="good1Show()"><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> 上架商品</a></li>
 		  <li onclick="good2Show()"><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> 修改条目</a></li>
-		  <li onclick="good3Show()"><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> 下架商品(谨慎操作！)</a></li>
+		  <li onclick="good3Show()"><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> 下架商品</a></li>
 		  <li class=""><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> 分类管理</a>
 		  </li>
 		</ul>
@@ -141,12 +141,14 @@ $.sidebarMenu($('.sidebar-menu'))
 			if(xhr.readyState===xhr.DONE){
 				var text = xhr.responseText;
 				if(text.trim()=="true"){
-					for(var i=3;i<8;i++){
-	       				var input = tds[i].firstElementChild;
-						var value = input.value;
-						if(i<7){tds[i].innerHTML = value;}
-						/* else if(i=6){tds[i].innerHTML = "";} 这里加分类select,做这个时要把上面i<7改成i<6*/
-						else{tds[i].innerHTML="<a onclick=\"modify(this)\">修改</a>";}
+					for(var i=3;i<9;i++){
+						if(i!=7){
+		       				var input = tds[i].firstElementChild;
+							var value = input.value;
+							if(i<7){tds[i].innerHTML = value;}
+							/* else if(i=6){tds[i].innerHTML = "";} 这里加分类select,做这个时要把上面i<7改成i<6*/
+							else{tds[i].innerHTML="<a onclick=\"modify(this)\">修改</a>";}
+						}
 					}
 				}else{
 					
@@ -169,7 +171,7 @@ $.sidebarMenu($('.sidebar-menu'))
 			if(xhr.readyState===xhr.DONE){
 				var text = xhr.responseText;
 				if(text.trim()=="true"){
-					tr.parentNode.removeChild(tr);
+					
 				}else{
 					alert("操作失败，请重试");
 				}
@@ -489,10 +491,10 @@ $.sidebarMenu($('.sidebar-menu'))
 	
 	<div  class="good-content2">
 		<table id="table"  class='table table-hover'>
-			<tr><th>商品编号</th><th>卖家昵称</th><th>商品标题</th><th>商品描述</th><th>商品价格</th><th>商品类别</th><th>操作</th></tr>
+			<tr><th>商品编号</th><th>卖家昵称</th><th>商品标题</th><th>商品描述</th><th>商品价格</th><th>商品类别</th><th>状态</th><th>操作</th></tr>
 			<c:forEach var="map" items="${goodMap}">
 				<tr>
-					<td>${map.value.goodId }</td><td>${map.value.sellerName }</td><td>${map.value.goodTitle }</td><td>${map.value.goodDesc }</td><td>${map.value.goodPrice }</td><td>${map.value.sort1 }－${map.value.sort2 }－${map.value.sort3 }</td><td><a onclick="modify(this)">修改</a></td>
+					<td>${map.value.goodId }</td><td>${map.value.sellerName }</td><td>${map.value.goodTitle }</td><td>${map.value.goodDesc }</td><td>${map.value.goodPrice }</td><td>${map.value.sort1 }－${map.value.sort2 }－${map.value.sort3 }</td><td><c:if test="${map.value.status == 1 }">在售</c:if><c:if test="${map.value.status == 0 }">已停售</c:if></td><td><a onclick="modify(this)">修改</a></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -516,11 +518,13 @@ $.sidebarMenu($('.sidebar-menu'))
        			var tds = tr.childNodes;
 				console.log(tds);
 				/*i从3 开始，即不允许修改商品编号和卖家 */
-				for(var i=3;i<8;i++){
-					var value = tds[i].innerHTML;
-					if(i<7){tds[i].innerHTML = "<input style=\"width:100px\" type=\"text\" value=\""+value+"\">";}
-					/* else if(i=6){tds[i].innerHTML = "";} 这里加分类select,做这个时要把上面i<7改成i<6*/
-					else{tds[i].innerHTML="<a onclick=\"modifysave(this)\">保存</a><a onclick=\"modifycancel(this)\">取消</a>";}
+				for(var i=3;i<9;i++){
+					if(i!=7){
+						var value = tds[i].innerHTML;
+						if(i<7){tds[i].innerHTML = "<input style=\"width:100px\" type=\"text\" value=\""+value+"\">";}
+						/* else if(i=6){tds[i].innerHTML = "";} 这里加分类select,做这个时要把上面i<7改成i<6*/
+						else{tds[i].innerHTML="<a onclick=\"modifysave(this)\">保存</a><a onclick=\"modifycancel(this)\">取消</a>";}
+					}
 				}
        		}
        		
@@ -528,12 +532,14 @@ $.sidebarMenu($('.sidebar-menu'))
        			var tr = e.parentNode.parentNode;
        			var tds = tr.childNodes;
        			/*i从3 开始，即不允许修改商品编号和卖家 */
-       			for(var i=3;i<8;i++){
-       				var input = tds[i].firstElementChild;
-					var value = input.value;
-					if(i<7){tds[i].innerHTML = value;}
-					/* else if(i=6){tds[i].innerHTML = "";} 这里加分类select,做这个时要把上面i<7改成i<6*/
-					else{tds[i].innerHTML="<a onclick=\"modify(this)\">修改</a>";}
+       			for(var i=3;i<9;i++){
+       				if(i!=7){
+	       				var input = tds[i].firstElementChild;
+						var value = input.value;
+						if(i<7){tds[i].innerHTML = value;}
+						/* else if(i=6){tds[i].innerHTML = "";} 这里加分类select,做这个时要把上面i<7改成i<6*/
+						else{tds[i].innerHTML="<a onclick=\"modify(this)\">修改</a>";}
+       				}
 				}
        		}
        		
@@ -586,11 +592,11 @@ $.sidebarMenu($('.sidebar-menu'))
 
 	<div  class="good-content3">
 		<table id="table"  class='table table-hover'>
-			<tr><th>商品编号</th><th>卖家昵称</th><th>商品标题</th><th>商品描述</th><th>商品价格</th><th>商品类别</th><th>操作</th></tr>
+			<tr><th>商品编号</th><th>卖家昵称</th><th>商品标题</th><th>商品描述</th><th>商品价格</th><th>商品类别</th><th>状态</th><th>操作</th></tr>
 			<c:forEach var="map" items="${goodMap}">
-				<tr>
-					<td>${map.value.goodId }</td><td>${map.value.sellerName }</td><td>${map.value.goodTitle }</td><td>${map.value.goodDesc }</td><td>${map.value.goodPrice }</td><td>${map.value.sort1 }－${map.value.sort2 }－${map.value.sort3 }</td><td><a onclick="goodDel(this)">下架</a></td>
-				</tr>
+					<tr>
+						<td>${map.value.goodId }</td><td>${map.value.sellerName }</td><td>${map.value.goodTitle }</td><td>${map.value.goodDesc }</td><td>${map.value.goodPrice }</td><td>${map.value.sort1 }－${map.value.sort2 }－${map.value.sort3 }</td><c:if test="${map.value.status == 1 }"><td>在售</td><td><a onclick="goodDel(this)">下架</a></td></c:if><c:if test="${map.value.status == 0 }"><td>已停售</td><td><a onclick="goodPublish(this)">重新上架</a></td></c:if>
+					</tr>
 			</c:forEach>
 		</table>
 	</div>

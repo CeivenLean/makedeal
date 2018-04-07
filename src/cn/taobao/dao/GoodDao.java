@@ -9,6 +9,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import cn.taobao.entity.Good;
+import cn.taobao.entity.Seller;
 import cn.taobao.util.JdbcHelper;
 import cn.taobao.util.PageUtil;
 
@@ -92,6 +93,7 @@ public class GoodDao {
 				g.setSort1(sort1);
 				g.setSort2(sort2);
 				g.setSort3(sort3);
+				g.setStatus(rs.getInt("status"));
 				
 				map.put(goodId, g);
 			
@@ -139,6 +141,7 @@ public Map<Integer,Good> listBySort(String sort,PageUtil pageUtil){
 				g.setSort2(sort2);
 				g.setSort3(sort3);
 				g.setPublishDate(rs.getTimestamp("publish_date"));
+				g.setStatus(rs.getInt("status"));
 				map.put(goodId, g);
 			
 			}
@@ -168,6 +171,7 @@ public Map<Integer,Good> listBySort(String sort,PageUtil pageUtil){
 				g.setSort2(rs.getString("sort2"));
 				g.setSort3(rs.getString("sort3"));
 				g.setPublishDate(rs.getTimestamp("publish_date"));
+				g.setStatus(rs.getInt("status"));
 				return g;
 			}
 			
@@ -196,6 +200,35 @@ public Map<Integer,Good> listBySort(String sort,PageUtil pageUtil){
 				g.setSort2(rs.getString("sort2"));
 				g.setSort3(rs.getString("sort3"));
 				g.setPublishDate(rs.getTimestamp("publish_date"));
+				g.setStatus(rs.getInt("status"));
+				map.put(g.getGoodId(), g);
+			}
+			return map;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public Map listBySeller(Seller seller) {
+		String SQL = "SELECT * FROM goods_info WHERE seller_name=? ORDER BY publish_date";
+		ResultSet rs = helper.query(SQL,seller.getName());
+		Map map = new HashMap();
+		try {
+			while(rs.next()) {
+				
+				Good g = new Good();
+				
+				g.setGoodId(rs.getInt("good_id"));
+				g.setSellerName(rs.getString("seller_name"));
+				g.setGoodTitle(rs.getString("good_title"));
+				g.setGoodDesc(rs.getString("good_desc"));
+				g.setGoodPrice(rs.getDouble("good_price"));
+				g.setSort1(rs.getString("sort1"));
+				g.setSort2(rs.getString("sort2"));
+				g.setSort3(rs.getString("sort3"));
+				g.setPublishDate(rs.getTimestamp("publish_date"));
+				g.setStatus(rs.getInt("status"));
 				map.put(g.getGoodId(), g);
 			}
 			return map;
@@ -223,6 +256,7 @@ public Map<Integer,Good> listBySort(String sort,PageUtil pageUtil){
 				g.setSort2(rs.getString("sort2"));
 				g.setSort3(rs.getString("sort3"));
 				g.setPublishDate(rs.getTimestamp("publish_date"));
+				g.setStatus(rs.getInt("status"));
 				map.put(g.getGoodId(), g);
 			}
 			return map;
@@ -247,7 +281,7 @@ public Map<Integer,Good> listBySort(String sort,PageUtil pageUtil){
 	}
 	
 	public boolean delById(int id) {
-		String SQL = "DELETE FROM goods_info WHERE good_id=?";
+		String SQL = "UPDATE goods_info SET status='0' WHERE good_id=?";
 		int i = helper.update(SQL, id);
 		if(i!=0) {
 			return true;

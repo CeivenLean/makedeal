@@ -13,6 +13,7 @@ public class BuyerOrder implements Serializable {
 	private double transactionAmount;
 	private Timestamp orderDate;
 	private String buyerId;
+	private String address;
 	private Map<Integer,Integer> goodsInfo;
 	public String getSerialNumber() {
 		return serialNumber;
@@ -38,6 +39,13 @@ public class BuyerOrder implements Serializable {
 	}
 	public void setBuyerId(String buyerId) {
 		this.buyerId = buyerId;
+	}
+	
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public Map<Integer, Integer> getGoodsInfo() {
 		return goodsInfo;

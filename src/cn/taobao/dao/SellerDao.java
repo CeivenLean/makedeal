@@ -90,6 +90,32 @@ public class SellerDao {
 		return null;
 	}
 	
+	public Seller selectById(String id) {
+		String SQL = "SELECT * FROM seller_info WHERE seller_id=?";
+		ResultSet rs = helper.query(SQL, id);
+		if(rs!=null) {
+			try {
+				while(rs.next()) {
+					Seller s = new Seller();
+					s.setName(rs.getString("seller_name"));
+					s.setPassword(rs.getString("password"));
+					s.setGender(rs.getString("seller_gender"));
+					s.setPhone(rs.getString("seller_phone"));
+					s.setAddress(rs.getString("seller_address"));
+					s.setId(rs.getString("seller_id"));
+					s.setRealName(rs.getString("real_name"));
+					s.setLevel(rs.getString("seller_level"));
+					s.setRegistDate(rs.getTimestamp("regist_date"));
+					s.setEmail(rs.getString("email"));
+					return s;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
 	public Map listAll() {
 		String SQL = "SELECT * FROM seller_info";
 		ResultSet rs = helper.query(SQL);

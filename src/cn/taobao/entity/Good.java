@@ -19,6 +19,7 @@ public class Good implements Serializable {
 	private String sort2;
 	private String sort3;
 	
+	private int status;
 	
 	public Integer getGoodId() {
 		return goodId;
@@ -74,6 +75,12 @@ public class Good implements Serializable {
 	}
 	public void setPublishDate(Timestamp publishDate) {
 		this.publishDate = publishDate;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	
 

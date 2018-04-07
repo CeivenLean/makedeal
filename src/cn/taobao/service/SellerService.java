@@ -37,6 +37,9 @@ public class SellerService {
 	public Seller select(String name) {
 		return sd.select(name);
 	}
+	public Seller selectById(String id) {
+		return sd.select(id);
+	}
 	
 	public Map listAll() {
 		return sd.listAll();

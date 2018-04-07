@@ -27,6 +27,11 @@ public class BuyerService {
 		return bd.search(name,password);
 		
 	}
+	public Buyer selectById(String id) {
+		
+		return bd.selectById(id);
+		
+	}
 	
 	public boolean complete(Buyer b) {
 		return bd.complete(b);

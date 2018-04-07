@@ -2,7 +2,7 @@ package cn.taobao.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
+import java.util.List;
 
 public class Buyer implements Serializable {
 
@@ -12,7 +12,7 @@ public class Buyer implements Serializable {
 	private String password;
 	private String gender;
 	private String phone;
-	private String address;
+	private List<String> address;
 	private String realName;
 	private String id;
 	private String level;
@@ -43,10 +43,11 @@ public class Buyer implements Serializable {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	public String getAddress() {
+	
+	public List<String> getAddress() {
 		return address;
 	}
-	public void setAddress(String address) {
+	public void setAddress(List<String> address) {
 		this.address = address;
 	}
 	public String getRealName() {
