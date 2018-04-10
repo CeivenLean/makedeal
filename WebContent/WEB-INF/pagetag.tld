@@ -7,7 +7,7 @@
 	<uri>http://cn.taobao/pagetag</uri>
 	<tag>
 		<name>page</name>
-		<tag-class>cn.taobao.entity.PagingTag</tag-class>
+		<tag-class>cn.shop.entity.PagingTag</tag-class>
 		<attribute>
 			<name>actionName</name>
 			<required>true</required>

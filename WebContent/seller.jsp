@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="cn.taobao.entity.*" %>
-<%@ page import="cn.taobao.dao.*" %>
-<%@ page import="cn.taobao.service.*" %>
+<%@ page import="cn.shop.entity.*" %>
+<%@ page import="cn.shop.dao.*" %>
+<%@ page import="cn.shop.service.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.lang.*" %>
-<%@ page import="cn.taobao.servlet.*" %>
-<%@ page import="cn.taobao.util.*" %>
+<%@ page import="cn.shop.servlet.*" %>
+<%@ page import="cn.shop.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
@@ -88,7 +88,7 @@
 	</div>	
 
 	<div class="mycontainer">
-	<h3 style="text-align:center">今日订单</h3><hr>
+	<h3 style="text-align:center">今日订单<c:if test="${empty todayOrder }">（暂无）</c:if></h3><hr>
 		<div class="container-fluid">
 			<c:forEach var="m" items="${todayOrder }">
 				<div class="row">
@@ -111,6 +111,32 @@
 				<hr>
 			</c:forEach>
 		</div>
+		
+		<h3 style="text-align:center">在售商品</h3><hr>
+		<div class="container-fluid">
+			<div class="row">
+					<div class='col-lg-1'>图片</div>
+					<div class='col-lg-2'>标题</div>
+					
+					<div class='col-lg-5'>描述</div>
+					<div class='col-lg-1'>价格</div>
+					<div class='col-lg-2'>类别</div>
+					<div class='col-lg-1'>状态</div>
+				</div><hr>
+			<c:forEach var="map" items="${goodlistmap }">
+				<div class="row"><a href="${pageContext.request.contextPath }/good/detail?id=${map.key}">
+					<div class='col-lg-1'><img width="60px" height="60px" src="${pageContext.request.contextPath}/images/goods/${map.value.goodId }.jpg"></div>
+					<div class='col-lg-2'>${map.value.goodTitle }</div>
+					
+					<div class='col-lg-5'>${map.value.goodDesc }</div>
+					<div class='col-lg-1'>${map.value.goodPrice }</div>
+					<div class='col-lg-2'>${map.value.sort1 }－${map.value.sort2 }－${map.value.sort3 }</div>
+					<div class='col-lg-1'><c:if test="${map.value.status == 1 }">在售</c:if><c:if test="${map.value.status == 0 }">已停售</c:if></div>
+				</a></div>
+				<hr>
+			</c:forEach>
+		</div>
+		
 	</div>
 
 	<a title="点击添加新商品" style="text-decoration:none;cursor:pointer;color:white;" href="${pageContext.request.contextPath }/publish.jsp"><div style="box-shadow:0px 2px 2px 0px;background-color:red;border-radius:50px;display:block;width:60px; text-align:center;height:60px;line-height:60px;position:fixed;right: 48%;bottom: 30px; "><i style="height:60px;line-height:60px;font-size:18px;" class="fa fa-plus"></i></div></a>

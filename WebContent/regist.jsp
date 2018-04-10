@@ -15,6 +15,8 @@
 	input.form-control{background-color:rgba(255,255,255,0.3); }  
 	.btn {margin-top:15px;}
 	.prompt {padding-left:4px;height:4px;font-size:12px;}
+	a {color:white;}
+	a:hover{color:white;}
 </style>
 </head>
 <script type="text/javascript">

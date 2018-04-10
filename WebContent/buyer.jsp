@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="cn.taobao.entity.*" %>
-<%@ page import="cn.taobao.dao.*" %>
-<%@ page import="cn.taobao.service.*" %>
+<%@ page import="cn.shop.entity.*" %>
+<%@ page import="cn.shop.dao.*" %>
+<%@ page import="cn.shop.service.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.lang.*" %>
-<%@ page import="cn.taobao.servlet.*" %>
-<%@ page import="cn.taobao.util.*" %>
+<%@ page import="cn.shop.servlet.*" %>
+<%@ page import="cn.shop.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	if(session.getAttribute("buyer")==null){
@@ -70,7 +70,7 @@ body {background-color:#f4f4f4;}
 .menu { text-decoration: none; font-size: 14px; width: 88%; height: 80%; margin: 20px auto; background-color: #ececec; }
 .menu .menuTop { font-size:16px;text_align:center;background-color: #F10215; color: #fff; width: 160px; height: 40px; padding-left: 20px; line-height: 40px; cursor: pointer; }
 .menu ul { width: 160px; background-color: #fff; border: 2px solid #F10215; box-sizing: border-box; position: relative; }
-.menu ul li { list-style: none;height: 45px; padding-left: 8px; text-align: left; line-height: 45px; font-size: 13px; background: url(image/1.png) no-repeat right; z-index: 2; }
+.menu ul li { list-style: none;height: 45px; padding-left: 8px; text-align: left; line-height: 45px; font-size: 13px; z-index: 2; }
 .menu ul li a { color: #7070770; }
 .menu ul li a:hover { color: red; text-decoration: underline; cursor: pointer; }
 .menu ul li:hover { border: 1px solid #DDD; border-right: 0; background-image: none; }
@@ -90,9 +90,13 @@ body {background-color:#f4f4f4;}
 .menuTop2{font-size:16px;background-color: #ff0215; color: #fff; width: 100%; height: 42px; padding-left: 20px; line-height: 42px; cursor: pointer;}
 .menuTop2 span {display:inline-block;width:10%;text-align:center;}
 .menuTop2 span:hover {background-color:#ff4815 }
-.content {width:100%;height:454px;background-color:green;}
+.content {width:100%;height:454px;}
 .content>div {float:left;}
 .content>div div:hover{background-color:RGBA(0,0,0,0.5);}
+
+.message {background-color:#fef;width:190px;height:452px;border: 1px solid #F10215;color:blue;s}
+.message h4{text-align:center;}
+.message p {font-size:13px;dispaly:inline-block;height:12%;width:90%;margin:0 auto;border-bottom:1px solid #F10215;}
 
 .input-group input {border:none;}
 .input-group button {border:none;}
@@ -495,8 +499,7 @@ text-align:center;
 			    	<a href="${pageContext.request.contextPath }/good/list?search=坚果">坚果</a>&nbsp;
 			    	<a href="${pageContext.request.contextPath }/good/list?search=袜子">袜子</a>&nbsp;
 			    	<a href="${pageContext.request.contextPath }/good/list?search=鞋子">鞋子</a>&nbsp;
-			    	<a href="${pageContext.request.contextPath }/good/list?search=aaa">aaa</a>&nbsp;
-			    	<a href="${pageContext.request.contextPath }/good/list?search=bbb">bbb</a>
+			   
 			    </div>
 			  </div>
 			</div>
@@ -505,16 +508,16 @@ text-align:center;
 	<div class="menu">
 	<div class="center-content">
 		<div class="menuTop">全部商品分类&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down"></i></div>
-		<div style="margin-right:-144px;margin-top:-40px;background-color:cyan;float:right;width:98.5%;height:504px;">
+		<div style="margin-right:-144px;margin-top:-40px;float:right;width:98.5%;height:504px;">
 			<div class="menuTop2">
-					<span style="margin-left:-20px;">今日特价</span>
+					<span style="margin-left:-20px;">最新上架</span>
 					<span>热销推荐</span>
 					<span>九块九包邮</span>
-					<span>淘抢购</span>
-					<span>电器城</span>
-					<span>司法拍卖</span>
-					<span>中国质造</span>
-					<span>兴农扶贫</span>
+					<span>电视</span>
+					<span>手机</span>
+					<span>教材</span>
+					<span>笔记本</span>
+					<span>猜你喜欢</span>
 			</div>
 			<div class="content">
 				<div style="position:relative">
@@ -523,6 +526,16 @@ text-align:center;
 					<img id="banner" src="//img.alicdn.com/tfs/TB14smleuOSBuNjy0FdXXbDnVXa-520-280.jpg_q90_.webp" height="452px" alt="">
 					<!-- <img border="0" src="https://aecpm.alicdn.com/simba/img/TB1JNHwKFXXXXafXVXXSutbFXXX.jpg" width="520px" height="280px" data-spm-anchor-id="a21bo.2017.201862.i2.5af911d9hYTQ3S">
 					<img border="0" src="https://aecpm.alicdn.com/simba/img/TB183NQapLM8KJjSZFBSutJHVXa.jpg" width="520px" height="280px"> -->
+				</div>
+				<div class="message">
+					<h4>最新公告</h4><hr>
+					<p>ceiven新上架了一款商品，快来看看吧</p>
+					<p>9527对商品XXXXXXX发了评论，快来看看吧</p>
+					<p>管理员：请各位 做好财产保护措施，谨防骗子！！！</p>
+					<p>管理员：请各位 做好财产保护措施，谨防骗子！！！</p>
+					<p>管理员：请各位 做好财产保护措施，谨防骗子！！！</p>
+					<p>管理员：请各位 做好财产保护措施，谨防骗子！！！</p>
+					
 				</div>
 			</div>
 			<script>
@@ -561,7 +574,7 @@ text-align:center;
             <p>最新上架</p>
         </div>
 
-        <div>
+        <div style="margin-left:4%;">
         <ul>
             <c:forEach var="map" items="${goodlistmap}" >
                 <li class="cell-3">
@@ -593,7 +606,7 @@ text-align:center;
             <p>热销商品</p>
         </div>
 
-        <div>
+        <div style="margin-left:4%;">
         <ul>
             <c:forEach var="map" items="${goodlistmap}" >
                 <li class="cell-3">
@@ -632,7 +645,7 @@ text-align:center;
 				<a href="http://blog.sina.com.cn/u/1769758704" target="blank" target="_blank">博客</a>
 			</li>
 			<li>
-				<a href="http://localhost:8080/taobao/" target="_blank">网站</a>
+				<a href="http://localhost:8080/shop/" target="_blank">网站</a>
 			</li>
 		</ul>
 		<div class="line"></div>

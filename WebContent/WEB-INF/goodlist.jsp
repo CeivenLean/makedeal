@@ -3,9 +3,9 @@
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.lang.*" %>
-<%@ page import="cn.taobao.entity.*" %>
-<%@ page import="cn.taobao.servlet.*" %>
-<%@ page import="cn.taobao.util.*" %>
+<%@ page import="cn.shop.entity.*" %>
+<%@ page import="cn.shop.servlet.*" %>
+<%@ page import="cn.shop.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="p" uri="http://cn.taobao/pagetag" %>
 <%
@@ -22,6 +22,7 @@
 <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/images/favicon.ico">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath }/css/product.css">
 <style type="text/css">
 	* {margin:0px 0px;padding:0px 0px;font-family:arial;} 
 	.mynav-left {float:left;line-height:35px;font-family:arial;}
@@ -33,11 +34,21 @@
 	.mynav a {text-decoration:none; color:black;}
 	.mynav span:hover {display:block; background-color:#dedede;}
 	.mynav {width:100%;height:35px; background-color:#f5f5f5;margin-bottom:20px;border:0;margin-top:-10px;}
-	.good_container .table {margin:20px auto; width:60%;}
-	.page-container {background-color:#dedede;width:50%;heigth:20px;margin:30px auto;text-align:center;position:relative;}
+	.good_container{width:90%;margin:20px auto;}
+	.good_container .table {margin:20px auto; width:80%;}
+	.page-container {width:100%;heigth:20px;margin:420px 0 20px 0;position:relative;text-align:center;}
 	.mypage {text-align:center;}
 	.good-list {background-color:cyan;width:88%;height:auto;}
 	.good-list>div {background-color:green;width:32%;}	
+	
+	.input-group input {border:none;}
+.input-group button {border:none;}
+.input-group button {color:white;background-color:red;}
+.input-group button:hover {color:white;background-color:red;}
+.input-group {border:1px solid red;}
+
+.input-group input:focus {border:none;box-shadow:none;}
+	
 </style>
 </head>
 <script type="text/javascript">
@@ -54,7 +65,7 @@
 		
 	}
 	
-	function addshoppingcart(e,key){
+	/* function addshoppingcart(e,key){
 		var xhr = new XMLHttpRequest();
 		var method = "post";
 		var url = "${pageContext.request.contextPath }/user/shoppingcart";
@@ -76,6 +87,28 @@
 		xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
 		var data = "goodId="+key;
 		xhr.send(data);
+		
+	} */
+function addshoppingcart(e,goodId){
+		
+		var xhr = new XMLHttpRequest();
+		var method = "post";
+		var url = "${pageContext.request.contextPath }/user/shoppingcart?goodId="+goodId+"&goodCount=1";
+		xhr.open(method,url);
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState===xhr.DONE){
+				if(xhr.status==200){
+					var result = xhr.responseText;
+					if(result=="1"){
+						e.innerHTML = "添加成功" ;
+					}else{
+						e.innerHTML = "添加失败，请重试";
+					}
+				}
+			}
+		}
+		xhr.setRequestHeader("content-type","application/x-www-form-urlencoded");
+		xhr.send();
 		
 	}
 </script>
@@ -103,8 +136,22 @@
 		</div>
 	</div>
 	
+	<div class="container-fluid">
+	    <form action="${pageContext.request.contextPath }/good/list" method="post">
+		    <div  class="row">
+			  <div  class="col-lg-6 col-lg-offset-3">
+			    <div class="input-group">
+			      <input type="text" class="form-control" name="search"  onfocus="inputclear()" placeholder="请输入关键字..">
+			      <span class="input-group-btn">
+			        <button class="btn btn-default" type="submit" value="搜索">搜索</button>
+			      </span>
+			    </div>
+			  </div>
+			</div>
+	    </form>
+	</div>
 	  
-	<div class="good_container">
+	<%-- <div class="good_container">
 		
 		<table class='table'>
 			<tr><td style="border:0">>>${sort }</td></tr>
@@ -132,8 +179,33 @@
 				</tr>
 			</c:forEach>	
 		</table>
-	</div>
+	</div> --%>
 	
+	<div class="good_container">
+	<div class="product-list">
+		 <div style="margin-left:3%;"><h5>搜索结果：</h5>
+        <ul>
+            <c:forEach var="m" items="${pageUtil.datas }" >
+                <li class="cell-3">
+                    <div class="inner"><a href="${pageContext.request.contextPath}/good/detail?id=${m.value.goodId }">
+                        <p class="pic">
+                            
+                                <img src="${pageContext.request.contextPath}/images/goods/${m.value.goodId }.jpg" height="200px" width="200px" border="0" alt="商品图片">
+                            
+                        </p>
+                        <p class="pro_name">
+                            ${m.value.goodTitle }
+                        <p/></a>
+                        <h5 class="pro_sellingPrice">商家：${m.value.sellerName }</h5>
+                        <h6 class="pro_memberPrice">单价：<span style="color:red;font-size:20px;">${m.value.goodPrice}</span><span onclick="addshoppingcart(this,${m.value.goodId})" style="cursor:pointer;height:30px;line-height:30px;padding:2px 4px;float:right;border:1px solid red;background-color:red;color:#fff"><i class="fa fa-shopping-cart" aria-hidden="true" style="color:#FFF;font-size:20px;"></i>加入购物车</span> </h6>
+                    </div>
+                </li>
+
+            </c:forEach>
+        </ul>
+        </div>
+	</div>
+	</div>
 	
 	
 	<%-- <div style="width:100%;">

@@ -28,10 +28,11 @@
 	.input-group {border:1px solid red;}
 	.input-group input:focus {border:none;box-shadow:none;}
 	
-	.good-container {padding:10px 6%;margin:0px auto;width:88%;height:400px;background-color:yellow;}
-	.good-pic {float:left;margin-right:3%;display:inline-block;width:22%;margin-top:2%;height:90%;background-color:red;}
+	.good-container {padding:10px 2%;margin:0px auto;width:88%;height:400px;}
+	.good-pic {float:left;margin-right:5%;display:inline-block;width:22%;margin-top:2%;height:98%;background-color:red;}
 	.good-info {float:left;margin-right:2%;display:inline-block;width:50%;height:100%;}
-	.seller-info {float:left;display:inline-block;width:22%;height:100%;background-color:green;}
+	.seller-info {float:left;display:inline-block;width:20%;line-height:100%;height:100%;}
+	.seller-info p{font-size:15px;text-align:center;height:30px;line-height:30px;display:block;margin:10px auto;}
 	
 	.good-info .mycount {cursor:pointer;margin:0px 0px;display:inline-block; width:28px;height:28px;background-color:#dedede;line-height:28px;text-align:center}
 	.good-info input[type='text'] {width:50px;height:28px;line-height:28px;;margin:0px -4px;border:none; text-align:center;}
@@ -132,13 +133,13 @@ function buyThisOne(){
 		<input type="hidden" name="goodId" value="${good.goodId }">
 		
 		<div class="good-pic">
-			<img alt="" src="${pageContext.request.contextPath }/images/goods/${good.goodId }.jpg" width="100%" height="100%">
+			<img alt="" src="${pageContext.request.contextPath }/images/goods/${good.goodId }.jpg" width="280px" height="280px">
 		</div>
 		<div class="good-info">
 			<div style="height:66%">
 			<h4>${good.goodTitle }</h4><hr>
 			
-			<h5>${good.goodDesc }</h5><h6>${good.publishDate }</h6><hr>
+			<h5>${good.goodDesc }</h5><h6>[上架日期]${good.publishDate }</h6><hr>
 			
 			<p>价格<span style="margin-left:24px;font-size:24px;color:#f40;font-family:verdana,arial;font-weight:700">&yen;${good.goodPrice }</span></p><hr>
 			</div>
@@ -182,12 +183,14 @@ function buyThisOne(){
 			</div>
 		</div>
 		<div class="seller-info">
-			<p>---卖家信息---</p>
-			<p>${seller.name }</p>
-			<p>${seller.level }</p>
-			<p>${seller.name }</p>
-			<p>${seller.name }</p>
-			<p>注册日期：${seller.registDate }</p>
+			<p>------------卖家信息------------</p>
+			<p>昵称：${seller.name }</p>
+			<p>等级：${seller.level }</p>
+			<p>性别：${seller.gender }</p>
+			<p>手机号：${seller.phone }</p>
+			<p>所在地：${seller.address }</p>
+			<p>邮箱：${seller.email }</p>
+			<p><h6 style="text-align:center;">注册日期：${seller.registDate }</h6></p>
 		</div>
 		</form>
 	</div>

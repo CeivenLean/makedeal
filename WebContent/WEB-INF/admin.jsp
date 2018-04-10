@@ -3,10 +3,10 @@
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="java.lang.*" %>
-<%@ page import="cn.taobao.entity.*" %>
-<%@ page import="cn.taobao.service.*" %>
-<%@ page import="cn.taobao.servlet.*" %>
-<%@ page import="cn.taobao.util.*" %>
+<%@ page import="cn.shop.entity.*" %>
+<%@ page import="cn.shop.service.*" %>
+<%@ page import="cn.shop.servlet.*" %>
+<%@ page import="cn.shop.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

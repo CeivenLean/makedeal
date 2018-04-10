@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="cn.taobao.entity.*" %>
-<%@ page import="cn.taobao.dao.*" %>
-<%@ page import="cn.taobao.service.*" %>
+<%@ page import="cn.shop.entity.*" %>
+<%@ page import="cn.shop.dao.*" %>
+<%@ page import="cn.shop.service.*" %>
 <%
 	if(session.getAttribute("buyer")==null){
 		response.sendRedirect(request.getContextPath()+"/login.jsp");
