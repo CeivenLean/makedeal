@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 import cn.shop.entity.Seller;
 import cn.shop.service.GoodService;
 
-@WebServlet("/user/onSaleGoodList")
-public class SellerOnSaleGoodListServlet extends HttpServlet {
+@WebServlet("/seller/goodList")
+public class SellerGoodListServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -3601577489374449181L;
 

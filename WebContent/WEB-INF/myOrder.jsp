@@ -163,7 +163,7 @@
 				Good g = gd.select(aaa);
 				out.print("<div class='row'><a href='"+request.getContextPath()+"/good/detail?id="+g.getGoodId()+"'>");
 				out.print("<div class='col-lg-1'>");
-				out.print("<img src='"+request.getContextPath()+"/images/goods/"+g.getGoodId()+".jpg' height='60px'>");
+				out.print("<img src='"+request.getContextPath()+"/images/goods/"+g.getGoodId()+".jpg' width='60px' height='60px'>");
 				out.print("</div>");
 				out.print("<div class='col-lg-3'>");
 				out.print(g.getGoodTitle().length()<20?g.getGoodTitle():g.getGoodTitle().substring(0,20));

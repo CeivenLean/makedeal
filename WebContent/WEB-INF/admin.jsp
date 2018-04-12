@@ -8,6 +8,7 @@
 <%@ page import="cn.shop.servlet.*" %>
 <%@ page import="cn.shop.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -105,13 +106,13 @@ td a {cursor:pointer;}
 		<a href="javascript:void(0)">
 		  <i class="fa fa-files-o"></i>
 		  <span>商品管理</span>
-		  <span class="label label-primary pull-right">4</span>
+		  <i class="fa fa-angle-down pull-right"></i>
 		</a>
 		<ul class="treeview-menu" style="display: none;">
 		  <li onclick="good1Show()"><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> 上架商品</a></li>
 		  <li onclick="good2Show()"><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> 修改条目</a></li>
 		  <li onclick="good3Show()"><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> 下架商品</a></li>
-		  <li class=""><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> 分类管理</a>
+		 
 		  </li>
 		</ul>
 	  </li>
@@ -189,7 +190,7 @@ $.sidebarMenu($('.sidebar-menu'))
 <div class="right-content">
 	<div class="buyer-content">
 		<table  class='table table-striped table-hover table-condensed'>
-			<tr><th>用户昵称</th><th>性别</th><th>手机号</th><th>地址</th><th>ID</th><th>姓名</th><th>级别</th><th>注册日期</th><th>操作</th></tr>
+			<tr><th>买家昵称</th><th>性别</th><th>手机号</th><th>地址</th><th>ID</th><th>姓名</th><th>级别</th><th>注册日期</th><th>操作</th></tr>
 			<c:forEach var="map" items="${buyerMap}">
 				<tr>
 					<td>${map.value.name }</td><td>${map.value.gender }</td><td>${map.value.phone }</td><td>${map.value.address }</td><td>${map.value.id }</td><td>${map.value.realName }</td><td>${map.value.level }</td><td>${map.value.registDate }</td>
@@ -202,7 +203,7 @@ $.sidebarMenu($('.sidebar-menu'))
 	
 	<div class="seller-content">
 		<table  class='table table-striped table-hover table-condensed'>
-			<tr><th>用户昵称</th><th>性别</th><th>手机号</th><th>地址</th><th>ID</th><th>姓名</th><th>级别</th><th>注册日期</th><th>操作</th></tr>
+			<tr><th>卖家昵称</th><th>性别</th><th>手机号</th><th>地址</th><th>ID</th><th>姓名</th><th>级别</th><th>注册日期</th><th>操作</th></tr>
 			<c:forEach var="map" items="${sellerMap}">
 				<tr>
 					<td>${map.value.name }</td><td>${map.value.gender }</td><td>${map.value.phone }</td><td>${map.value.address }</td><td>${map.value.id }</td><td>${map.value.realName }</td><td>${map.value.level }</td><td>${map.value.registDate }</td>
@@ -491,10 +492,10 @@ $.sidebarMenu($('.sidebar-menu'))
 	
 	<div  class="good-content2">
 		<table id="table"  class='table table-hover'>
-			<tr><th>商品编号</th><th>卖家昵称</th><th>商品标题</th><th>商品描述</th><th>商品价格</th><th>商品类别</th><th>状态</th><th>操作</th></tr>
+			<tr><th class="col-sm-1">商品编号</th><th class="col-sm-1">卖家昵称</th><th class="col-sm-2">商品标题</th><th class="col-sm-4">商品描述</th><th class="col-sm-1">商品价格</th><th class="col-sm-1">商品类别</th><th class="col-sm-1">状态</th><th class="col-sm-1">操作</th></tr>
 			<c:forEach var="map" items="${goodMap}">
 				<tr>
-					<td>${map.value.goodId }</td><td>${map.value.sellerName }</td><td>${map.value.goodTitle }</td><td>${map.value.goodDesc }</td><td>${map.value.goodPrice }</td><td>${map.value.sort1 }－${map.value.sort2 }－${map.value.sort3 }</td><td><c:if test="${map.value.status == 1 }">在售</c:if><c:if test="${map.value.status == 0 }">已停售</c:if></td><td><a onclick="modify(this)">修改</a></td>
+					<td class="col-sm-1">${map.value.goodId }</td><td class="col-sm-1">${map.value.sellerName }</td><td class="col-sm-2">${fn:length(map.value.goodTitle)<25?map.value.goodTitle:fn:substring(map.value.goodTitle,0,25) }</td><td class="col-sm-4">${fn:length(map.value.goodDesc)<80?map.value.goodDesc:fn:substring(map.value.goodDesc,0,80) }</td><td class="col-sm-1">${map.value.goodPrice }</td><td class="col-sm-1">${map.value.sort1 }－${map.value.sort2 }－${map.value.sort3 }</td><td class="col-sm-1"><c:if test="${map.value.status == 1 }">在售</c:if><c:if test="${map.value.status == 0 }">已停售</c:if></td><td class="col-sm-1"><a onclick="modify(this)">修改</a></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -592,10 +593,10 @@ $.sidebarMenu($('.sidebar-menu'))
 
 	<div  class="good-content3">
 		<table id="table"  class='table table-hover'>
-			<tr><th>商品编号</th><th>卖家昵称</th><th>商品标题</th><th>商品描述</th><th>商品价格</th><th>商品类别</th><th>状态</th><th>操作</th></tr>
+			<tr><th class="col-sm-1">商品编号</th><th class="col-sm-1">卖家昵称</th><th class="col-sm-2">商品标题</th><th class="col-sm-4">商品描述</th><th class="col-sm-1">商品价格</th><th class="col-sm-1">商品类别</th><th class="col-sm-1">状态</th><th class="col-sm-1">操作</th></tr>
 			<c:forEach var="map" items="${goodMap}">
 					<tr>
-						<td>${map.value.goodId }</td><td>${map.value.sellerName }</td><td>${map.value.goodTitle }</td><td>${map.value.goodDesc }</td><td>${map.value.goodPrice }</td><td>${map.value.sort1 }－${map.value.sort2 }－${map.value.sort3 }</td><c:if test="${map.value.status == 1 }"><td>在售</td><td><a onclick="goodDel(this)">下架</a></td></c:if><c:if test="${map.value.status == 0 }"><td>已停售</td><td><a onclick="goodPublish(this)">重新上架</a></td></c:if>
+						<td class="col-sm-1">${map.value.goodId }</td><td class="col-sm-1">${map.value.sellerName }</td><td class="col-sm-2">${fn:length(map.value.goodTitle)<25?map.value.goodTitle:fn:substring(map.value.goodTitle,0,25) }</td><td class="col-sm-4">${fn:length(map.value.goodDesc)<80?map.value.goodDesc:fn:substring(map.value.goodDesc,0,80) }</td><td class="col-sm-1">${map.value.goodPrice }</td><td class="col-sm-1">${map.value.sort1 }－${map.value.sort2 }－${map.value.sort3 }</td><c:if test="${map.value.status == 1 }"><td class="col-sm-1">在售</td><td class="col-sm-1"><a onclick="goodDel(this)">下架</a></td></c:if><c:if test="${map.value.status == 0 }"><td class="col-sm-1">已停售</td><td class="col-sm-1"><a onclick="goodPublish(this)">重新上架</a></td></c:if>
 					</tr>
 			</c:forEach>
 		</table>
@@ -604,7 +605,7 @@ $.sidebarMenu($('.sidebar-menu'))
 	<div  class="order-content">
 		<table id="table"  class='table table-hover'>
 			<tr><th>订单流水号</th><th>金额</th><th>日期</th></tr>
-			<c:forEach var="map" items="${orderMap}">
+			<c:forEach var="map" items="${AdminOrderMap}">
 				<tr>
 					<td>${map.value.serialNumber }</td><td>${map.value.transactionAmount }</td><td>${map.value.orderDate }</td>
 				</tr>

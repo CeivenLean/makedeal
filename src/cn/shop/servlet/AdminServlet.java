@@ -40,7 +40,7 @@ public class AdminServlet extends HttpServlet {
 		request.setAttribute("buyerMap", buyerMap);
 		request.setAttribute("sellerMap", sellerMap);
 		request.setAttribute("goodMap", goodMap);
-		request.setAttribute("orderMap", orderMap);
+		request.setAttribute("AdminOrderMap", orderMap);
 		
 		
 		

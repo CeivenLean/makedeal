@@ -88,15 +88,15 @@
 	</div>	
 
 	<div class="mycontainer">
-	<h3 style="text-align:center">今日订单<c:if test="${empty todayOrder }">（暂无）</c:if></h3><hr>
+	<h3 style="text-align:center">所有订单<c:if test="${empty sellerOrderMap }">（暂无）</c:if></h3><hr>
 		<div class="container-fluid">
-			<c:forEach var="m" items="${todayOrder }">
+			<c:forEach var="m" items="${sellerOrderMap }">
 				<div class="row">
-					<div class='col-lg-2'>流水号：${fn:substring(m.key,0,11) }...</div>
-					<div class='col-lg-2'>订单日期：${fn:substring(m.value.orderDate,11,19) }</div>
-					<div class='col-lg-2'>订单总金额：<span style="color:red;font-size:18px;">&yen;${m.value.orderPrice }</span></div>
-					<div class='col-lg-2'>买家：${m.value.buyer.name }</div>
-					<div class='col-lg-4'>配送地址：${fn:substring(m.value.address,0,23) }...</div>
+					<div class='col-lg-2'>流水号:${fn:substring(m.key,0,11) }...</div>
+					<div class='col-lg-2'>订单日期:${fn:substring(m.value.orderDate,11,19) }</div>
+					<div class='col-lg-2'>订单总金额:<span style="color:red;font-size:18px;">&yen;${m.value.orderPrice }</span></div>
+					<div class='col-lg-2'>买家:${m.value.buyer.name }</div>
+					<div class='col-lg-4'>配送地址:${fn:substring(m.value.address,0,23) }...</div>
 				</div>
 				<c:forEach var="g" items="${m.value.goodsInfo }">
 				<div class="row"><a href="${pageContext.request.contextPath }/good/detail?id=${g.key.goodId}">
@@ -108,31 +108,6 @@
 					
 				</a></div>
 				</c:forEach>
-				<hr>
-			</c:forEach>
-		</div>
-		
-		<h3 style="text-align:center">在售商品</h3><hr>
-		<div class="container-fluid">
-			<div class="row">
-					<div class='col-lg-1'>图片</div>
-					<div class='col-lg-2'>标题</div>
-					
-					<div class='col-lg-6'>描述</div>
-					<div class='col-lg-1'>价格</div>
-					<div class='col-lg-2'>类别</div>
-					
-				</div><hr>
-			<c:forEach var="map" items="${goodlistmap }">
-				<div class="row"><a href="${pageContext.request.contextPath }/good/detail?id=${map.key}">
-					<div class='col-lg-1'><img width="60px" height="60px" src="${pageContext.request.contextPath}/images/goods/${map.value.goodId }.jpg"></div>
-					<div class='col-lg-2'>${map.value.goodTitle }</div>
-					
-					<div class='col-lg-6'>${fn:length(map.value.goodDesc)<80?map.value.goodDesc:fn:substring(map.value.goodDesc,0,120) }</div>
-					<div class='col-lg-1'>${map.value.goodPrice }</div>
-					<div class='col-lg-2'>${map.value.sort1 }－${map.value.sort2 }－${map.value.sort3 }</div>
-					
-				</a></div>
 				<hr>
 			</c:forEach>
 		</div>

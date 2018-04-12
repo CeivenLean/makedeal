@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="cn.shop.entity.*" %>
+<%@ page import="cn.shop.dao.*" %>
+<%@ page import="cn.shop.service.*" %>
+<%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.lang.*" %>
+<%@ page import="cn.shop.servlet.*" %>
+<%@ page import="cn.shop.util.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,7 +23,7 @@
 	.mynav-left {float:left;line-height:35px;font-family:arial;}
 	.mynav-right {width:88%; margin:0px auto;background-color:cyan;position:relative;}
 	.mynav .right>li{float:right;list-style:none; margin-left:30px;font-size:10px;line-height:35px;font-family:arial;}
-	.myhidden {display:none; position:absolute;}
+	.myhidden {display:none;position:absolute;background-color:#f5f5f5;}
 	.abc li{list-style:none;font-size:8px;margin-bottom:-6px;font-family:arial;}
 	.mynav .left{float:left;list-style:none;}
 	.mynav a {text-decoration:none; color:black;}
@@ -72,9 +81,9 @@ function addshoppingcart(e){
 			if(xhr.status==200){
 				var result = xhr.responseText;
 				if(result=="1"){
-					e.firstElementChild.innerHTML = "添加成功" ;
+					alert("添加成功！") ;
 				}else{
-					e.firstElementChild.innerHTML = "添加失败，请重试";
+					alert("商品已存在，请勿重复添加！") ;
 				}
 			}
 		}
@@ -85,11 +94,15 @@ function addshoppingcart(e){
 }
 
 function buyThisOne(){
-	document.querySelector("#form2").submit();
+	if(document.querySelector("input[name='status']").value==0){
+		alert("抱歉，些商品已停售！");
+	}else{
+		document.querySelector("#form2").submit();
+	}
 }
 </script>
 <body>
-
+	<c:if test="${not empty buyer }">
 	<div class="mynav">
 		<div class="mynav-right">
 			<div class="mynav-left">
@@ -111,6 +124,31 @@ function buyThisOne(){
 			</ul>
 		</div>
 	</div>
+	</c:if>
+	<c:if test="${not empty seller }">
+	<div class="mynav">
+		<div class="mynav-right">
+			<div class="mynav-left">
+				<a href="${pageContext.request.contextPath }/seller.jsp">欢迎，${seller.name }！</a>
+			</div>
+			<ul class="right">
+				<li><span><a href="#">联系客服</a></span></li>
+				<li onMouseOver="$.show()" onMouseOut="$.myhidden()"><span><a href="#"><i class="fa fa-user-o" aria-hidden="true"   style="color:#FF6905;font-size:14px;"></i>&nbsp;&nbsp;个人中心</a>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></span></i>
+					<div class="myhidden">
+					<ul class="abc list-unstyled">
+						<li><span><a href="${pageContext.request.contextPath }/complete.jsp">修改个人信息</a></span></li>
+						<li><span><a class="mydelete" onClick="$.userdelete()">删除此账户</a></span></li>
+						<li><span><a href="${pageContext.request.contextPath }/user/logout">退出登录</a></span></li>
+					</ul>
+					</div>
+				</li>
+				<li><span><a href="${pageContext.request.contextPath }/seller/goodList"><i class="fa fa-user" aria-hidden="true" style="color:#FF6905;font-size:14px;"></i>&nbsp;&nbsp;商品管理</a>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></span></li>
+				<li><span><a href="${pageContext.request.contextPath }/seller/orderList"><i class="fa fa-history" aria-hidden="true"  style="color:#FF6905;font-size:14px;"></i>&nbsp;&nbsp;我的订单</a>&nbsp;&nbsp;&nbsp;<i class="fa fa-angle-down" aria-hidden="true"></i></span></li>
+			</ul>
+		</div>
+	</div>
+	</c:if>
+	
 	
 	<div class="container-fluid">
 	    <form action="${pageContext.request.contextPath }/good/list" method="post">
@@ -131,13 +169,14 @@ function buyThisOne(){
 	<div class="good-container">
 		<form id="form2" action="${pageContext.request.contextPath }/user/orderFromDetail" method="post">
 		<input type="hidden" name="goodId" value="${good.goodId }">
+		<input type="hidden" name="status" value="${good.status }">
 		
 		<div class="good-pic">
 			<img alt="" src="${pageContext.request.contextPath }/images/goods/${good.goodId }.jpg" width="280px" height="280px">
 		</div>
 		<div class="good-info">
 			<div style="height:66%">
-			<h4>${good.goodTitle }</h4><hr>
+			<h4>${good.goodTitle }<c:if test="${good.status==0 }">&nbsp;&nbsp;[已停售]</c:if></h4><hr>
 			
 			<h5>${good.goodDesc }</h5><h6>[上架日期]${good.publishDate }</h6><hr>
 			
@@ -184,13 +223,13 @@ function buyThisOne(){
 		</div>
 		<div class="seller-info">
 			<p>------------卖家信息------------</p>
-			<p>昵称：${seller.name }</p>
-			<p>等级：${seller.level }</p>
-			<p>性别：${seller.gender }</p>
-			<p>手机号：${seller.phone }</p>
-			<p>所在地：${seller.address }</p>
-			<p>邮箱：${seller.email }</p>
-			<p><h6 style="text-align:center;">注册日期：${seller.registDate }</h6></p>
+			<p>昵称：${sellerinfo.name }</p>
+			<p>等级：${sellerinfo.level }</p>
+			<p>性别：${sellerinfo.gender }</p>
+			<p>手机号：${sellerinfo.phone }</p>
+			<p>所在地：${sellerinfo.address }</p>
+			<p>邮箱：${sellerinfo.email }</p>
+			<p><h6 style="text-align:center;">注册日期：${sellerinfo.registDate }</h6></p>
 		</div>
 		</form>
 	</div>

@@ -9,6 +9,7 @@
 <%@ page import="cn.shop.servlet.*" %>
 <%@ page import="cn.shop.util.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -54,6 +55,11 @@
 			document.querySelector(".mydelete").href="${pageContext.request.contextPath }/user/delete";
 		}
 	}
+	
+	function confirmAddr(e){
+		var value= e.value;
+		document.querySelector("#J_AddrConfirm").innerHTML = value;
+	}
 </script>
 
 <body>
@@ -87,12 +93,19 @@
 
 <h3>选择收货地址</h3>
 <ul id="address-list" class="address-list">
-	<c:forEach var="s" items="${buyer.address }">
+	<c:forEach var="s" items="${buyer.address }" varStatus="status">
 	<li class="J_Addr J_MakePoint clearfix  J_DefaultAddr ">
 		<s class="J_Marker marker"></s>
 		<span class="marker-tip">寄送至</span>
 		<div class="address-info">
-			<input name="address" class="J_MakePoint " type="radio" value="${s }" >
+			<c:if test="${status.count==1}">
+				<input onclick="confirmAddr(this)" name="address" class="J_MakePoint " checked="checked" type="radio" value="${s }" >
+				<c:set var="addr1" value="${s }"></c:set>
+			</c:if>
+			<c:if test="${status.count>1}">
+				<input onclick="confirmAddr(this)" name="address" class="J_MakePoint " type="radio" value="${s }" >
+			</c:if>
+			
 			<label for="addrId_674944241" class="user-address">${s }</label>
 		</div>
 	</li>
@@ -103,7 +116,7 @@
  </ul>
 
 <div class="address-bar">
- <a href="#" class="new J_MakePoint" id="J_NewAddressBtn">使用新地址</a>
+ <!-- <a href="#" class="new J_MakePoint" id="J_NewAddressBtn">使用新地址</a> -->
  </div>
 
 </div>
@@ -129,10 +142,10 @@
  		<tr class="item" data-lineid="19614514619:31175333266:35612993875" data-pointRate="0">
 			<td class="s-title">
 				<a href="${pageContext.request.contextPath }/good/detail?id=${m.key.goodId }" target="_blank" title="${m.key.goodTitle }" class="J_MakePoint">
-					<img src="${pageContext.request.contextPath }/images/goods/${m.key.goodId }.jpg" class="itempic">
+					<img width="60px" height="60px" src="${pageContext.request.contextPath }/images/goods/${m.key.goodId }.jpg" class="itempic">
 					<span class="title J_MakePoint">${m.key.goodTitle }</span>
 				</a>
-				<div class="props"><span>${m.key.goodDesc } </span></div>
+				<div class="props"><span>${fn:length(m.key.goodDesc)<80?m.key.goodDesc:fn:substring(m.key.goodDesc,0,80) } </span></div>
 		 		<a title="消费者保障服务，卖家承诺商品如实描述" href="javascript:void(0)" target="_blank">
 					<img src="http://img03.taobaocdn.com/tps/i3/T1bnR4XEBhXXcQVo..-14-16.png"/>${m.key.sellerName }
 				</a>
@@ -167,16 +180,17 @@
 								<div class="point-in">
 									<em class="t">实付款：</em>
 									<span class='price g_price '>
-										<span>&yen;</span>
+										<span style="color:red;font-size:22px;">&yen;
 										<em class="style-large-bold-red"  id="J_ActualFee"  >${totalPrice }</em>
+										</span>
 									</span>
 								</div>
 
 								<ul>
-									<li><em>寄送至:</em><span id="J_AddrConfirm" style="word-break: break-all;">
-湖北省 恩施土家族苗族自治州 恩施市 湖北民族学院（信息工程学院）  男生宿舍楼235栋1234202</span>
+									<li><em>寄送至:</em>
+									<span id="J_AddrConfirm" style="word-break: break-all;">${addr1 }</span>
 									</li>
-									<li><em>收货人:</em><span id="J_AddrNameConfirm">某某某 18124317260 </span></li>
+									
 								</ul>
 							</div>
 						</div>

@@ -32,6 +32,8 @@ public class Login extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
+		session.removeAttribute("buyer");
+		session.removeAttribute("seller");
 		String name = request.getParameter("username");
 		String password = request.getParameter("password");
 		String imgCode = request.getParameter("imgCode").toUpperCase();
@@ -46,6 +48,10 @@ public class Login extends HttpServlet {
 				session.setAttribute("imgcodeError", "验证码不正确！");
 				response.sendRedirect(request.getHeader("referer"));
 				return ;
+			}
+			if("admin".equals(name)&&"admin".equals(password)) {
+				response.sendRedirect(request.getContextPath()+"/admin");
+				return;
 			}
 			OrderService os = new OrderService();
 			BuyerService bs = new BuyerService();
@@ -70,11 +76,11 @@ public class Login extends HttpServlet {
 					
 				}
 				if(seller!=null) {
-					Map goodlistmap1 = gs.listBySeller(seller);
-					Map historyOrder = os.listBySeller(seller);
+					Map goodlistmap1 = gs.listOnSaleBySeller(seller);
+					
 					Map todayOrder = os.listToday(seller);
 					session.setAttribute("goodlistmap", goodlistmap1);
-					session.setAttribute("historyOrder", historyOrder);
+					
 					session.setAttribute("todayOrder", todayOrder);
 					session.setAttribute("seller", seller);
 					response.sendRedirect(request.getContextPath()+"/seller.jsp");

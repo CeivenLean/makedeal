@@ -105,20 +105,30 @@ public class BuyerDao {
 		
 		String fir= "SELECT * FROM buyer_info WHERE buyer_id=?";
 		ResultSet rs = helper.query(fir, b.getId());
-		
+		int addrcount = b.getAddress().size();
 		String SQL = "UPDATE buyer_info SET buyer_gender='"+b.getGender()+"',buyer_phone='"+b.getPhone()+"',buyer_address1='"+b.getAddress().get(0)+"' WHERE buyer_id='"+b.getId()+"'";
 		if(rs!=null) {
 			try {
 				while(rs.next()) {
-					
-					if(rs.getString("buyer_address1")==null) {
-						SQL = "UPDATE buyer_info SET buyer_gender='"+b.getGender()+"',buyer_phone='"+b.getPhone()+"',buyer_address1='"+b.getAddress().get(0)+"' WHERE buyer_id='"+b.getId()+"'";
-					}else if(rs.getString("buyer_address2")==null) {
-						SQL = "UPDATE buyer_info SET buyer_gender='"+b.getGender()+"',buyer_phone='"+b.getPhone()+"',buyer_address2='"+b.getAddress().get(0)+"' WHERE buyer_id='"+b.getId()+"'";
-					}else if(rs.getString("buyer_address3")==null) {
-						SQL = "UPDATE buyer_info SET buyer_gender='"+b.getGender()+"',buyer_phone='"+b.getPhone()+"',buyer_address3='"+b.getAddress().get(0)+"' WHERE buyer_id='"+b.getId()+"'";
+					if(addrcount==1) {
+						if(rs.getString("buyer_address1")==null) {
+							SQL = "UPDATE buyer_info SET buyer_gender='"+b.getGender()+"',buyer_phone='"+b.getPhone()+"',buyer_address1='"+b.getAddress().get(0)+"' WHERE buyer_id='"+b.getId()+"'";
+						}else if(rs.getString("buyer_address2")==null) {
+							SQL = "UPDATE buyer_info SET buyer_gender='"+b.getGender()+"',buyer_phone='"+b.getPhone()+"',buyer_address2='"+b.getAddress().get(0)+"' WHERE buyer_id='"+b.getId()+"'";
+						}else if(rs.getString("buyer_address3")==null) {
+							SQL = "UPDATE buyer_info SET buyer_gender='"+b.getGender()+"',buyer_phone='"+b.getPhone()+"',buyer_address3='"+b.getAddress().get(0)+"' WHERE buyer_id='"+b.getId()+"'";
+						}
+					}else if(addrcount==2){
+						if(rs.getString("buyer_address1")==null) {
+							SQL = "UPDATE buyer_info SET buyer_gender='"+b.getGender()+"',buyer_phone='"+b.getPhone()+"',buyer_address1='"+b.getAddress().get(0)+"',buyer_address2='"+b.getAddress().get(1)+"' WHERE buyer_id='"+b.getId()+"'";
+						}else {
+							SQL = "UPDATE buyer_info SET buyer_gender='"+b.getGender()+"',buyer_phone='"+b.getPhone()+"',buyer_address2='"+b.getAddress().get(0)+"',buyer_address3='"+b.getAddress().get(1)+"' WHERE buyer_id='"+b.getId()+"'";
+						}
+					}else if(addrcount==3){
+						
+							SQL = "UPDATE buyer_info SET buyer_gender='"+b.getGender()+"',buyer_phone='"+b.getPhone()+"',buyer_address1='"+b.getAddress().get(0)+"',buyer_address2='"+b.getAddress().get(1)+"',buyer_address3='"+b.getAddress().get(2)+"' WHERE buyer_id='"+b.getId()+"'";
+						
 					}
-					
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

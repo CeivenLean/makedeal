@@ -32,7 +32,7 @@ public class GoodDetail extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		session.setAttribute("good", good);
-		session.setAttribute("seller", seller);
+		session.setAttribute("sellerinfo", seller);
 		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/gooddetail.jsp");
 		

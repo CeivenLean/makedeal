@@ -35,6 +35,8 @@
 	.mynav {width:100%;height:35px; background-color:#f5f5f5;margin-bottom:20px;border:0;margin-top:-10px;}
 	
 	.table {margin:20px auto;}
+	.table td{text-align:center;}
+	.table a {text-decoration:none;}
 	.good_container {width:70%;margin:0px auto;}
 	.good-count {text-align:center;}
 	.myselect {text-align:center;}
@@ -105,7 +107,11 @@
 				}
 				
 			}
-				input.value= "购买"+sum;
+			if(sum==""){	
+				input.value= "购买";
+			}else {
+				input.value= "购买总计：￥"+sum;
+			}
 		}
 		
 		
@@ -178,50 +184,94 @@
 	</div>
 	
 	<div class="good_container">
-	<h3 style="text-align:center">我的购物车</h3>
-	<form action="${pageContext.request.contextPath }/user/orderFromCart" method="post">
-	<table class="table table-bordered table-striped">
-	<tr class="table-title">
-	<td>图图</td>
-	<td>商品名称</td>
-	<td>商品价格</td>
-	<td>数量</td>
-	<td>全选<input type="checkbox" value="all" onchange='X.totalPrice()' onClick="X.selectAll(this)"></td>
-	</tr>
-	<%
-		Object o = session.getAttribute("myShoppingCart");
-		Map<Integer,BuyerShoppingCart> map = (Map<Integer,BuyerShoppingCart>)o;
-		Set<Integer> set = map.keySet();
-		for(Integer key:set) {
-			BuyerShoppingCart sc = map.get(key);
-			session.setAttribute("BuyerShoppingCart", sc);
-			out.print("<tr class='table-title'><a href='"+request.getContextPath()+"/good/detail?id="+sc.getGoodId()+"'>");
-			out.print("<td>");
-			out.print("<img src='"+request.getContextPath()+"/images/goods/"+sc.getGoodId()+".jpg' width='25px' height='42px'>");
-			out.print("</td>");
-			out.print("<td>");
-			out.print(sc.getGoodTitle());
-			out.print("</td>");
-			out.print("<td>");
-			out.print(sc.getGoodPrice());
-			out.print("</td>");
-			out.print("<td class='good-count col-xs-2'>");			
-			out.print("<i class='mycount' onClick='X.updateCount("+sc.getCartId()+",0)'>-</i>");
-			out.print("<span id='selector"+sc.getCartId()+"' >"+sc.getGoodCount()+"</span>");
-			out.print("<i class='mycount' onClick='X.updateCount("+sc.getCartId()+",1)'>+</i>");
-			out.print("</td>");
-			out.print("<td>");
-			out.print("<input onchange='X.totalPrice()' name='goodSelect' class='mycheckbox'  type='checkbox' value='"+sc.getCartId()+"'>");
-			out.print("</td>");
-			out.print("</a></tr>");
-		}
-		out.print("</table>");
-		out.print("<a class='btn btn-warning col-lg-1 col-lg-offset-8' href='javascript:void(0)' onclick='X.cartdelete(this)'>删除</a>");
-		out.print("<input class='btn btn-primary col-lg-2 col-lg-offset-1' type='submit' value='购买'>");
-		out.print("</form>");
-	%>
+		<h3 style="text-align:center">我的购物车</h3>
+		<form action="${pageContext.request.contextPath }/user/orderFromCart" method="post">
+		<table id="table" class="table">
+		<tr class="table-title">
+		<td>图</td>
+		<td>商品名称</td>
+		<td>商品价格</td>
+		<td>数量</td>
+		<td>全选<input type="checkbox" value="all" onchange='X.totalPrice()' onClick="X.selectAll(this)"></td>
+		</tr>
+		<c:forEach var="m" items="${myShoppingCart }">
+			<tr>
+				<td><a href="${pageContext.request.contextPath }/good/detail?id=${m.value.goodId}"><img src="${pageContext.request.contextPath }/images/goods/${m.value.goodId}.jpg" width='50px' height='50px'></a></td>
+				<td><a href="${pageContext.request.contextPath }/good/detail?id=${m.value.goodId}">${m.value.goodTitle}</a></td>
+				<td>${m.value.goodPrice}</td>
+				<td>
+					<i class="mycount" onClick="X.updateCount(${m.key},0)">-</i>
+					<span id="selector${m.key}">${m.value.goodCount}</span>
+					<i class="mycount" onClick="X.updateCount(${m.key},1)">+</i>
+				</td>
+				<td><input onchange='X.totalPrice()' name='goodSelect' class='mycheckbox'  type='checkbox' value='${m.key}'></td>
+			</tr>
+		</c:forEach>
+		</table>
+		<div class="gridItem" style="padding: 5px; width: 250px; float: left; text-align: left; height: 40px; font-size: 15px;" > 
+		        共有 <span id="spanTotalInfor"></span> 条记录     
+		        当前第<span id="spanPageNum"></span>页     
+		        共<span id="spanTotalPage"></span>页
+		  </div>
+		  <div class="gridItem" style="margin-left:50px;  padding: 5px; width: 400px; float: left; text-align: center; height: 40px; vertical-align: middle; font-size: 15px;">   
+		            <span id="spanFirst" >首页</span> 
+		            <span id="spanPre">上一页</span>
+		            <span id="spanInput" style="margin: 0px; padding: 0px 0px 4px 0px; height:100%; "> 
+		                第<input id="Text1" type="text" class="TextBox" onkeyup="changepage()"   style="height:20px; text-align: center;width:50px" />页 
+		            </span>
+		            <span id="spanNext">下一页</span> 
+		            <span  id="spanLast">尾页</span> 
+       	 </div>
+       	<script type="text/javascript">
+       		
+			var theTable = document.getElementById("table");
+			var txtValue = document.getElementById("Text1").value;
+			function changepage() {
+			    var txtValue2 = document.getElementById("Text1").value;
+			    if (txtValue != txtValue2) {
+			        if (txtValue2 > pageCount()) {
+			
+			        }
+			        else if (txtValue2 <= 0) {
+			
+			        }
+			        else if (txtValue2 == 1) {
+			            first();
+			        }
+			        else if (txtValue2 == pageCount()) {
+			            last();
+			        }
+			        else {
+			            hideTable();
+			            page = txtValue2;
+			            pageNum2.value = page;
+			
+			            currentRow = pageSize * page;
+			            maxRow = currentRow - pageSize;
+			            if (currentRow > numberRowsInTable) currentRow = numberRowsInTable;
+			            for (var i = maxRow; i < currentRow; i++) {
+			                theTable.rows[i].style.display = '';
+			            }
+			            if (maxRow == 0) { preText(); firstText(); }
+			            showPage();
+			            nextLink();
+			            lastLink();
+			            preLink();
+			            firstLink();
+			       }
+			
+			        txtValue = txtValue2;
+			    }
+			}
+		
+		 </script>
+		<script type="text/javascript" src="${pageContext.request.contextPath }/js/goodpagging.js"></script>
+		<a class='btn btn-warning col-lg-1 col-lg-offset-8' href='javascript:void(0)' onclick='X.cartdelete(this)'>删除</a>
+		<input class='btn btn-primary col-lg-2 col-lg-offset-1' type='submit' value='购买'>
+		</form>
+	 	
 	</div>
-	<div style="height:100px"></div>
+	<div style="height:20px"></div>
 
 	
 </body>

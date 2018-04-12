@@ -49,7 +49,7 @@ public class OrderDao {
 	}
 	
 	public  Map list(Buyer b) {
-		String SQL = "SELECT serial_number,transaction_amount,order_date,goods_info FROM order_info WHERE buyer_id="+b.getId()+" ORDER BY order_date DESC";
+		String SQL = "SELECT serial_number,transaction_amount,order_date,goods_info,address FROM order_info WHERE buyer_id="+b.getId()+" ORDER BY order_date DESC";
 		ResultSet rs = helper.query(SQL);
 		Map map = new LinkedHashMap<>();
 		try {
@@ -74,19 +74,25 @@ public class OrderDao {
 		
 	}
 	public  Map listBySeller(Seller s) {
-		String SQL = "SELECT * FROM seller_order WHERE seller_id="+s.getId()+" AND to_days(order_date) != to_days(now()) ORDER BY order_date DESC";
+		String SQL = "SELECT * FROM seller_order WHERE seller_id="+s.getId()+" ORDER BY order_date DESC";
 		ResultSet rs = helper.query(SQL);
 		Map map = new LinkedHashMap<>();
 		try {
 			while(rs.next()) {
 				SellerOrder so = new SellerOrder();
 				so.setSeller(s);
+				
 				so.setSerialNumber(rs.getString("serial_number"));
 				so.setOrderPrice(rs.getDouble("order_price"));
 				so.setOrderDate(rs.getTimestamp("order_date"));
 				String goods = rs.getString("goods_info");
-				Map m1 = StringHelper.toMap(goods);
-				Map m2 = StringHelper.reset(m1);
+				Map<String,String> m1 = StringHelper.toMap(goods);
+				Map<Good,Integer> m2 = new HashMap<Good,Integer>();
+				for(Map.Entry<String,String> entry:m1.entrySet()) {
+					Good good = gs.select(Integer.valueOf(entry.getKey()));
+					Integer count = Integer.valueOf(entry.getValue());
+					m2.put(good, count);
+				}
 				so.setGoodsInfo(m2);
 				so.setAddress(rs.getString("address"));
 				String buyerid = rs.getString("buyer_id");
@@ -142,7 +148,7 @@ public class OrderDao {
 	}
 	
 	public  Map listAll() {
-		String SQL = "SELECT serial_number,transaction_amount,order_date,buyer_id,goods_info FROM order_info ORDER BY order_date DESC";
+		String SQL = "SELECT * FROM order_info ORDER BY order_date DESC";
 		ResultSet rs = helper.query(SQL);
 		Map map = new LinkedHashMap<>();
 		try {

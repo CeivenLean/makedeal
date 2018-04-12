@@ -433,8 +433,9 @@ input[type=text]:focus,textarea:focus {
 	float:left;
 	margin-left:-60px;
 	border:1px solid #ccc;
-	width:80px;
-	height:125px;
+	width:70px;
+	height:70px;
+	margin-right: 10px;
 }
 .order-table .item .price {
 	margin-right:15px

@@ -237,6 +237,33 @@ public Map<Integer,Good> listBySort(String sort,PageUtil pageUtil){
 		}
 		return null;
 	}
+	public Map listOnSaleBySeller(Seller seller) {
+		String SQL = "SELECT * FROM goods_info WHERE seller_name=? AND status='1' ORDER BY publish_date";
+		ResultSet rs = helper.query(SQL,seller.getName());
+		Map map = new HashMap();
+		try {
+			while(rs.next()) {
+				
+				Good g = new Good();
+				
+				g.setGoodId(rs.getInt("good_id"));
+				g.setSellerName(rs.getString("seller_name"));
+				g.setGoodTitle(rs.getString("good_title"));
+				g.setGoodDesc(rs.getString("good_desc"));
+				g.setGoodPrice(rs.getDouble("good_price"));
+				g.setSort1(rs.getString("sort1"));
+				g.setSort2(rs.getString("sort2"));
+				g.setSort3(rs.getString("sort3"));
+				g.setPublishDate(rs.getTimestamp("publish_date"));
+				g.setStatus(rs.getInt("status"));
+				map.put(g.getGoodId(), g);
+			}
+			return map;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	public Map<Integer,Good> listByPublishDate() {
 		String SQL = "SELECT * FROM goods_info ORDER BY publish_date LIMIT 0,8";

@@ -140,16 +140,16 @@ function pageCount() {
 
 
 //显示链接 link方法将相应的文字变成可点击翻页的  nolink方法将对应的文字变成不可点击的
-function preLink() { spanPre.innerHTML = "<a href='javascript:pre();'>上一页</a>"; }
+function preLink() { spanPre.innerHTML = "<a style='text-decoration:none;' href='javascript:pre();'>上一页</a>"; }
 function preNoLink(){ spanPre.innerHTML = "上一页"; }
 
-function nextLink() { spanNext.innerHTML = "<a href='javascript:next();'>下一页</a>"; }
+function nextLink() { spanNext.innerHTML = "<a style='text-decoration:none;' href='javascript:next();'>下一页</a>"; }
 function nextNoLink(){ spanNext.innerHTML = "下一页";}
 
-function firstLink() { spanFirst.innerHTML = "<a href='javascript:first();'>首页</a>"; }
+function firstLink() { spanFirst.innerHTML = "<a style='text-decoration:none;' href='javascript:first();'>首页</a>"; }
 function firstNoLink(){ spanFirst.innerHTML = "首页";}
 
-function lastLink() { spanLast.innerHTML = "<a href='javascript:last();'>尾页</a>"; }
+function lastLink() { spanLast.innerHTML = "<a style='text-decoration:none;' href='javascript:last();'>尾页</a>"; }
 function lastNoLink(){ spanLast.innerHTML = "尾页";}
 
 //初始化表格

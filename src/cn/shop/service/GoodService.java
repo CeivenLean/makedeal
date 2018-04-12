@@ -45,6 +45,9 @@ public class GoodService {
 	public Map listBySeller(Seller seller) {
 		return gd.listBySeller(seller);
 	}
+	public Map listOnSaleBySeller(Seller seller) {
+		return gd.listOnSaleBySeller(seller);
+	}
 	
 	public boolean save(Map map) {
 		return gd.save(map);

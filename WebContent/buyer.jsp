@@ -250,7 +250,7 @@ text-align:center;
 					if(result=="1"){
 						e.innerHTML = "添加成功" ;
 					}else{
-						e.innerHTML = "添加失败，请重试";
+						e.innerHTML = "请勿重复添加";
 					}
 				}
 			}
