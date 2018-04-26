@@ -20,7 +20,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>完善个人信息</title>
-<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/images/favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/images/favicon.png">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.css">
 <style type="text/css">
@@ -201,7 +201,7 @@
 		</form>
 	</div>
 	</c:if>
-	
+	<script src="${pageContext.request.contextPath }/js/canvas-nest.min.js"></script>
 </body>
 <script type="text/javascript">
 	(function(w){

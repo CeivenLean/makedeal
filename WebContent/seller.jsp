@@ -21,7 +21,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>卖家主页</title>
-<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/images/favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/images/favicon.png">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.css">
 <style type="text/css">
@@ -140,5 +140,7 @@
 	</div>
 
 	<a title="点击添加新商品" style="text-decoration:none;cursor:pointer;color:white;" href="${pageContext.request.contextPath }/publish.jsp"><div style="box-shadow:0px 2px 2px 0px;background-color:red;border-radius:50px;display:block;width:60px; text-align:center;height:60px;line-height:60px;position:fixed;right: 48%;bottom: 30px; "><i style="height:60px;line-height:60px;font-size:18px;" class="fa fa-plus"></i></div></a>
+	
+	<script src="${pageContext.request.contextPath }/js/canvas-nest.min.js"></script>
 </body>
 </html>

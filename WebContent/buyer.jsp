@@ -20,7 +20,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>买家主页</title>
-<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/images/mylogo.jpg">
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/images/favicon.png">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/css/product.css">
@@ -64,7 +64,7 @@ body {background-color:#f4f4f4;}
 	.mynav .left{float:left;list-style:none;}
 	.mynav a {text-decoration:none; color:black;}
 	.mynav span:hover {display:block; background-color:#dedede;}
-	.mynav {width:100%;height:35px; background-color:#f5f5f5;margin-bottom:20px;border:0;margin-top:-10px;}
+	.mynav {width:100%;height:35px;margin-bottom:20px;border:0;margin-top:-10px;}
 	
 	
 .menu { text-decoration: none; font-size: 14px; width: 88%; height: 80%; margin: 20px auto; background-color: #ececec; }
@@ -487,8 +487,11 @@ text-align:center;
 	
 	<div class="container-fluid">
 	    <form action="${pageContext.request.contextPath }/good/list" method="post">
-		    <div  class="row">
-			  <div  class="col-lg-6 col-lg-offset-3">
+		    <div class="row">
+		    <div class="col-sm-2 col-sm-offset-1">
+		    <img width="" height="85px" alt="" src="${pageContext.request.contextPath }/images/logo.png">
+		    </div>
+			  <div style="margin-top:25px;"  class="col-sm-6">
 			    <div class="input-group">
 			      <input type="text" class="form-control" name="search"  onfocus="inputclear()" placeholder="请输入关键字..">
 			      <span class="input-group-btn">
@@ -666,5 +669,7 @@ text-align:center;
 		<p class="copy">© 2018 · CeivenLean · All Rights Reserved</p>
 	</div>
 	
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath }/js/canvas-nest.min.js"></script>
 </body>
 </html>

@@ -14,6 +14,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>XXX后台管理</title>
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/images/favicon.png">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/css/sidebar-menu.css">
@@ -98,8 +99,8 @@ td a {cursor:pointer;}
 		  <i class="fa fa-dashboard"></i> <span>用户管理</span> <i class="fa fa-angle-down pull-right"></i>
 		</a>
 		<ul class="treeview-menu">
-		  <li onclick="buyerShow()"><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> 买家操作</a></li>
-		  <li onclick="sellerShow()"><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> 卖家操作</a></li>
+		  <li onclick="buyerShow()"><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> 买家列表</a></li>
+		  <li onclick="sellerShow()"><a href="javascript:void(0)"><i class="fa fa-circle-o"></i> 卖家列表</a></li>
 		</ul>
 	  </li>
 	  <li class="treeview">
@@ -119,7 +120,11 @@ td a {cursor:pointer;}
 	  <li onclick="orderShow()">
 		<a href="javascript:void(0)">
 		  <i class="fa fa-th"></i> <span>订单日志</span>
-		 <!--  <small class="label pull-right label-info">new</small> -->
+		</a>
+	  </li>
+	  <li>
+		<a href="${pageContext.request.contextPath}/user/logout">
+		  <span>退出</span>
 		</a>
 	  </li>
 	 
@@ -190,11 +195,11 @@ $.sidebarMenu($('.sidebar-menu'))
 <div class="right-content">
 	<div class="buyer-content">
 		<table  class='table table-striped table-hover table-condensed'>
-			<tr><th>买家昵称</th><th>性别</th><th>手机号</th><th>地址</th><th>ID</th><th>姓名</th><th>级别</th><th>注册日期</th><th>操作</th></tr>
+			<thead><tr><th>买家昵称</th><th>性别</th><th>手机号</th><th>地址</th><th>ID</th><th>姓名</th><th>级别</th><th>注册日期</th></tr></thead>
 			<c:forEach var="map" items="${buyerMap}">
 				<tr>
 					<td>${map.value.name }</td><td>${map.value.gender }</td><td>${map.value.phone }</td><td>${map.value.address }</td><td>${map.value.id }</td><td>${map.value.realName }</td><td>${map.value.level }</td><td>${map.value.registDate }</td>
-					<td><p><a>修改</a></p><p><a>删除</a></p></td>
+					
 				</tr>
 			</c:forEach>
 		</table>
@@ -203,11 +208,11 @@ $.sidebarMenu($('.sidebar-menu'))
 	
 	<div class="seller-content">
 		<table  class='table table-striped table-hover table-condensed'>
-			<tr><th>卖家昵称</th><th>性别</th><th>手机号</th><th>地址</th><th>ID</th><th>姓名</th><th>级别</th><th>注册日期</th><th>操作</th></tr>
+			<tr><th>卖家昵称</th><th>性别</th><th>手机号</th><th>地址</th><th>ID</th><th>姓名</th><th>级别</th><th>注册日期</th></tr>
 			<c:forEach var="map" items="${sellerMap}">
 				<tr>
 					<td>${map.value.name }</td><td>${map.value.gender }</td><td>${map.value.phone }</td><td>${map.value.address }</td><td>${map.value.id }</td><td>${map.value.realName }</td><td>${map.value.level }</td><td>${map.value.registDate }</td>
-					<td><a>修改</a><a>删除</a></td>
+					
 				</tr>
 			</c:forEach>
 		</table>
@@ -492,10 +497,10 @@ $.sidebarMenu($('.sidebar-menu'))
 	
 	<div  class="good-content2">
 		<table id="table"  class='table table-hover'>
-			<tr><th class="col-sm-1">商品编号</th><th class="col-sm-1">卖家昵称</th><th class="col-sm-2">商品标题</th><th class="col-sm-4">商品描述</th><th class="col-sm-1">商品价格</th><th class="col-sm-1">商品类别</th><th class="col-sm-1">状态</th><th class="col-sm-1">操作</th></tr>
+			<tr><th class="col-sm-1">商品编号</th><th class="col-sm-1">卖家昵称</th><th class="col-sm-1">商品标题</th><th class="col-sm-4">商品描述</th><th class="col-sm-1">商品价格</th><th class="col-sm-2">商品类别</th><th class="col-sm-1">状态</th><th class="col-sm-1">操作</th></tr>
 			<c:forEach var="map" items="${goodMap}">
 				<tr>
-					<td class="col-sm-1">${map.value.goodId }</td><td class="col-sm-1">${map.value.sellerName }</td><td class="col-sm-2">${fn:length(map.value.goodTitle)<25?map.value.goodTitle:fn:substring(map.value.goodTitle,0,25) }</td><td class="col-sm-4">${fn:length(map.value.goodDesc)<80?map.value.goodDesc:fn:substring(map.value.goodDesc,0,80) }</td><td class="col-sm-1">${map.value.goodPrice }</td><td class="col-sm-1">${map.value.sort1 }－${map.value.sort2 }－${map.value.sort3 }</td><td class="col-sm-1"><c:if test="${map.value.status == 1 }">在售</c:if><c:if test="${map.value.status == 0 }">已停售</c:if></td><td class="col-sm-1"><a onclick="modify(this)">修改</a></td>
+					<td class="col-sm-1">${map.value.goodId }</td><td class="col-sm-1">${map.value.sellerName }</td><td class="col-sm-2">${fn:length(map.value.goodTitle)<25?map.value.goodTitle:fn:substring(map.value.goodTitle,0,25) }</td><td class="col-sm-4">${fn:length(map.value.goodDesc)<40?map.value.goodDesc:fn:substring(map.value.goodDesc,0,40) }</td><td class="col-sm-1">${map.value.goodPrice }</td><td class="col-sm-1">${map.value.sort1 }－${map.value.sort2 }－${map.value.sort3 }</td><td class="col-sm-1"><c:if test="${map.value.status == 1 }">在售</c:if><c:if test="${map.value.status == 0 }">已停售</c:if></td><td class="col-sm-1"><a onclick="modify(this)">修改</a></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -593,10 +598,10 @@ $.sidebarMenu($('.sidebar-menu'))
 
 	<div  class="good-content3">
 		<table id="table"  class='table table-hover'>
-			<tr><th class="col-sm-1">商品编号</th><th class="col-sm-1">卖家昵称</th><th class="col-sm-2">商品标题</th><th class="col-sm-4">商品描述</th><th class="col-sm-1">商品价格</th><th class="col-sm-1">商品类别</th><th class="col-sm-1">状态</th><th class="col-sm-1">操作</th></tr>
+			<tr><th class="col-sm-1">商品编号</th><th class="col-sm-1">卖家昵称</th><th class="col-sm-2">商品标题</th><th class="col-sm-5">商品描述</th><th class="col-sm-1">商品价格</th><th class="col-sm-1">状态</th><th class="col-sm-1">操作</th></tr>
 			<c:forEach var="map" items="${goodMap}">
 					<tr>
-						<td class="col-sm-1">${map.value.goodId }</td><td class="col-sm-1">${map.value.sellerName }</td><td class="col-sm-2">${fn:length(map.value.goodTitle)<25?map.value.goodTitle:fn:substring(map.value.goodTitle,0,25) }</td><td class="col-sm-4">${fn:length(map.value.goodDesc)<80?map.value.goodDesc:fn:substring(map.value.goodDesc,0,80) }</td><td class="col-sm-1">${map.value.goodPrice }</td><td class="col-sm-1">${map.value.sort1 }－${map.value.sort2 }－${map.value.sort3 }</td><c:if test="${map.value.status == 1 }"><td class="col-sm-1">在售</td><td class="col-sm-1"><a onclick="goodDel(this)">下架</a></td></c:if><c:if test="${map.value.status == 0 }"><td class="col-sm-1">已停售</td><td class="col-sm-1"><a onclick="goodPublish(this)">重新上架</a></td></c:if>
+						<td class="col-sm-1">${map.value.goodId }</td><td class="col-sm-1">${map.value.sellerName }</td><td class="col-sm-2">${fn:length(map.value.goodTitle)<12?map.value.goodTitle:fn:substring(map.value.goodTitle,0,12) }</td><td class="col-sm-5">${fn:length(map.value.goodDesc)<30?map.value.goodDesc:fn:substring(map.value.goodDesc,0,30) }</td><td class="col-sm-1">${map.value.goodPrice }</td><c:if test="${map.value.status == 1 }"><td class="col-sm-1">在售</td><td class="col-sm-1"><a onclick="goodDel(this)">下架</a></td></c:if><c:if test="${map.value.status == 0 }"><td class="col-sm-1">已停售</td><td class="col-sm-1"><a onclick="goodPublish(this)">重新上架</a></td></c:if>
 					</tr>
 			</c:forEach>
 		</table>
@@ -615,6 +620,8 @@ $.sidebarMenu($('.sidebar-menu'))
 	
 </div>
 
+
+<script count="60" src="${pageContext.request.contextPath }/js/canvas-nest.min.js"></script>
 </body>
 
 </html>

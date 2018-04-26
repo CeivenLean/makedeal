@@ -15,7 +15,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>支付宝 - 网上支付 安全快速！</title>
-<link rel="shortcut icon" href="https://i.alipayobjects.com/common/favicon/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="https://i.alipayobjects.com/common/favicon/favicon.png" type="image/x-icon">
 <style type="text/css">
 body, button, input, select, textarea {
     font: 12px/1.5 tahoma,arial,\5b8b\4f53;

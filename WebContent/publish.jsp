@@ -14,7 +14,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>${seller.name }发布商品</title>
-<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/images/favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/images/favicon.png">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.css">
 <style type="text/css">
@@ -140,7 +140,7 @@
 		</form>
 	</div>
 
-	
+	<script src="${pageContext.request.contextPath }/js/canvas-nest.min.js"></script>
 </body>
 <script>
 

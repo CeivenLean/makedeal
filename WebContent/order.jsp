@@ -16,7 +16,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>订单确认</title>
-<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/images/mylogo.jpg">
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath }/images/favicon.png">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/font-awesome/css/font-awesome.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/bootstrap/css/bootstrap.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/css/tasp.css" />
@@ -211,5 +211,7 @@
 </div>
 	
 </form>	
+
+<script src="${pageContext.request.contextPath }/js/canvas-nest.min.js"></script>
 </body>
 </html>
